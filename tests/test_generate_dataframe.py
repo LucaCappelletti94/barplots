@@ -14,10 +14,6 @@ def test_generate_dataframe():
     with pytest.raises(ValueError):
         generate_dataframe(random_seed=-1)
     with pytest.raises(ValueError):
-        generate_dataframe(include_bools=-1)
-    with pytest.raises(ValueError):
-        generate_dataframe(include_strings=-1)
-    with pytest.raises(ValueError):
         generate_dataframe(include_timestamps=-1)
 
     generate_dataframe()
