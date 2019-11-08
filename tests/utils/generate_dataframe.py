@@ -3,9 +3,9 @@ import numpy as np
 
 
 def generate_dataframe(
-    rows: int = 10000,
+    rows: int = 20,
     columns: int = 10,
-    indices: int = 3,
+    indices: int = 5,
     include_timestamps: bool = True,
     random_seed: int = 42
 ) -> pd.DataFrame:
