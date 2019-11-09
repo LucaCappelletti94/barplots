@@ -61,7 +61,11 @@ setup(
     tests_require=test_deps,
     # Add here the package dependencies
     install_requires=[
-        "pandas"
+        "pandas",
+        "scipy",
+        "matplotlib",
+        "tqdm",
+        "humanize"
     ],
     extras_require=extras,
 )
