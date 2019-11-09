@@ -1,10 +1,9 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from typing import List, Any, Union, Tuple, Dict
+from typing import List, Any, Union, Tuple
 from matplotlib.figure import Figure
 from matplotlib.axes import Axes
 from pandas.core.index import MultiIndex
-from multiprocessing import Pool, cpu_count
 from scipy.constants import golden_ratio
 
 

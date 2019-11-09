@@ -36,7 +36,7 @@ def generate_dataframe(
         If random_seed is a non strictly positive integer.
     ValueError,
         If include_timestamps is not a bool.
-    
+
     Returns
     ---------------------------------
     The generated random dataframe.
@@ -56,7 +56,7 @@ def generate_dataframe(
     np.random.seed(random_seed)
 
     bools = {
-        "include_timestamps":include_timestamps,
+        "include_timestamps": include_timestamps,
     }
     for name, var in bools.items():
         if not isinstance(var, bool):
