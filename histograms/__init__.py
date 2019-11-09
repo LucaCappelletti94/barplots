@@ -1,3 +1,3 @@
-from .histograms import histograms
+from .histograms import histograms, histogram
 
-__all__ = ["histograms"]
+__all__ = ["histograms", "histogram"]
