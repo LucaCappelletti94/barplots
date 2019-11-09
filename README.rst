@@ -18,8 +18,30 @@ Since some software handling coverages sometime get slightly different results, 
 
 |coveralls| |sonar_coverage| |code_climate_coverage|
 
-Python package to easily make histograms from multi-indexed dataframes.
+Usage examples
+----------------------------------------------
+The library offers two main methods: :code:`histogram`, for plotting a single histogram, and  :code:`histograms`, for plotting
+a number of histograms in parallel fashion.
 
+Histograms
+~~~~~~~~~
+
+.. code:: python
+
+    from histograms import histograms
+    df = pd.read_csv("tests/test_case.csv", index_col=0)
+    histograms(df, ["dataset", "resource", "model"])
+
+This will output the following images (just a few examples reported here):
+
+.. image:: https://github.com/LucaCappelletti94/histograms/blob/master/examples/test_auroc.jpg?raw=true
+    :width: 800 px
+
+.. image:: https://github.com/LucaCappelletti94/histograms/blob/master/examples/test_auprc.jpg?raw=true
+    :width: 800 px
+
+.. image:: https://github.com/LucaCappelletti94/histograms/blob/master/examples/required_time.jpg?raw=true
+    :width: 800 px
 
 .. |travis| image:: https://travis-ci.org/LucaCappelletti94/histograms.png
    :target: https://travis-ci.org/LucaCappelletti94/histograms
