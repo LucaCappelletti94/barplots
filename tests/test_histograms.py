@@ -17,3 +17,15 @@ def test_single_index_histograms():
     histograms(df, ["dataset"],
                path="{root}/{{feature}}.jpg".format(root=root))
     shutil.rmtree(root)
+
+
+def test_single_index_no_std_histograms():
+    root = "test_histograms"
+    df = pd.read_csv("tests/test_case.csv", index_col=0)
+    histograms(
+        df,
+        ["dataset"],
+        show_standard_deviation=False,
+        path="{root}/{{feature}}.jpg".format(root=root)
+    )
+    shutil.rmtree(root)

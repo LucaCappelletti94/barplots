@@ -83,7 +83,7 @@ def histogram(
         if len(values) == 2:
             y, std = values
         elif len(values) == 1:
-            y, std = values, 0
+            y, std = values.values[0], 0
         max_y = max(max_y, y+std)
         plot_bar(axes, x, y, std, min_std, bar_width, color, label)
         x += bar_width
