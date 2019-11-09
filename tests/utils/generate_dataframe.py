@@ -77,4 +77,4 @@ def generate_dataframe(
     )
     if include_timestamps:
         df["Time feature"] = np.random.randint(0, 10000000, size=rows)
-    return df.groupby(features[:indices]).agg(["mean", "std"])
+    return df
