@@ -1,0 +1,19 @@
+import pandas as pd
+from histograms import histograms
+import shutil
+
+
+def test_standard_histograms():
+    root = "test_histograms"
+    df = pd.read_csv("tests/test_case.csv", index_col=0)
+    histograms(df, ["dataset", "resource", "model"],
+               path="{root}/{{feature}}.jpg".format(root=root))
+    shutil.rmtree(root)
+
+
+def test_single_index_histograms():
+    root = "test_histograms"
+    df = pd.read_csv("tests/test_case.csv", index_col=0)
+    histograms(df, ["dataset"],
+               path="{root}/{{feature}}.jpg".format(root=root))
+    shutil.rmtree(root)

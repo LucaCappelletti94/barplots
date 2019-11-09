@@ -60,6 +60,8 @@ def histogram(
     x = 0
     max_y = 0
     for i, (index, values) in enumerate(df.iterrows()):
+        if not isinstance(index, (list, tuple)):
+            index = (index,)
         jumps = get_jumps(df, i, index, old_index)
         old_x = x
         for j, value in enumerate(jumps):
