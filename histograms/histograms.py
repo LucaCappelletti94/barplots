@@ -39,7 +39,7 @@ def sanitize_name(name: str) -> str:
 
     Returns
     -------
-    The sanitized name.    
+    The sanitized name.
     """
     return str(name).replace("_", " ")
 
