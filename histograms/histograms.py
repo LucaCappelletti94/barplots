@@ -31,13 +31,17 @@ def histograms(
     show_standard_deviation:bool=True,
         Whetever to show or not the standard deviation. By default True.
     title: str = "{feature}",
-        The title to use for the subgraphs. The `feature` placeholder is replaced with the considered column name.
+        The title to use for the subgraphs.
+        The `feature` placeholder is replaced with the considered column name.
     y_label: str = "{feature}",
-        The label to use for the y-axis. The `feature` placeholder is replaced with the considered column name.
+        The label to use for the y-axis.
+        The `feature` placeholder is replaced with the considered column name.
     path: str = "histograms/{feature}.jpg",
-        The path where to store the pictures. The `feature` placeholder is replaced with the considered column name.
+        The path where to store the pictures.
+        The `feature` placeholder is replaced with the considered column name.
     histogram_kwargs:Dict,
         Kwargs parameters to pass to the histogram method.
+        Read docstring for histogram method for more information on the available parameters.
     """
     groupby = df.groupby(indices).agg(
         ("mean",)+(("std",) if show_standard_deviation else tuple())
