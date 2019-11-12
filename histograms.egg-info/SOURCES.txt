@@ -1,0 +1,13 @@
+MANIFEST.in
+README.rst
+setup.py
+histograms/__init__.py
+histograms/__version__.py
+histograms/histogram.py
+histograms/histograms.py
+histograms/utils.py
+histograms.egg-info/PKG-INFO
+histograms.egg-info/SOURCES.txt
+histograms.egg-info/dependency_links.txt
+histograms.egg-info/requires.txt
+histograms.egg-info/top_level.txt

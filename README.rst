@@ -24,7 +24,7 @@ The library offers two main methods: :code:`histogram`, for plotting a single hi
 a number of histograms in parallel fashion.
 
 Histograms
-~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code:: python
 

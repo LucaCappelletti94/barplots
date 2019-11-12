@@ -7,6 +7,11 @@ from pandas.core.index import MultiIndex
 from scipy.constants import golden_ratio
 
 
+def swap(*args: List, flag: bool) -> List:
+    """If the given flag is true returns """
+    return args if flag else reversed(args)
+
+
 def is_last(df: pd.DataFrame, row: int) -> bool:
     """Return boolean representing if given row is the last row.
 
@@ -39,7 +44,7 @@ def sanitize_name(name: str) -> str:
     return str(name).replace("_", " ")
 
 
-def histogram_width(df: pd.DataFrame, bar_width: float) -> float:
+def histogram_side(df: pd.DataFrame, bar_width: float) -> float:
     """Return histogram width for given dataframe and bar width.
 
     Parameters
@@ -102,11 +107,21 @@ def remove_duplicated_legend_labels(figure: Figure, axes: Axes, legend_position:
     """
     handles, labels = figure.gca().get_legend_handles_labels()
     by_label = dict(zip(labels, handles))
-    if legend_position is not None:
+    if legend_position is not None and by_label:
         axes.legend(by_label.values(), by_label.keys(), loc=legend_position)
 
 
-def plot_bar(axes: Axes, x: float, y: float, std: float, min_std: float, bar_width: float, color: str, label: str):
+def plot_bar(
+    axes: Axes,
+    x: float,
+    y: float,
+    std: float,
+    min_std: float,
+    bar_width: float,
+    color: str,
+    label: str,
+    vertical: bool
+):
     """Plot bar with given properties.
 
     Parameters
@@ -127,25 +142,43 @@ def plot_bar(axes: Axes, x: float, y: float, std: float, min_std: float, bar_wid
         Color of the bar.
     label: str,
         Label of the bar.
+    vertical: bool,
+        Whetever to build the axis to show the bars as vertical or as horizontal.
     """
-    axes.bar(
-        x + bar_width/2,
-        y+1,
-        bottom=-1,
-        **({"yerr": std} if std > min_std else {}),
-        color=color,
-        error_kw={
-            "ecolor": "black",
-            "alpha": 0.75
-        },
-        width=bar_width,
-        capsize=5,
-        alpha=0.75,
-        label=sanitize_name(label)
-    )
+    if vertical:
+        axes.bar(
+            x=x,
+            height=y+1,
+            bottom=-1,
+            **({"yerr": std} if std > min_std else {}),
+            color=color,
+            error_kw={
+                "ecolor": "black",
+                "alpha": 0.75
+            },
+            width=bar_width,
+            capsize=5,
+            alpha=0.75,
+            label=sanitize_name(label)
+        )
+    else:
+        axes.barh(
+            y=x,
+            width=y,
+            **({"xerr": std} if std > min_std else {}),
+            color=color,
+            error_kw={
+                "ecolor": "black",
+                "alpha": 0.75
+            },
+            height=bar_width,
+            capsize=5,
+            alpha=0.75,
+            label=sanitize_name(label)
+        )
 
 
-def plot_text(axes: Axes, x: float, y: float, text: str, width: float):
+def plot_text(axes: Axes, x: float, y: float, text: str, width: float, vertical: bool):
     """Plot text with given properties.
 
     Parameters
@@ -160,18 +193,30 @@ def plot_text(axes: Axes, x: float, y: float, text: str, width: float):
         Text to be shown.
     width: float,
         Total width of the histogram for normalizing the X position
+    vertical: bool,
+        Whetever to build the axis to show the bars as vertical or as horizontal.
     """
-    axes.text(
-        x/(width),
-        y/15,
-        sanitize_name(text),
-        horizontalalignment='center',
-        verticalalignment='center',
-        transform=axes.transAxes
-    )
+    if vertical:
+        axes.text(
+            x=x/width,
+            y=y/15,
+            s=sanitize_name(text),
+            horizontalalignment='center',
+            #verticalalignment='center',
+            transform=axes.transAxes
+        )
+    else:
+        axes.text(
+            x=y/5,
+            y=x/width,
+            s=sanitize_name(text),
+            horizontalalignment='right',
+            verticalalignment='center',
+            transform=axes.transAxes
+        )
 
 
-def get_axes(df: pd.DataFrame, bar_width: float, height: float, dpi: int, title: str, y_label: str) -> Tuple[Figure, Axes]:
+def get_axes(df: pd.DataFrame, bar_width: float, height: float, dpi: int, title: str, y_label: str, vertical: bool) -> Tuple[Figure, Axes]:
     """Setup axes for histogram plotting.
 
     Parameters
@@ -188,23 +233,37 @@ def get_axes(df: pd.DataFrame, bar_width: float, height: float, dpi: int, title:
         Title of the considered histogram.
     y_label: str,
         Histogram's y_label. None for not showing any y_label (default).
+    vertical: bool,
+        Whetever to build the axis to show the bars as vertical or as horizontal.
 
     Returns
     -----------
+    Tuple containing new figure and axis.
     """
-    width = histogram_width(df, bar_width)
+    side = histogram_side(df, bar_width)
     if height is None:
-        height = width/(golden_ratio**2)
+        height = side/(golden_ratio**2)
+    width, height = swap(side, height, flag=vertical)
     fig, axes = plt.subplots(figsize=(width, height), dpi=dpi)
-    axes.set_xlim(0, width)
-    axes.set_ylim(0)
-    axes.set_xticks([])
-    axes.yaxis.grid(True, which="both")
+
+    if vertical:
+        axes.set_xlim(0, side)
+        axes.set_ylim(0)
+        axes.set_xticks([])
+        axes.yaxis.grid(True, which="both")
+        if y_label is not None:
+            axes.set_ylabel(y_label)
+    else:
+        axes.set_ylim(0, side)
+        axes.set_xlim(0)
+        axes.set_yticks([])
+        axes.xaxis.grid(True, which="both")
+        if y_label is not None:
+            axes.set_xlabel(y_label)
+
     if title is not None:
         axes.set_title(title)
-    if y_label is not None:
-        axes.set_ylabel(y_label)
-    return fig, axes, width
+    return fig, axes, side
 
 
 def get_levels(df: pd.DataFrame) -> List[List[Any]]:
