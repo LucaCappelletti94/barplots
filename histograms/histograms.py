@@ -14,8 +14,9 @@ def histograms(
     indices: List,
     show_standard_deviation: bool = True,
     title: str = "{feature}",
-    y_label: str = "{feature}",
+    data_label: str = "{feature}",
     path: str = "histograms/{feature}.jpg",
+    verbose: bool = True,
     **histogram_kwargs: Dict
 ):
     """
@@ -33,8 +34,8 @@ def histograms(
     title: str = "{feature}",
         The title to use for the subgraphs.
         The `feature` placeholder is replaced with the considered column name.
-    y_label: str = "{feature}",
-        The label to use for the y-axis.
+    data_label: str = "{feature}",
+        The label to use for the data axis.
         The `feature` placeholder is replaced with the considered column name.
     path: str = "histograms/{feature}.jpg",
         The path where to store the pictures.
@@ -42,25 +43,29 @@ def histograms(
     histogram_kwargs:Dict,
         Kwargs parameters to pass to the histogram method.
         Read docstring for histogram method for more information on the available parameters.
+    verbose:bool
     """
     groupby = df.groupby(indices).agg(
         ("mean",)+(("std",) if show_standard_deviation else tuple())
     ).sort_index()
+    
     tasks = [
         {
             "df": groupby[feature],
             "title":title.format(feature=feature.replace("_", " ")),
-            "y_label":title.format(feature=feature.replace("_", " ")),
+            "data_label":data_label.format(feature=feature.replace("_", " ")),
             "path":path.format(feature=feature),
             **histogram_kwargs
         } for feature in groupby.columns.levels[0]
     ]
-    with Pool(cpu_count()) as p:
-        list(tqdm(
-            p.imap(_histogram, tasks),
-            desc="Rendering histograms",
-            total=len(tasks),
-            dynamic_ncols=True
-        ))
-        p.close()
-        p.join()
+    _histogram(tasks[0])
+    # with Pool(cpu_count()) as p:
+    #     list(tqdm(
+    #         p.imap(_histogram, tasks),
+    #         desc="Rendering histograms",
+    #         total=len(tasks),
+    #         dynamic_ncols=True,
+    #         disable=not verbose
+    #     ))
+    #     p.close()
+    #     p.join()

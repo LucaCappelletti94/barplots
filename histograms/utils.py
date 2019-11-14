@@ -6,6 +6,85 @@ from matplotlib.axes import Axes
 from pandas.core.index import MultiIndex
 from scipy.constants import golden_ratio
 
+import pandas as pd
+from typing import Dict
+from matplotlib.axes import Axes
+
+import pandas as pd
+from typing import Generator
+from scipy.constants import golden_ratio
+
+
+def bar_positions(df: pd.DataFrame, bar_width: float) -> Generator:
+    """Returns a generator of bar positions.
+        df: pd.DataFrame,
+            Dataframe to iterate to extract the necessary data.
+        bar_width:float,
+            Width of any given bar.
+    """
+    old_index = tuple()
+    bar_position = 0
+    for i, (index, values) in enumerate(df.iterrows()):
+        if not isinstance(index, (list, tuple)):
+            index = (index,)
+
+        if not is_last(df, i):
+            bar_position += bar_width * sum(
+                get_jumps(df, i, index, old_index)
+            )
+        else:
+            bar_position += bar_width
+        old_index = index
+
+        if len(values) == 2:
+            y, std = values
+        elif len(values) == 1:
+            y, std = values.values[0], 0
+
+        yield (
+            bar_position + bar_width / 2,
+            y,
+            std,
+            sanitize_name(index[-1]),
+            index[-1]
+        )
+
+
+def get_max_bar_lenght(
+    df: pd.DataFrame,
+    bar_width: float
+) -> float:
+    """Return maximum bar size, including std.
+
+    Parameters
+    ----------
+    df: pd.DataFrame,
+        The dataframe from where to extract the data.
+    bar_width: float,
+        The width of the bars, used also for spacing
+    """
+    return max(
+        y + std for _, y, std, _, _ in bar_positions(df, bar_width)
+    )
+
+
+def get_max_bar_position(
+    df: pd.DataFrame,
+    bar_width: float
+) -> float:
+    """Return maximum bar size, including std.
+
+    Parameters
+    ----------
+    df: pd.DataFrame,
+        The dataframe from where to extract the data.
+    bar_width: float,
+        The width of the bars, used also for spacing
+    """
+    return max(
+        x for x, _, _, _, _ in bar_positions(df, bar_width)
+    ) + bar_width/2
+
 
 def swap(*args: List, flag: bool) -> List:
     """If the given flag is true returns """
@@ -44,29 +123,6 @@ def sanitize_name(name: str) -> str:
     return str(name).replace("_", " ")
 
 
-def histogram_side(df: pd.DataFrame, bar_width: float) -> float:
-    """Return histogram width for given dataframe and bar width.
-
-    Parameters
-    ----------
-    df: pd.DataFrame,
-        Dataframe from which to obtain the curresponding histogram width.
-    bar_width: float,
-        Width of bars in considered histogram.
-
-    Returns
-    -------
-    Return float representing histogram total width.
-    """
-    old_index = None
-    width = bar_width*df.shape[0]
-    for row, index in enumerate(df.index):
-        if not is_last(df, row):
-            width += sum(get_jumps(df, row, index, old_index))*bar_width
-        old_index = index
-    return width
-
-
 def get_jumps(df: pd.DataFrame, row: int, index: Union[List, Any], old_index: Union[List, Any]) -> List[bool]:
     """Return list representing the detected jumps from given index and old_index.
 
@@ -85,11 +141,13 @@ def get_jumps(df: pd.DataFrame, row: int, index: Union[List, Any], old_index: Un
     -------
     Returns list of boolean representing if for given index level a jump has been detected.
     """
-    if not isinstance(index, (tuple, list)) or not old_index:
-        return tuple()
+    if not isinstance(index, (tuple, list)):
+        return tuple(True)
+    if not old_index:
+        return [False]*len(index)
     return [
         new != old or is_last(df, row)
-        for new, old in zip(index[:-1], old_index)
+        for new, old in zip(index, old_index)
     ]
 
 
@@ -103,12 +161,11 @@ def remove_duplicated_legend_labels(figure: Figure, axes: Axes, legend_position:
     axes: Axes,
         Axes where to show the labels.
     legend_position: str,
-        Legend position, by default "best". Use None for hiding legend.
+        Legend position.
     """
     handles, labels = figure.gca().get_legend_handles_labels()
     by_label = dict(zip(labels, handles))
-    if legend_position is not None and by_label:
-        axes.legend(by_label.values(), by_label.keys(), loc=legend_position)
+    axes.legend(by_label.values(), by_label.keys(), loc=legend_position)
 
 
 def plot_bar(
@@ -118,9 +175,8 @@ def plot_bar(
     std: float,
     min_std: float,
     bar_width: float,
-    color: str,
-    label: str,
-    vertical: bool
+    vertical: bool,
+    **kwargs
 ):
     """Plot bar with given properties.
 
@@ -138,10 +194,6 @@ def plot_bar(
         Minimum standard deviation to be shown.
     bar_width: float,
         Width of the bar.
-    color: str,
-        Color of the bar.
-    label: str,
-        Label of the bar.
     vertical: bool,
         Whetever to build the axis to show the bars as vertical or as horizontal.
     """
@@ -149,36 +201,23 @@ def plot_bar(
         axes.bar(
             x=x,
             height=y+1,
-            bottom=-1,
-            **({"yerr": std} if std > min_std else {}),
-            color=color,
-            error_kw={
-                "ecolor": "black",
-                "alpha": 0.75
-            },
             width=bar_width,
+            **({"yerr": std} if std > min_std else {}),
             capsize=5,
-            alpha=0.75,
-            label=sanitize_name(label)
+            **kwargs
         )
     else:
         axes.barh(
             y=x,
             width=y,
-            **({"xerr": std} if std > min_std else {}),
-            color=color,
-            error_kw={
-                "ecolor": "black",
-                "alpha": 0.75
-            },
             height=bar_width,
+            **({"xerr": std} if std > min_std else {}),
             capsize=5,
-            alpha=0.75,
-            label=sanitize_name(label)
+            **kwargs
         )
 
 
-def plot_text(axes: Axes, x: float, y: float, text: str, width: float, vertical: bool):
+def plot_text(axes: Axes, x: float, y: float, text: str, vertical: bool):
     """Plot text with given properties.
 
     Parameters
@@ -191,28 +230,27 @@ def plot_text(axes: Axes, x: float, y: float, text: str, width: float, vertical:
         Center coordinate for the text vertical axes.
     text: str,
         Text to be shown.
-    width: float,
-        Total width of the histogram for normalizing the X position
     vertical: bool,
         Whetever to build the axis to show the bars as vertical or as horizontal.
     """
     if vertical:
         axes.text(
-            x=x/width,
-            y=y/15,
+            x=x,
+            y=y,
             s=sanitize_name(text),
             horizontalalignment='center',
-            #verticalalignment='center',
+            verticalalignment='top',
             transform=axes.transAxes
         )
     else:
-        axes.text(
-            x=y/5,
-            y=x/width,
+        #axes.scatter(y, x, s=100, color="tab:red")
+        trans = axes.get_transform()
+        axes.annotate(
             s=sanitize_name(text),
-            horizontalalignment='right',
-            verticalalignment='center',
-            transform=axes.transAxes
+            xy=(y, x),
+            # xycoords=trans,
+            annotation_clip=False
+            # transform=axes.transAxes
         )
 
 
@@ -240,7 +278,7 @@ def get_axes(df: pd.DataFrame, bar_width: float, height: float, dpi: int, title:
     -----------
     Tuple containing new figure and axis.
     """
-    side = histogram_side(df, bar_width)
+    side = get_max_bar_position(df, bar_width)
     if height is None:
         height = side/(golden_ratio**2)
     width, height = swap(side, height, flag=vertical)
@@ -263,7 +301,7 @@ def get_axes(df: pd.DataFrame, bar_width: float, height: float, dpi: int, title:
 
     if title is not None:
         axes.set_title(title)
-    return fig, axes, side
+    return fig, axes
 
 
 def get_levels(df: pd.DataFrame) -> List[List[Any]]:

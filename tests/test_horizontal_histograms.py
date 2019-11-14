@@ -13,6 +13,7 @@ def test_horizontal_histograms():
         index,
         path="{root}/{{feature}}.jpg".format(root=root),
         orientation="horizontal",
-        show_bar_labels=True
+        show_bar_labels=True,
+        legend_position=None
     )
     #shutil.rmtree(root)
