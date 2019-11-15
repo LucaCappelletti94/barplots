@@ -3,11 +3,12 @@ from typing import List, Tuple, Dict
 from matplotlib.colors import TABLEAU_COLORS
 from matplotlib.figure import Figure
 from matplotlib.axes import Axes
-from .utils import get_axes, get_jumps, get_levels, is_last, plot_text, plot_bar, remove_duplicated_legend_labels, sanitize_name, bar_positions
+from .utils import get_axes, get_jumps, get_levels, is_last, plot_bar, \
+    remove_duplicated_legend_labels, bar_positions, get_max_bar_lenght,\
+    save_picture, text_positions, plot_bars
+
 from humanize import naturaldelta
 import os
-from .text_positions import text_positions
-from .plot_bars import plot_bars
 
 
 def histogram(
@@ -112,10 +113,10 @@ def histogram(
     for i in reversed(range(n-2, n)):
         positions, labels = zip(*text_positions(df, bar_width, i))
         positions = [
-            round(pos, 4) for pos in positions
+            round(pos, 5) for pos in positions
         ]
         positions = [
-            position + 0.001 if position in other_positions else position 
+            position + 0.00014 if position in other_positions else position
             for position in positions
         ]
         other_positions |= set(positions)
@@ -126,16 +127,16 @@ def histogram(
             labels_offset = max(
                 label.get_window_extent(figure.canvas.get_renderer()).width
                 for label in labels
-            )/2.25
+            )/2
 
-    axes.tick_params(axis='y', which='major', direction='out', length=labels_offset, width=0)
+    axes.tick_params(axis='y', which='major', direction='out',
+                     length=labels_offset, width=0)
 
     if show_legend:
         remove_duplicated_legend_labels(figure, axes, legend_position)
     figure.tight_layout()
+
     if path is not None:
-        directory = os.path.dirname(path)
-        if directory:
-            os.makedirs(directory, exist_ok=True)
-        figure.savefig(path, bbox_inches='tight')
+        save_picture(path, figure)
+
     return figure, axes

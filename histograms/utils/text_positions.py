@@ -1,6 +1,7 @@
 import pandas as pd
 from typing import Generator
-from .utils import is_last, get_jumps
+from .is_last import is_last
+from .get_jumps import get_jumps
 
 
 def text_positions(df: pd.DataFrame, bar_width: float, index_level: int) -> Generator:

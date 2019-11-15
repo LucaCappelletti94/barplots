@@ -1,7 +1,8 @@
 import pandas as pd
-from .utils import plot_bar, sanitize_name, bar_positions
 from typing import Dict
 from matplotlib.axes import Axes
+from .plot_bar import plot_bar
+from .bar_positions import bar_positions
 
 def plot_bars(
     axes:Axes, 
