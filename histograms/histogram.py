@@ -27,7 +27,9 @@ def histogram(
     orientation: str = "vertical",
     subplots: bool = False,
     plots_per_row: Union[int, str] = "auto",
-    humanize_time_features: bool = True
+    humanize_time_features: bool = True,
+    minor_rotation:Union[str, float]="auto",
+    major_rotation:float=0
 ) -> Tuple[Figure, Axes]:
     """Plot histogram corresponding to given dataframe, containing y value and optionally std.
 
@@ -115,7 +117,9 @@ def histogram(
             sub_df,
             vertical,
             len(levels) - int(show_legend) - int(subplots),
-            bar_width
+            bar_width,
+            minor_rotation,
+            major_rotation
         )
 
         if any(e is not None and "time" in e for e in (path, title)):

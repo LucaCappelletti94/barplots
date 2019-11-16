@@ -2,9 +2,19 @@ from matplotlib.axes import Axes
 from matplotlib.figure import Figure
 from .text_positions import text_positions
 import pandas as pd
+from typing import Union
 
 
-def plot_bar_labels(axes:Axes, figure:Figure, df:pd.DataFrame, vertical:bool, levels:int, bar_width:float):
+def plot_bar_labels(
+    axes:Axes,
+    figure:Figure,
+    df:pd.DataFrame,
+    vertical:bool,
+    levels:int,
+    bar_width:float,
+    minor_rotation:Union[str, float],
+    major_rotation:float
+):
     other_positions = set()
     for level in reversed(range(max(levels-2, 0), levels)):
         positions, labels = zip(*text_positions(df, bar_width, level))
@@ -21,6 +31,14 @@ def plot_bar_labels(axes:Axes, figure:Figure, df:pd.DataFrame, vertical:bool, le
             axes.set_xticks(positions, minor=minor)
             labels = axes.set_xticklabels(labels, minor=minor)
             if minor:
+                if minor_rotation=="auto" and any(len(label.get_text()) > 3 for label in labels):
+                    minor_rotation = 90
+                if minor_rotation != "auto":
+                    axes.tick_params(
+                        axis='x',
+                        which='minor',
+                        labelrotation=minor_rotation
+                    )
                 axes.tick_params(
                     axis='x',
                     which='major',
@@ -29,12 +47,19 @@ def plot_bar_labels(axes:Axes, figure:Figure, df:pd.DataFrame, vertical:bool, le
                         label.get_window_extent(figure.canvas.get_renderer()).height
                         for label in labels
                     )/2.5,
-                    width=0
+                    width=0,
+                    labelrotation=major_rotation
                 )
         else:
             axes.set_yticks(positions, minor=minor)
             labels = axes.set_yticklabels(labels, minor=minor)
             if minor:
+                if minor_rotation != "auto":
+                    axes.tick_params(
+                        axis='x',
+                        which='minor',
+                        labelrotation=minor_rotation
+                    )
                 axes.tick_params(
                     axis='y',
                     which='major',
@@ -43,5 +68,7 @@ def plot_bar_labels(axes:Axes, figure:Figure, df:pd.DataFrame, vertical:bool, le
                         label.get_window_extent(figure.canvas.get_renderer()).width
                         for label in labels
                     )/2.5,
-                    width=0
+                    width=0,
+                    labelrotation=major_rotation
                 )
+                
