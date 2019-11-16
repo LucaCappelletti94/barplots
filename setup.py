@@ -26,7 +26,7 @@ def find_version(*file_paths):
     raise RuntimeError("Unable to find version string.")
 
 
-__version__ = find_version("histograms", "__version__.py")
+__version__ = find_version("barplots", "__version__.py")
 
 test_deps =[
     "pytest",
@@ -42,11 +42,11 @@ extras = {
 }
 
 setup(
-    name='histograms',
+    name='barplots',
     version=__version__,
-    description="Python package to easily make histograms from multi-indexed dataframes.",
+    description="Python package to easily make barplots from multi-indexed dataframes.",
     long_description=long_description,
-    url="https://github.com/LucaCappelletti94/histograms",
+    url="https://github.com/LucaCappelletti94/barplots",
     author="Luca Cappelletti",
     author_email="cappelletti.luca94@gmail.com",
     # Choose your license

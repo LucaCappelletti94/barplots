@@ -26,22 +26,22 @@ def get_axes(
     subplots: bool,
     plots_per_row: Union[int, str]
 ) -> Tuple[Figure, Axes]:
-    """Setup axes for histogram plotting.
+    """Setup axes for barplot plotting.
 
     Parameters
     ----------
     df: pd.DataFrame,
-        Dataframe from which to obtain the curresponding histogram width.
+        Dataframe from which to obtain the curresponding barplot width.
     bar_width: float,
-        Width of bars in considered histogram.
+        Width of bars in considered barplot.
     height: float,
-        Height of considered histogram.
+        Height of considered barplot.
     dpi: int,
         DPI for rendered images.
     title: str,
-        Title of the considered histogram.
+        Title of the considered barplot.
     y_label: str,
-        Histogram's y_label. None for not showing any y_label (default).
+        barplot's y_label. None for not showing any y_label (default).
     vertical: bool,
         Whetever to build the axis to show the bars as vertical or as horizontal.
 

@@ -1,12 +1,12 @@
 import pandas as pd
 import pytest
-from histograms import histograms
+from barplots import barplots
 
 def test_wrong_parameters():
-    root = "test_histograms"
+    root = "test_barplots"
     df = pd.read_csv("tests/test_case.csv", index_col=0)
     with pytest.raises(ValueError):
-        histograms(
+        barplots(
             df,
             ["dataset", "resource", "model"],
             orientation="pinco",
@@ -14,7 +14,7 @@ def test_wrong_parameters():
         )
 
     with pytest.raises(ValueError):
-        histograms(
+        barplots(
             df,
             ["model"],
             path="{root}/{{feature}}.jpg".format(root=root),
@@ -22,7 +22,7 @@ def test_wrong_parameters():
         )
 
     with pytest.raises(ValueError):
-        histograms(
+        barplots(
             df,
             ["model"],
             plots_per_row="pinco",

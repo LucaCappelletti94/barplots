@@ -1,12 +1,12 @@
 import pandas as pd
-from histograms import histograms
+from barplots import barplots
 import shutil
 
 
-def test_horizontal_histograms():
-    root = "test_histograms"
+def test_horizontal_barplots():
+    root = "test_barplots"
     df = pd.read_csv("tests/test_case.csv", index_col=0)
-    histograms(
+    barplots(
         df,
         ["dataset", "resource", "model"],
         path="{root}/{{feature}}.jpg".format(root=root),
@@ -15,26 +15,26 @@ def test_horizontal_histograms():
     shutil.rmtree(root)
 
 
-def test_standard_histograms():
-    root = "test_histograms"
+def test_standard_barplots():
+    root = "test_barplots"
     df = pd.read_csv("tests/test_case.csv", index_col=0)
-    histograms(df, ["dataset", "resource", "model"],
+    barplots(df, ["dataset", "resource", "model"],
                path="{root}/{{feature}}.jpg".format(root=root))
     shutil.rmtree(root)
 
 
-def test_single_index_histograms():
-    root = "test_histograms"
+def test_single_index_barplots():
+    root = "test_barplots"
     df = pd.read_csv("tests/test_case.csv", index_col=0)
-    histograms(df, ["dataset"],
+    barplots(df, ["dataset"],
                path="{root}/{{feature}}.jpg".format(root=root))
     shutil.rmtree(root)
 
 
-def test_single_index_no_std_histograms():
-    root = "test_histograms"
+def test_single_index_no_std_barplots():
+    root = "test_barplots"
     df = pd.read_csv("tests/test_case.csv", index_col=0)
-    histograms(
+    barplots(
         df,
         ["dataset"],
         show_standard_deviation=False,

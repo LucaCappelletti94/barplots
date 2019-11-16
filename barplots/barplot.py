@@ -11,7 +11,7 @@ from humanize import naturaldelta
 import os
 
 
-def histogram(
+def barplot(
     df: pd.DataFrame,
     bar_width: float = 0.3,
     height: float = None,
@@ -31,28 +31,28 @@ def histogram(
     minor_rotation:float=0,
     major_rotation:float=0
 ) -> Tuple[Figure, Axes]:
-    """Plot histogram corresponding to given dataframe, containing y value and optionally std.
+    """Plot barplot corresponding to given dataframe, containing y value and optionally std.
 
     Parameters
     ----------
     df: pd.DataFrame,
-        Dataframe from which to extrat data for plotting histogram.
+        Dataframe from which to extrat data for plotting barplot.
     bar_width: float=0.3,
-        Width of the bar of the histogram.
+        Width of the bar of the barplot.
     height: float=None,
-        Height of the histogram. By default golden ratio.
+        Height of the barplot. By default golden ratio.
     dpi: int=100,
-        DPI for plotting the histograms.
+        DPI for plotting the barplots.
     min_std: float=0.01,
         Minimum standard deviation for showing error bars.
     legend_position: str="best",
         Legend position, by default "best".
     data_label: str=None,
-        Histogram's data_label. None for not showing any data_label (default).
+        barplot's data_label. None for not showing any data_label (default).
     title: str=None,
-        Histogram's title. None for not showing any title (default).
+        barplot's title. None for not showing any title (default).
     path: str=None,
-        Path where to save the histogram. None for not saving it (default).
+        Path where to save the barplot. None for not saving it (default).
     colors: Dict[str]=None,
         Dict of colors to be used for innermost index of dataframe.
         By default None, using the default color tableau from matplotlib.
@@ -73,7 +73,7 @@ def histogram(
 
     Returns
     -------
-    Tuple containing Figure and Axes of created histogram.
+    Tuple containing Figure and Axes of created barplot.
     """
     
     if orientation not in ("vertical", "horizontal"):

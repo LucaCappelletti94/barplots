@@ -1,1 +1,1 @@
-histograms
+barplots
