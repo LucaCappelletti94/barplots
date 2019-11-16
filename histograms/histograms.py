@@ -58,7 +58,7 @@ def histograms(
             **histogram_kwargs
         } for feature in groupby.columns.levels[0]
     ]
-    with Pool(min(tasks, cpu_count())) as p:
+    with Pool(min(len(tasks), cpu_count())) as p:
         list(tqdm(
             p.imap(_histogram, tasks),
             desc="Rendering histograms",
