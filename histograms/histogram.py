@@ -1,11 +1,11 @@
 import pandas as pd
-from typing import List, Tuple, Dict
+from typing import List, Tuple, Dict, Union
 from matplotlib.colors import TABLEAU_COLORS
 from matplotlib.figure import Figure
 from matplotlib.axes import Axes
 from .utils import get_axes, get_jumps, get_levels, is_last, plot_bar, \
     remove_duplicated_legend_labels, bar_positions, get_max_bar_lenght,\
-    save_picture, text_positions, plot_bars
+    save_picture, text_positions, plot_bars, plot_bar_labels, humanize_time_ticks
 
 from humanize import naturaldelta
 import os
@@ -25,7 +25,9 @@ def histogram(
     colors: Dict[str, str] = None,
     alphas: Dict[str, float] = None,
     orientation: str = "vertical",
-    show_bar_labels: bool = False
+    split_plots: bool = False,
+    plots_per_row: Union[int, str] = "auto",
+    humanize_time_features: bool = True
 ) -> Tuple[Figure, Axes]:
     """Plot histogram corresponding to given dataframe, containing y value and optionally std.
 
@@ -57,8 +59,6 @@ def histogram(
         By default None, using the default alpha.
     orientation: str = "vertical",
         Orientation of the bars. Can either be "vertical" of "horizontal".
-    show_bar_labels: bool = False,
-        Whetever to show or not the x ticks bar labels.
 
     Raises
     ------
@@ -75,9 +75,17 @@ def histogram(
             orientation=orientation
         ))
 
+    if not isinstance(plots_per_row, int) and plots_per_row != "auto" or isinstance(plots_per_row, int) and plots_per_row<1:
+        raise ValueError("Given plots_per_row \"{plots_per_row}\" is not 'auto' or a positive integer.".format(
+            plots_per_row=plots_per_row
+        ))
+
     vertical = orientation is "vertical"
 
     levels = get_levels(df)
+
+    if len(levels) <= 1 and split_plots:
+        raise ValueError("Unable to split plots with only a single index level.")
 
     if colors is None:
         colors = dict(zip(levels[-1], TABLEAU_COLORS.keys()))
@@ -85,55 +93,39 @@ def histogram(
         alphas = dict(zip(levels[-1], (0.75,)*len(levels[-1])))
 
     figure, axes = get_axes(
-        df, bar_width, height, dpi, title, data_label, vertical
+        df, bar_width, height, dpi, title, data_label, vertical, split_plots, plots_per_row
     )
 
-    plot_bars(axes, df, bar_width, alphas, colors,
-              vertical=vertical, min_std=min_std)
+    for index, ax in zip(levels[0], axes):
+        if split_plots:
+            sub_df = df.loc[index]
+        else:
+            sub_df = df
 
-    # max_bar_lenght = get_max_bar_lenght(df, bar_width)
-    # if vertical:
-    #     axes.set_ylim(0, max_bar_lenght*1.01)
-    # else:
-    #     axes.set_xlim(0, max_bar_lenght*1.01)
+        plot_bars(ax, sub_df, bar_width, alphas, colors,
+                vertical=vertical, min_std=min_std)
 
-    # if vertical:
-    #     if any(e is not None and "time" in e for e in (path, title)):
-    #         axes.set_yticklabels([
-    #             naturaldelta(y) for y in axes.get_yticks()
-    #         ])
-    # else:
-    #     if any(e is not None and "time" in e for e in (path, title)):
-    #         axes.set_xticklabels([
-    #             naturaldelta(x) for x in axes.get_xticks()
-    #         ])
+        # max_bar_lenght = get_max_bar_lenght(sub_df, bar_width)
+        # if vertical:
+        #     ax.set_ylim(0, max_bar_lenght*1.01)
+        # else:
+        #     ax.set_xlim(0, max_bar_lenght*1.01)
 
-    n = len(levels) - int(show_legend)
-    other_positions = set()
-    for i in reversed(range(n-2, n)):
-        positions, labels = zip(*text_positions(df, bar_width, i))
-        positions = [
-            round(pos, 5) for pos in positions
-        ]
-        positions = [
-            position + 0.00014 if position in other_positions else position
-            for position in positions
-        ]
-        other_positions |= set(positions)
-        minor = i == n-1
-        axes.set_yticks(positions, minor=minor)
-        labels = axes.set_yticklabels(labels, minor=minor)
-        if minor:
-            labels_offset = max(
-                label.get_window_extent(figure.canvas.get_renderer()).width
-                for label in labels
-            )/2
+        plot_bar_labels(
+            ax,
+            figure,
+            sub_df,
+            vertical,
+            len(levels) - int(show_legend) - int(split_plots),
+            bar_width
+        )
 
-    axes.tick_params(axis='y', which='major', direction='out',
-                     length=labels_offset, width=0)
+        if any(e is not None and "time" in e for e in (path, title)):
+            humanize_time_ticks(ax, vertical)
 
-    if show_legend:
-        remove_duplicated_legend_labels(figure, axes, legend_position)
+        if show_legend:
+            remove_duplicated_legend_labels(ax, legend_position)
+        
     figure.tight_layout()
 
     if path is not None:
