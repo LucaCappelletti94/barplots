@@ -73,7 +73,7 @@ def histogram(
     -------
     Tuple containing Figure and Axes of created histogram.
     """
-
+    
     if orientation not in ("vertical", "horizontal"):
         raise ValueError("Given orientation \"{orientation}\" is not supported.".format(
             orientation=orientation
@@ -84,7 +84,7 @@ def histogram(
             plots_per_row=plots_per_row
         ))
 
-    vertical = orientation is "vertical"
+    vertical = orientation == "vertical"
 
     levels = get_levels(df)
 
