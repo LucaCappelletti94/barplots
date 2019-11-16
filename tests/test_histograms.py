@@ -54,3 +54,20 @@ def test_wrong_orientation():
             orientation="pinco",
             path="{root}/{{feature}}.jpg".format(root=root)
         )
+
+    with pytest.raises(ValueError):
+        histograms(
+            df,
+            ["model"],
+            path="{root}/{{feature}}.jpg".format(root=root),
+            subplots=True
+        )
+
+    with pytest.raises(ValueError):
+        histograms(
+            df,
+            ["model"],
+            plots_per_row="pinco",
+            path="{root}/{{feature}}.jpg".format(root=root),
+            subplots=True
+        )

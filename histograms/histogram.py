@@ -64,6 +64,10 @@ def histogram(
     ------
     ValueError:
         If the given orientation is nor "vertical" nor "horizontal".
+    ValueError:
+        If the given plots_per_row is nor "auto" or a positive integer.
+    ValueError:
+        If subplots is True and less than a single index level is provided.
 
     Returns
     -------
