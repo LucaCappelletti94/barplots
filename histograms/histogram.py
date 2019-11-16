@@ -28,7 +28,7 @@ def histogram(
     subplots: bool = False,
     plots_per_row: Union[int, str] = "auto",
     humanize_time_features: bool = True,
-    minor_rotation:Union[str, float]="auto",
+    minor_rotation:float=0,
     major_rotation:float=0
 ) -> Tuple[Figure, Axes]:
     """Plot histogram corresponding to given dataframe, containing y value and optionally std.

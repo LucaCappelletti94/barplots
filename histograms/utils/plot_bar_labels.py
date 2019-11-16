@@ -12,7 +12,7 @@ def plot_bar_labels(
     vertical:bool,
     levels:int,
     bar_width:float,
-    minor_rotation:Union[str, float],
+    minor_rotation:float,
     major_rotation:float
 ):
     other_positions = set()
@@ -31,14 +31,11 @@ def plot_bar_labels(
             axes.set_xticks(positions, minor=minor)
             labels = axes.set_xticklabels(labels, minor=minor)
             if minor:
-                if minor_rotation=="auto" and any(len(label.get_text()) > 3 for label in labels):
-                    minor_rotation = 90
-                if minor_rotation != "auto":
-                    axes.tick_params(
-                        axis='x',
-                        which='minor',
-                        labelrotation=minor_rotation
-                    )
+                axes.tick_params(
+                    axis='x',
+                    which='minor',
+                    labelrotation=minor_rotation
+                )
                 axes.tick_params(
                     axis='x',
                     which='major',
@@ -54,12 +51,11 @@ def plot_bar_labels(
             axes.set_yticks(positions, minor=minor)
             labels = axes.set_yticklabels(labels, minor=minor)
             if minor:
-                if minor_rotation != "auto":
-                    axes.tick_params(
-                        axis='x',
-                        which='minor',
-                        labelrotation=minor_rotation
-                    )
+                axes.tick_params(
+                    axis='x',
+                    which='minor',
+                    labelrotation=minor_rotation
+                )
                 axes.tick_params(
                     axis='y',
                     which='major',
