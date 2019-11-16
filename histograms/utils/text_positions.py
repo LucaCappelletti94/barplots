@@ -9,8 +9,6 @@ def text_positions(df: pd.DataFrame, bar_width: float, index_level: int) -> Gene
     old_index = tuple()
     bar_position = 0
     for i, (index, _) in enumerate(df.iterrows()):
-        if not isinstance(index, (list, tuple)):
-            index = (index,)
         jumps = get_jumps(df, i, index, old_index)
         if not old_index:
             old_index = index

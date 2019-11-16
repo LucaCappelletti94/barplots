@@ -4,7 +4,7 @@ from matplotlib.colors import TABLEAU_COLORS
 from matplotlib.figure import Figure
 from matplotlib.axes import Axes
 from .utils import get_axes, get_jumps, get_levels, is_last, plot_bar, \
-    remove_duplicated_legend_labels, bar_positions, get_max_bar_lenght,\
+    remove_duplicated_legend_labels, bar_positions,\
     save_picture, text_positions, plot_bars, plot_bar_labels, humanize_time_ticks
 
 from humanize import naturaldelta

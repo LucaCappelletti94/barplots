@@ -21,8 +21,6 @@ def get_jumps(df: pd.DataFrame, row: int, index: Union[List, Any], old_index: Un
     -------
     Returns list of boolean representing if for given index level a jump has been detected.
     """
-    if not isinstance(index, (tuple, list)):
-        return tuple(True)
     if not old_index:
         return [False]*len(index)
     return [
