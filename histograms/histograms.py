@@ -58,14 +58,13 @@ def histograms(
             **histogram_kwargs
         } for feature in groupby.columns.levels[0]
     ]
-    _histogram(tasks[0])
-    # with Pool(cpu_count()) as p:
-    #     list(tqdm(
-    #         p.imap(_histogram, tasks),
-    #         desc="Rendering histograms",
-    #         total=len(tasks),
-    #         dynamic_ncols=True,
-    #         disable=not verbose
-    #     ))
-    #     p.close()
-    #     p.join()
+    with Pool(cpu_count()) as p:
+        list(tqdm(
+            p.imap(_histogram, tasks),
+            desc="Rendering histograms",
+            total=len(tasks),
+            dynamic_ncols=True,
+            disable=not verbose
+        ))
+        p.close()
+        p.join()

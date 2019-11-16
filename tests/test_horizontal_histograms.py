@@ -73,7 +73,7 @@ def test_multiple_histograms_vertical():
             root=root),
         orientation="vertical",
         show_legend=False,
-        split_plots=True
+        subplots=True
     )
     # shutil.rmtree(root)
 
@@ -88,7 +88,7 @@ def test_multiple_histograms_horizontal():
             root=root),
         orientation="horizontal",
         show_legend=False,
-        split_plots=True
+        subplots=True
     )
     # shutil.rmtree(root)
 
@@ -103,7 +103,7 @@ def test_multiple_histograms_vertical_with_legend():
             root=root),
         orientation="vertical",
         show_legend=True,
-        split_plots=True
+        subplots=True
     )
     # shutil.rmtree(root)
 
@@ -118,6 +118,6 @@ def test_multiple_histograms_horizontal_with_legend():
             root=root),
         orientation="horizontal",
         show_legend=True,
-        split_plots=True
+        subplots=True
     )
     # shutil.rmtree(root)

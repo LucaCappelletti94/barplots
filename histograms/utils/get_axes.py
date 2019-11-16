@@ -23,7 +23,7 @@ def get_axes(
     title: str,
     y_label: str,
     vertical: bool,
-    split_plots: bool,
+    subplots: bool,
     plots_per_row: Union[int, str]
 ) -> Tuple[Figure, Axes]:
     """Setup axes for histogram plotting.
@@ -49,7 +49,7 @@ def get_axes(
     -----------
     Tuple containing new figure and axis.
     """
-    if split_plots:
+    if subplots:
         side = max(
             get_max_bar_position(df.loc[index], bar_width)
             for index in df.index.levels[0]
@@ -58,13 +58,13 @@ def get_axes(
         side = get_max_bar_position(df, bar_width)
 
     if height is None:
-        height = side/(golden_ratio**(2-int(split_plots)))
+        height = side/(golden_ratio**(2-int(subplots)))
 
-    if plots_per_row == "auto":
+    if plots_per_row == "auto" and subplots:
         plots_per_row = 2 if vertical else 4
         plots_per_row = min(df.index.levels[0].size, plots_per_row)
 
-    if split_plots:
+    if subplots:
         nrows = ceil(df.index.levels[0].size/plots_per_row)
     else:
         nrows = plots_per_row = 1
@@ -80,7 +80,14 @@ def get_axes(
     if isinstance(axes, Axes):
         axes = np.array([axes])
 
-    for subtitle, ax in zip(df.index.levels[0], axes.flatten()):
+    axes = axes.flatten()
+
+    if subplots:
+        titles = df.index.levels[0]
+    else: 
+        titles = ("",)
+
+    for subtitle, ax in zip(titles, axes):
         if vertical:
             ax.set_xlim(0, side)
             ax.set_ylim(0)
@@ -98,11 +105,11 @@ def get_axes(
 
         ax.set_title(subtitle)
 
-    for ax in axes.flatten()[df.index.levels[0].size:]:
+    for ax in axes[len(titles):]:
         ax.grid(False)
         ax.axis('off')
 
     if title is not None and len(axes) == 1:
         axes[0].set_title(title)
 
-    return fig, axes.flatten()
+    return fig, axes

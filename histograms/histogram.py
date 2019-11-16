@@ -25,7 +25,7 @@ def histogram(
     colors: Dict[str, str] = None,
     alphas: Dict[str, float] = None,
     orientation: str = "vertical",
-    split_plots: bool = False,
+    subplots: bool = False,
     plots_per_row: Union[int, str] = "auto",
     humanize_time_features: bool = True
 ) -> Tuple[Figure, Axes]:
@@ -84,7 +84,7 @@ def histogram(
 
     levels = get_levels(df)
 
-    if len(levels) <= 1 and split_plots:
+    if len(levels) <= 1 and subplots:
         raise ValueError("Unable to split plots with only a single index level.")
 
     if colors is None:
@@ -93,11 +93,11 @@ def histogram(
         alphas = dict(zip(levels[-1], (0.75,)*len(levels[-1])))
 
     figure, axes = get_axes(
-        df, bar_width, height, dpi, title, data_label, vertical, split_plots, plots_per_row
+        df, bar_width, height, dpi, title, data_label, vertical, subplots, plots_per_row
     )
 
     for index, ax in zip(levels[0], axes):
-        if split_plots:
+        if subplots:
             sub_df = df.loc[index]
         else:
             sub_df = df
@@ -105,18 +105,12 @@ def histogram(
         plot_bars(ax, sub_df, bar_width, alphas, colors,
                 vertical=vertical, min_std=min_std)
 
-        # max_bar_lenght = get_max_bar_lenght(sub_df, bar_width)
-        # if vertical:
-        #     ax.set_ylim(0, max_bar_lenght*1.01)
-        # else:
-        #     ax.set_xlim(0, max_bar_lenght*1.01)
-
         plot_bar_labels(
             ax,
             figure,
             sub_df,
             vertical,
-            len(levels) - int(show_legend) - int(split_plots),
+            len(levels) - int(show_legend) - int(subplots),
             bar_width
         )
 
