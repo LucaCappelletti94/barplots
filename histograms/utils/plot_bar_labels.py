@@ -28,7 +28,7 @@ def plot_bar_labels(axes:Axes, figure:Figure, df:pd.DataFrame, vertical:bool, le
                     length=max(
                         label.get_window_extent(figure.canvas.get_renderer()).height
                         for label in labels
-                    )/2,
+                    )/2.5,
                     width=0
                 )
         else:
@@ -42,6 +42,6 @@ def plot_bar_labels(axes:Axes, figure:Figure, df:pd.DataFrame, vertical:bool, le
                     length=max(
                         label.get_window_extent(figure.canvas.get_renderer()).width
                         for label in labels
-                    )/2,
+                    )/2.5,
                     width=0
                 )

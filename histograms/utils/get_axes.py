@@ -102,10 +102,7 @@ def get_axes(
         ax.grid(False)
         ax.axis('off')
 
-    if title is not None:
-        if len(axes) == 1:
-            axes[0].set_title(title)
-        else:
-            fig.suptitle(title)
+    if title is not None and len(axes) == 1:
+        axes[0].set_title(title)
 
     return fig, axes.flatten()
