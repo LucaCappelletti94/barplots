@@ -5,7 +5,7 @@ import shutil
 
 def test_horizontal_barplots():
     root = "test_barplots"
-    df = pd.read_csv("tests/test_case.csv", index_col=0)
+    df = pd.read_csv("tests/test_case_1.csv", index_col=0)
     barplots(
         df,
         ["dataset", "resource", "model"],
@@ -17,7 +17,7 @@ def test_horizontal_barplots():
 
 def test_standard_barplots():
     root = "test_barplots"
-    df = pd.read_csv("tests/test_case.csv", index_col=0)
+    df = pd.read_csv("tests/test_case_1.csv", index_col=0)
     barplots(df, ["dataset", "resource", "model"],
                path="{root}/{{feature}}.jpg".format(root=root))
     shutil.rmtree(root)
@@ -25,7 +25,7 @@ def test_standard_barplots():
 
 def test_single_index_barplots():
     root = "test_barplots"
-    df = pd.read_csv("tests/test_case.csv", index_col=0)
+    df = pd.read_csv("tests/test_case_1.csv", index_col=0)
     barplots(df, ["dataset"],
                path="{root}/{{feature}}.jpg".format(root=root))
     shutil.rmtree(root)
@@ -33,7 +33,7 @@ def test_single_index_barplots():
 
 def test_single_index_no_std_barplots():
     root = "test_barplots"
-    df = pd.read_csv("tests/test_case.csv", index_col=0)
+    df = pd.read_csv("tests/test_case_1.csv", index_col=0)
     barplots(
         df,
         ["dataset"],

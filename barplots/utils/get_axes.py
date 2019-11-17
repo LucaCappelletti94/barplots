@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 from scipy.constants import golden_ratio
 from typing import List, Union
 from math import ceil
+from sanitize_ml_labels import sanitize_ml_labels
 
 
 def swap(*args: List, flag: bool) -> List:
@@ -21,7 +22,7 @@ def get_axes(
     height: float,
     dpi: int,
     title: str,
-    y_label: str,
+    data_label: str,
     vertical: bool,
     subplots: bool,
     plots_per_row: Union[int, str]
@@ -40,8 +41,8 @@ def get_axes(
         DPI for rendered images.
     title: str,
         Title of the considered barplot.
-    y_label: str,
-        barplot's y_label. None for not showing any y_label (default).
+    data_label: str,
+        barplot's data_label. None for not showing any data_label (default).
     vertical: bool,
         Whetever to build the axis to show the bars as vertical or as horizontal.
 
@@ -93,23 +94,23 @@ def get_axes(
             ax.set_ylim(0)
             ax.set_xticks([])
             ax.yaxis.grid(True, which="both")
-            if y_label is not None:
-                ax.set_ylabel(y_label)
+            if data_label is not None:
+                ax.set_ylabel(sanitize_ml_labels(data_label))
         else:
             ax.set_ylim(0, side)
             ax.set_xlim(0)
             ax.set_yticks([])
             ax.xaxis.grid(True, which="both")
-            if y_label is not None:
-                ax.set_xlabel(y_label)
+            if data_label is not None:
+                ax.set_xlabel(sanitize_ml_labels(data_label))
 
-        ax.set_title(subtitle)
+        ax.set_title(sanitize_ml_labels(subtitle))
 
     for ax in axes[len(titles):]:
         ax.grid(False)
         ax.axis('off')
 
     if title is not None and len(axes) == 1:
-        axes[0].set_title(title)
+        axes[0].set_title(sanitize_ml_labels(title))
 
     return fig, axes

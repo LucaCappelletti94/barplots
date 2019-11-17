@@ -4,9 +4,9 @@ from matplotlib.colors import TABLEAU_COLORS
 from matplotlib.figure import Figure
 from matplotlib.axes import Axes
 from .utils import get_axes, get_jumps, get_levels, is_last, plot_bar, \
-    remove_duplicated_legend_labels, bar_positions,\
+    remove_duplicated_legend_labels, get_max_bar_lenght,\
     save_picture, text_positions, plot_bars, plot_bar_labels, humanize_time_ticks
-
+from sanitize_ml_labels import is_normalized_metric
 from humanize import naturaldelta
 import os
 
@@ -28,8 +28,9 @@ def barplot(
     subplots: bool = False,
     plots_per_row: Union[int, str] = "auto",
     humanize_time_features: bool = True,
-    minor_rotation:float=0,
-    major_rotation:float=0
+    minor_rotation: float = 0,
+    major_rotation: float = 0,
+    auto_normalize_metrics: bool = True
 ) -> Tuple[Figure, Axes]:
     """Plot barplot corresponding to given dataframe, containing y value and optionally std.
 
@@ -75,13 +76,13 @@ def barplot(
     -------
     Tuple containing Figure and Axes of created barplot.
     """
-    
+
     if orientation not in ("vertical", "horizontal"):
         raise ValueError("Given orientation \"{orientation}\" is not supported.".format(
             orientation=orientation
         ))
 
-    if not isinstance(plots_per_row, int) and plots_per_row != "auto" or isinstance(plots_per_row, int) and plots_per_row<1:
+    if not isinstance(plots_per_row, int) and plots_per_row != "auto" or isinstance(plots_per_row, int) and plots_per_row < 1:
         raise ValueError("Given plots_per_row \"{plots_per_row}\" is not 'auto' or a positive integer.".format(
             plots_per_row=plots_per_row
         ))
@@ -91,7 +92,8 @@ def barplot(
     levels = get_levels(df)
 
     if len(levels) <= 1 and subplots:
-        raise ValueError("Unable to split plots with only a single index level.")
+        raise ValueError(
+            "Unable to split plots with only a single index level.")
 
     if colors is None:
         colors = dict(zip(levels[-1], TABLEAU_COLORS.keys()))
@@ -109,7 +111,7 @@ def barplot(
             sub_df = df
 
         plot_bars(ax, sub_df, bar_width, alphas, colors,
-                vertical=vertical, min_std=min_std)
+                  vertical=vertical, min_std=min_std)
 
         plot_bar_labels(
             ax,
@@ -127,7 +129,17 @@ def barplot(
 
         if show_legend:
             remove_duplicated_legend_labels(ax, legend_position)
-        
+
+        if auto_normalize_metrics and is_normalized_metric(title):
+            lenght = max(
+                get_max_bar_lenght(sub_df, bar_width),
+                1
+            )
+            if vertical:
+                ax.set_ylim(0, lenght)
+            else:
+                ax.set_xlim(0, lenght)
+
     figure.tight_layout()
 
     if path is not None:

@@ -29,7 +29,7 @@ def plot_bars(
     kwargs:Dict,
         Parameters to be passed directly to the plot_bar method
     """
-    for x, y, std, label, index in bar_positions(df, bar_width):
+    for x, y, std, index in bar_positions(df, bar_width):
         plot_bar(
             axes=axes,
             x=x,
@@ -38,6 +38,6 @@ def plot_bars(
             bar_width=bar_width,
             alpha=alphas[index],
             color=colors[index],
-            label=label,
+            label=index,
             **kwargs
         )

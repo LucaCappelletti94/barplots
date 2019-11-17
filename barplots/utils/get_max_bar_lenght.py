@@ -2,11 +2,11 @@ import pandas as pd
 from .bar_positions import bar_positions
 
 
-def get_max_bar_position(
+def get_max_bar_lenght(
     df: pd.DataFrame,
     bar_width: float
 ) -> float:
-    """Return maximum bar position.
+    """Return maximum bar lenght, including std.
 
     Parameters
     ----------
@@ -16,5 +16,5 @@ def get_max_bar_position(
         The width of the bars, used also for spacing
     """
     return max(
-        x for x, _, _, _ in bar_positions(df, bar_width)
-    ) + bar_width/2
+        y+std for _, y, std, _ in bar_positions(df, bar_width)
+    )

@@ -66,7 +66,8 @@ setup(
         "scipy",
         "matplotlib",
         "tqdm",
-        "humanize"
+        "humanize",
+        "sanitize_ml_labels"
     ],
     extras_require=extras,
 )

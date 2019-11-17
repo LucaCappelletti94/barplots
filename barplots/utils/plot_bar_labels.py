@@ -3,21 +3,23 @@ from matplotlib.figure import Figure
 from .text_positions import text_positions
 import pandas as pd
 from typing import Union
+from sanitize_ml_labels import sanitize_ml_labels
 
 
 def plot_bar_labels(
-    axes:Axes,
-    figure:Figure,
-    df:pd.DataFrame,
-    vertical:bool,
-    levels:int,
-    bar_width:float,
-    minor_rotation:float,
-    major_rotation:float
+    axes: Axes,
+    figure: Figure,
+    df: pd.DataFrame,
+    vertical: bool,
+    levels: int,
+    bar_width: float,
+    minor_rotation: float,
+    major_rotation: float
 ):
     other_positions = set()
     for level in reversed(range(max(levels-2, 0), levels)):
         positions, labels = zip(*text_positions(df, bar_width, level))
+        labels = sanitize_ml_labels(labels)
         positions = [
             round(pos, 5) for pos in positions
         ]
@@ -41,7 +43,8 @@ def plot_bar_labels(
                     which='major',
                     direction='out',
                     length=max(
-                        label.get_window_extent(figure.canvas.get_renderer()).height
+                        label.get_window_extent(
+                            figure.canvas.get_renderer()).height
                         for label in labels
                     )/2.5,
                     width=0,
@@ -61,10 +64,10 @@ def plot_bar_labels(
                     which='major',
                     direction='out',
                     length=max(
-                        label.get_window_extent(figure.canvas.get_renderer()).width
+                        label.get_window_extent(
+                            figure.canvas.get_renderer()).width
                         for label in labels
                     )/2.5,
                     width=0,
                     labelrotation=major_rotation
                 )
-                

@@ -1,12 +1,11 @@
 import pandas as pd
 from barplots import barplots
-import pytest
 import shutil
 
 
 def test_horizontal_barplots_with_legend():
     root = "test_barplots"
-    df = pd.read_csv("tests/test_case.csv", index_col=0)
+    df = pd.read_csv("tests/test_case_1.csv", index_col=0)
     index = ["dataset", "resource", "model"]
     barplots(
         df[index+["test_auroc"]],
@@ -20,7 +19,7 @@ def test_horizontal_barplots_with_legend():
 
 def test_horizontal_barplots_without_legend():
     root = "test_barplots"
-    df = pd.read_csv("tests/test_case.csv", index_col=0)
+    df = pd.read_csv("tests/test_case_1.csv", index_col=0)
     index = ["dataset", "resource", "model"]
     barplots(
         df[index+["test_auroc"]],
@@ -35,7 +34,7 @@ def test_horizontal_barplots_without_legend():
 
 def test_vertical_barplots_with_legend():
     root = "test_barplots"
-    df = pd.read_csv("tests/test_case.csv", index_col=0)
+    df = pd.read_csv("tests/test_case_1.csv", index_col=0)
     index = ["dataset", "resource", "model"]
     barplots(
         df[index+["test_auroc"]],
@@ -49,7 +48,7 @@ def test_vertical_barplots_with_legend():
 
 def test_vertical_barplots_without_legend():
     root = "test_barplots"
-    df = pd.read_csv("tests/test_case.csv", index_col=0)
+    df = pd.read_csv("tests/test_case_1.csv", index_col=0)
     index = ["dataset", "resource", "model"]
     barplots(
         df[index+["test_auroc"]],
@@ -64,7 +63,7 @@ def test_vertical_barplots_without_legend():
 
 def test_multiple_barplots_vertical():
     root = "test_barplots"
-    df = pd.read_csv("tests/test_case.csv", index_col=0)
+    df = pd.read_csv("tests/test_case_1.csv", index_col=0)
     index = ["dataset", "resource", "model"]
     barplots(
         df[index+["test_auroc"]],
@@ -79,7 +78,7 @@ def test_multiple_barplots_vertical():
 
 def test_multiple_barplots_horizontal():
     root = "test_barplots"
-    df = pd.read_csv("tests/test_case.csv", index_col=0)
+    df = pd.read_csv("tests/test_case_1.csv", index_col=0)
     index = ["dataset", "resource", "model"]
     barplots(
         df[index+["test_auroc"]],
@@ -94,7 +93,7 @@ def test_multiple_barplots_horizontal():
 
 def test_multiple_barplots_vertical_with_legend():
     root = "test_barplots"
-    df = pd.read_csv("tests/test_case.csv", index_col=0)
+    df = pd.read_csv("tests/test_case_1.csv", index_col=0)
     index = ["dataset", "resource", "model"]
     barplots(
         df[index+["test_auroc"]],
@@ -109,7 +108,7 @@ def test_multiple_barplots_vertical_with_legend():
 
 def test_multiple_barplots_horizontal_with_legend():
     root = "test_barplots"
-    df = pd.read_csv("tests/test_case.csv", index_col=0)
+    df = pd.read_csv("tests/test_case_1.csv", index_col=0)
     index = ["dataset", "resource", "model"]
     barplots(
         df[index+["test_auroc"]],

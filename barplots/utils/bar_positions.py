@@ -2,7 +2,6 @@ from typing import Generator
 import pandas as pd
 from .is_last import is_last
 from .get_jumps import get_jumps
-from .sanitize_label import sanitize_label
 
 
 def bar_positions(df: pd.DataFrame, bar_width: float) -> Generator:
@@ -35,6 +34,5 @@ def bar_positions(df: pd.DataFrame, bar_width: float) -> Generator:
             bar_position + bar_width / 2,
             y,
             std,
-            sanitize_label(index[-1]),
             index[-1]
         )
