@@ -40,10 +40,11 @@ def barplots(
     path: str = "barplots/{feature}.jpg",
         The path where to store the pictures.
         The `feature` placeholder is replaced with the considered column name.
+    verbose:bool,
+        Whetever to show or not the loading bar.
     barplot_kwargs:Dict,
         Kwargs parameters to pass to the barplot method.
         Read docstring for barplot method for more information on the available parameters.
-    verbose:bool
     """
     groupby = df.groupby(indices).agg(
         ("mean",)+(("std",) if show_standard_deviation else tuple())
