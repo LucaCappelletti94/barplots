@@ -63,6 +63,57 @@ def barplot(
     orientation: str = "vertical",
         Orientation of the bars. Can either be "vertical" of "horizontal".
 
+    df: pd.DataFrame,
+        Dataframe from which to extrat data for plotting barplot.
+    bar_width: float = 0.3,
+        Width of the bar of the barplot.
+    height: float = None,
+        Height of the barplot. By default golden ratio of the width.
+    dpi: int = 200,
+        DPI for plotting the barplots.
+    min_std: float = 0.001,
+        Minimum standard deviation for showing error bars.
+    show_legend: bool = True,
+        Whetever to show or not the legend.
+        If legend is hidden, the bar ticks are shown alternatively.
+    legend_position: str = "best",
+        Legend position, by default "best".
+    data_label: str = None,
+        Barplot's data_label.
+        Use None for not showing any data_label (default).
+    title: str = None,
+        Barplot's title.
+        Use None for not showing any title (default).
+    path: str = None,
+        Path where to save the barplot.
+        Use None for not saving it (default).
+    colors: Dict[str, str] = None,
+        Dict of colors to be used for innermost index of dataframe.
+        By default None, using the default color tableau from matplotlib.
+    alphas: Dict[str, float] = None,
+        Dict of alphas to be used for innermost index of dataframe.
+        By default None, using the default alpha.
+    orientation: str = "vertical",
+        Orientation of the bars.
+        Can either be "vertical" of "horizontal".
+    subplots: bool = False,
+        Whetever to slit the top indexing layer to multiple subplots.
+    plots_per_row: Union[int, str] = "auto",
+        If subplots is True, specifies the number of plots for row.
+        If "auto" is used, for vertical the default is 2 plots per row,
+        while for horizontal the default is 4 plots per row.
+    humanize_time_features: bool = True,
+        Whetever to automatically detect by name and humanize time deltas.
+        The considered time values are those containing "time" in the title or path.
+    minor_rotation: float = 0,
+        Rotation for the minor ticks of the bars.
+    major_rotation: float = 0,
+        Rotation for the major ticks of the bars.
+    auto_normalize_metrics: bool = True,
+        Whetever to apply or not automatic normalization
+        to the metrics that are recognized to be between
+        zero and one. For example AUROC, AUPRC or accuracy.
+
     Raises
     ------
     ValueError:
