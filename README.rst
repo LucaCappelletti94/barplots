@@ -49,9 +49,10 @@ displaying the bar labels as a shared legend.
         df
     )
 
-.. image:: https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_legend_minor_rotation_val_auroc.jpg?raw=true
-    :width: 100px
-    :align: center 
+.. raw:: html
+
+    <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_legend_minor_rotation_val_auroc.jpg?raw=true" height="400px">
+
 
 This will output the following images (just a few examples reported here):
 
