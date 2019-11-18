@@ -152,7 +152,7 @@ def barplot(
             custom_defaults
         )
 
-        if any(e is not None and "time" in e for e in (path, title)):
+        if humanize_time_features and any(e is not None and "time" in e for e in (path, title)):
             humanize_time_ticks(ax, vertical)
 
         if show_legend:
@@ -164,6 +164,7 @@ def barplot(
         if auto_normalize_metrics and is_normalized_metric(title):
             max_lenght = max(max_lenght, 1)
             min_lenght = min(min_lenght, 0)
+
         if vertical:
             ax.set_ylim(min_lenght, max_lenght)
         else:
