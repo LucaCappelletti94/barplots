@@ -26,7 +26,8 @@ def get_axes(
     vertical: bool,
     subplots: bool,
     plots_per_row: Union[int, str],
-    custom_defaults: Dict[str, List[str]]
+    custom_defaults: Dict[str, List[str]],
+    expected_levels: int
 ) -> Tuple[Figure, Axes]:
     """Setup axes for barplot plotting.
 
@@ -46,6 +47,8 @@ def get_axes(
         barplot's data_label. None for not showing any data_label (default).
     vertical: bool,
         Whetever to build the axis to show the bars as vertical or as horizontal.
+    expected_levels: int,
+        Number of levels to expect to plot as labels.
 
     Returns
     -----------
@@ -60,7 +63,8 @@ def get_axes(
         side = get_max_bar_position(df, bar_width)
 
     if height is None:
-        height = side/(golden_ratio**(2-int(subplots)))
+        exponent = 1 if subplots or expected_levels>1 else 2
+        height = side/(golden_ratio**exponent)
 
     if plots_per_row == "auto" and subplots:
         plots_per_row = 2 if vertical else 4

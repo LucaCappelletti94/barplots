@@ -36,7 +36,8 @@ def test_histograms():
         "A": "active ",
         "I": "inactive ",
         "+": " and ",
-        "": "anything"
+        "": "anything",
+        "Validation":"val"
     }
 
     arguments = list(itertools.product(*list(fuzzy_args.values())))
@@ -51,8 +52,28 @@ def test_histograms():
 
         if kwargs["subplots"]:
             path += "_subplots"
+        else:
+            kwargs["indices"]=kwargs["indices"][1:]
 
-        if kwargs["show_legend"] and kwargs["subplots"] and kwargs["major_rotation"]:
+        if kwargs["show_legend"] and kwargs["major_rotation"]:
+            continue
+
+        if kwargs["show_legend"] and kwargs["orientation"] == "horizontal" and not kwargs["minor_rotation"]:
+            continue
+
+        if kwargs["show_legend"] and kwargs["orientation"] == "vertical" and kwargs["minor_rotation"]:
+            continue
+
+        if not kwargs["show_legend"] and kwargs["orientation"] == "vertical" and not kwargs["minor_rotation"]:
+            continue
+
+        if not kwargs["show_legend"] and kwargs["orientation"] == "horizontal" and kwargs["minor_rotation"]:
+            continue
+
+        if not kwargs["show_legend"] and kwargs["orientation"] == "vertical" and kwargs["major_rotation"]:
+            continue
+
+        if not (kwargs["minor_rotation"] or kwargs["major_rotation"]) and kwargs["orientation"] == "horizontal":
             continue
 
         if kwargs["major_rotation"]:

@@ -20,8 +20,11 @@ Since some software handling coverages sometime get slightly different results, 
 
 Usage examples
 ----------------------------------------------
-The library offers two main methods: :code:`barplot`, for plotting a single barplot, and  :code:`barplots`, for plotting
-a number of barplots in parallel fashion.
+
+
+N.B. The data used in the following examples as *randomly generated* so to be useful for test porposes.
+DO NOT consider these values as valid results for experiments using the same labels (cell lines etc...)
+which are only used to show possible usages.
 
 barplots
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -42,6 +45,12 @@ This will output the following images (just a few examples reported here):
 
 .. image:: https://github.com/LucaCappelletti94/barplots/blob/master/examples/required_time.jpg?raw=true
     :width: 800 px
+
+
+Future features
+---------------
+Currently it is not possible to automatically detect labels overlap and rotate them.
+I will work on this feature when I get the time, currently you will need to use the parameters :code:`minor_rotation` and :code:`major_rotation`.
 
 .. |travis| image:: https://travis-ci.org/LucaCappelletti94/barplots.png
    :target: https://travis-ci.org/LucaCappelletti94/barplots

@@ -117,6 +117,7 @@ def barplot(
     vertical = orientation == "vertical"
 
     levels = get_levels(df)
+    expected_levels = len(levels) - int(show_legend) - int(subplots)
 
     if len(levels) <= 1 and subplots:
         raise ValueError(
@@ -128,7 +129,7 @@ def barplot(
         alphas = dict(zip(levels[-1], (0.75,)*len(levels[-1])))
 
     figure, axes = get_axes(
-        df, bar_width, height, dpi, title, data_label, vertical, subplots, plots_per_row, custom_defaults
+        df, bar_width, height, dpi, title, data_label, vertical, subplots, plots_per_row, custom_defaults, expected_levels
     )
 
     for index, ax in zip(levels[0], axes):
@@ -145,7 +146,7 @@ def barplot(
             figure,
             sub_df,
             vertical,
-            len(levels) - int(show_legend) - int(subplots),
+            expected_levels,
             bar_width,
             minor_rotation,
             major_rotation,
