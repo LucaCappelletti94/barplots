@@ -33,20 +33,44 @@ For every example, the considered dataframe :code:`df` is loaded as follows:
 .. code:: python
 
     import pandas as pd
-    
+
     df = pd.read_csv("tests/test_case.csv")
 
-Example B
+
+Also, for every example, the :code:`custom_defaults` used to sanitize the labels specific to the used dataset is:
+
+.. code:: python
+
+    custom_defaults = {
+        "P": "promoters",
+        "E": "enhancers",
+        "A": "active ",
+        "I": "inactive ",
+        "+": " and ",
+        "": "anything",
+        "Validation":"val"
+    }
+
+
+
+
+
+Horizontal Example A
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 In the following example we will plot the bars horizontally, rotating the group labels by 90 degrees and
 displaying the bar labels as a shared legend.
 
-.. code:: shell
+.. code:: python
 
     from barplots import barplots
 
     barplots(
-        df
+        df,
+        groupby=["task","model"],
+        orientation="horizontal",
+        show_legend=True,
+        minor_rotation=90,
+        custom_defaults=custom_defaults
     )
 
 .. raw:: html
@@ -54,16 +78,29 @@ displaying the bar labels as a shared legend.
     <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_legend_minor_rotation_val_auroc.jpg?raw=true" height="400px">
 
 
-This will output the following images (just a few examples reported here):
+Horizontal Example B
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In the following example we will plot the top index as multiple
+subplots with horizontal bars, rotating the group labels by 90 degrees and
+displaying the bar labels as a shared legend.
 
-.. image:: https://github.com/LucaCappelletti94/barplots/blob/master/examples/test_auroc.jpg?raw=true
-    :width: 800 px
+.. code:: python
 
-.. image:: https://github.com/LucaCappelletti94/barplots/blob/master/examples/test_auprc.jpg?raw=true
-    :width: 800 px
+    from barplots import barplots
 
-.. image:: https://github.com/LucaCappelletti94/barplots/blob/master/examples/required_time.jpg?raw=true
-    :width: 800 px
+    barplots(
+        df,
+        groupby=["cell_line", "task","model"],
+        orientation="horizontal",
+        show_legend=True,
+        subplots=True,
+        minor_rotation=90,
+        custom_defaults=custom_defaults
+    )
+
+.. raw:: html
+
+    <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_legend_subplots_minor_rotation_val_auroc.jpg?raw=true" height="800px">
 
 
 Future features
