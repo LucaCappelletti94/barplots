@@ -43,8 +43,14 @@ displaying the bar labels as a shared legend.
 
 .. code:: shell
 
+    from barplots import barplots
+
+    barplots(
+        df
+    )
+
 .. image:: https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_legend_minor_rotation_val_auroc.jpg?raw=true
-    :height: 400px
+    :width: 200px
 
 This will output the following images (just a few examples reported here):
 

@@ -11,7 +11,7 @@ def _barplot(kwargs):
 
 def barplots(
     df: pd.DataFrame,
-    indices: List,
+    groupby: List,
     show_standard_deviation: bool = True,
     title: str = "{feature}",
     data_label: str = "{feature}",
@@ -27,8 +27,8 @@ def barplots(
     ----------
     df: pd.DataFrame,
         Dataframe from which to extrat data for plotting barplot.
-    indices: List,
-        List of indices over to run group by.
+    groupby: List,
+        List of groupby over to run group by.
     show_standard_deviation:bool=True,
         Whetever to show or not the standard deviation. By default True.
     title: str = "{feature}",
@@ -46,7 +46,7 @@ def barplots(
         Kwargs parameters to pass to the barplot method.
         Read docstring for barplot method for more information on the available parameters.
     """
-    groupby = df.groupby(indices).agg(
+    groupby = df.groupby(groupby).agg(
         ("mean",)+(("std",) if show_standard_deviation else tuple())
     ).sort_index()
     

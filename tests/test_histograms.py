@@ -10,7 +10,7 @@ def test_histograms():
         "df": [
             pd.read_csv("tests/test_case.csv")
         ],
-        "indices": [
+        "groupby": [
             ["cell_line","task","model"]
         ],
         "show_legend": [
@@ -53,7 +53,7 @@ def test_histograms():
         if kwargs["subplots"]:
             path += "_subplots"
         else:
-            kwargs["indices"]=kwargs["indices"][1:]
+            kwargs["groupby"]=kwargs["groupby"][1:]
 
         if kwargs["show_legend"] and kwargs["major_rotation"]:
             continue
