@@ -8,7 +8,7 @@ from tqdm.auto import tqdm
 def test_histograms():
     fuzzy_args = {
         "df": [
-            pd.read_csv("tests/test_case.csv", index_col=0)
+            pd.read_csv("tests/test_case.csv")
         ],
         "indices": [
             ["cell_line","task","model"]

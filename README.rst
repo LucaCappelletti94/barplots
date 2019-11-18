@@ -20,20 +20,31 @@ Since some software handling coverages sometime get slightly different results, 
 
 Usage examples
 ----------------------------------------------
+Here follows a set of examples of common usages. Basically, every graph show either the same data
+or a mean based on the provided group by indices. Choose whetever representation is best for
+visualizing your data, as hardly one is better than another for every possible dataset.
 
-
-N.B. The data used in the following examples as *randomly generated* so to be useful for test porposes.
-DO NOT consider these values as valid results for experiments using the same labels (cell lines etc...)
+N.B. The data used in the following examples as **randomly generated** so to be useful for test porposes.
+**DO NOT** consider these values as valid results for experiments using the same labels (cell lines etc...)
 which are only used to show possible usages.
 
-barplots
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+For every example, the considered dataframe :code:`df` is loaded as follows:
 
 .. code:: python
 
-    from barplots import barplots
-    df = pd.read_csv("tests/test_case.csv", index_col=0)
-    barplots(df, ["dataset", "resource", "model"])
+    import pandas as pd
+    
+    df = pd.read_csv("tests/test_case.csv")
+
+Example B
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In the following example we will plot the bars horizontally, rotating the group labels by 90 degrees and
+displaying the bar labels as a shared legend.
+
+.. code:: shell
+
+.. image:: https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_legend_minor_rotation_val_auroc.jpg?raw=true
+    :height: 400px
 
 This will output the following images (just a few examples reported here):
 

@@ -63,7 +63,7 @@ def get_axes(
         side = get_max_bar_position(df, bar_width)
 
     if height is None:
-        exponent = 1 if subplots or expected_levels>1 else 2
+        exponent = 1 if subplots or expected_levels>1 else 1.5
         height = side/(golden_ratio**exponent)
 
     if plots_per_row == "auto" and subplots:
