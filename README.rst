@@ -100,7 +100,7 @@ displaying the bar labels as a shared legend.
 
 .. raw:: html
 
-    <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_legend_subplots_minor_rotation_val_auroc.jpg?raw=true" height="800px">
+    <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_legend_subplots_minor_rotation_val_auroc.jpg?raw=true">
 
 
 Future features
