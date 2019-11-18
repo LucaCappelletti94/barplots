@@ -7,3 +7,16 @@ from .remove_duplicated_legend_labels import remove_duplicated_legend_labels
 from .plot_bar_labels import plot_bar_labels
 from .humanize_time_ticks import humanize_time_ticks
 from .get_max_bar_lenght import get_max_bar_lenght
+
+
+__all__ = [
+    "save_picture",
+    "get_axes",
+    "text_positions",
+    "plot_bars",
+    "get_levels",
+    "remove_duplicated_legend_labels",
+    "plot_bar_labels",
+    "humanize_time_ticks",
+    "get_max_bar_lenght"
+]
