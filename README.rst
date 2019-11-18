@@ -129,6 +129,31 @@ displaying the bar labels as minor ticks.
     <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_major_rotation_val_auroc.jpg?raw=true" height="400px">
 
 
+Horizontal Example D
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In the following example we will plot the top index as multiple
+subplots with horizontal bars, rotating the group labels by 90 degrees and
+displaying the bar labels as minor ticks.
+
+.. code:: python
+
+    from barplots import barplots
+
+    barplots(
+        df,
+        groupby=["cell_line", "task","model"],
+        orientation="horizontal",
+        show_legend=False,
+        major_rotation=90,
+        subplots=True,
+        custom_defaults=custom_defaults
+    )
+
+.. raw:: html
+
+    <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_subplots_major_rotation_val_auroc.jpg?raw=true">
+
+
 Future features
 ---------------
 Currently it is not possible to automatically detect labels overlap and rotate them.
