@@ -18,6 +18,12 @@ Since some software handling coverages sometime get slightly different results, 
 
 |coveralls| |sonar_coverage| |code_climate_coverage|
 
+
+Documentation
+----------------------------------------------
+Most methods, in particular those exposed to user usage, are provided with doc strings.
+Consider reading these docstrings for learning the most recent updates to the library.
+
 Usage examples
 ----------------------------------------------
 Here follows a set of examples of common usages. Basically, every graph show either the same data
@@ -50,9 +56,6 @@ Also, for every example, the :code:`custom_defaults` used to sanitize the labels
         "": "anything",
         "Validation":"val"
     }
-
-
-
 
 
 Horizontal Example A
@@ -101,6 +104,29 @@ displaying the bar labels as a shared legend.
 .. raw:: html
 
     <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_legend_subplots_minor_rotation_val_auroc.jpg?raw=true">
+
+
+Horizontal Example C
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In the following example we will plot horizontal bars, rotating the top group labels by 90 degrees and
+displaying the bar labels as minor ticks.
+
+.. code:: python
+
+    from barplots import barplots
+
+    barplots(
+        df,
+        groupby=["task","model"],
+        orientation="horizontal",
+        show_legend=False,
+        major_rotation=90,
+        custom_defaults=custom_defaults
+    )
+
+.. raw:: html
+
+    <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_major_rotation_val_auroc.jpg?raw=true" height="400px">
 
 
 Future features
