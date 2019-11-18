@@ -154,6 +154,99 @@ displaying the bar labels as minor ticks.
     <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_subplots_major_rotation_val_auroc.jpg?raw=true">
 
 
+Vertical Example A
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In the following example we will plot the bars vertically and
+displaying the bar labels as a shared legend.
+
+.. code:: python
+
+    from barplots import barplots
+
+    barplots(
+        df,
+        groupby=["task","model"],
+        orientation="vertical",
+        show_legend=True,
+        custom_defaults=custom_defaults
+    )
+
+.. raw:: html
+
+    <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/vertical_legend_val_auroc.jpg" height="400px">
+
+
+Vertical Example B
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In the following example we will plot the top index as multiple
+subplots with vertical bars  and displaying the bar labels as a shared legend.
+
+.. code:: python
+
+    from barplots import barplots
+
+    barplots(
+        df,
+        groupby=["cell_line", "task","model"],
+        orientation="vertical",
+        show_legend=True,
+        subplots=True,
+        custom_defaults=custom_defaults
+    )
+
+.. raw:: html
+
+    <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/vertical_legend_subplots_val_auroc.jpg">
+
+
+Vertical Example C
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In the following example we will plot vertical bars, rotating the minor group labels by 90 degrees and
+displaying the bar labels as minor ticks.
+
+.. code:: python
+
+    from barplots import barplots
+
+    barplots(
+        df,
+        groupby=["task","model"],
+        orientation="vertical",
+        show_legend=False,
+        minor_rotation=90,
+        custom_defaults=custom_defaults
+    )
+
+.. raw:: html
+
+    <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/vertical_minor_rotation_val_auroc.jpg" height="400px">
+
+
+Vertical Example D
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In the following example we will plot the top index as multiple
+subplots with vertical bars, rotating the minor group labels by 90 degrees and
+displaying the bar labels as minor ticks.
+
+.. code:: python
+
+    from barplots import barplots
+
+    barplots(
+        df,
+        groupby=["cell_line", "task","model"],
+        orientation="vertical",
+        show_legend=False,
+        minor_rotation=90,
+        subplots=True,
+        custom_defaults=custom_defaults
+    )
+
+.. raw:: html
+
+    <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/vertical_subplots_minor_rotation_val_auroc.jpg">
+
+
 Future features
 ---------------
 Currently it is not possible to automatically detect labels overlap and rotate them.
