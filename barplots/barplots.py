@@ -49,7 +49,7 @@ def barplots(
     groupby = df.groupby(groupby).agg(
         ("mean",)+(("std",) if show_standard_deviation else tuple())
     ).sort_index()
-    
+
     tasks = [
         {
             "df": groupby[feature],

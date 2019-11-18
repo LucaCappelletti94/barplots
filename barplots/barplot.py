@@ -5,9 +5,8 @@ from matplotlib.figure import Figure
 from matplotlib.axes import Axes
 from .utils import get_axes, get_jumps, get_levels, is_last, plot_bar, \
     remove_duplicated_legend_labels, get_max_bar_lenght,\
-    save_picture, text_positions, plot_bars, plot_bar_labels, humanize_time_ticks
+    save_picture, plot_bars, plot_bar_labels, humanize_time_ticks
 from sanitize_ml_labels import is_normalized_metric
-from humanize import naturaldelta
 import os
 
 
@@ -157,11 +156,12 @@ def barplot(
             humanize_time_ticks(ax, vertical)
 
         if show_legend:
-            remove_duplicated_legend_labels(ax, legend_position, custom_defaults)
+            remove_duplicated_legend_labels(
+                ax, legend_position, custom_defaults)
 
         max_lenght, min_lenght = get_max_bar_lenght(sub_df, bar_width)
-        max_lenght*=1.01
-        min_lenght*=1.01
+        max_lenght *= 1.01
+        min_lenght *= 1.01
         if auto_normalize_metrics and is_normalized_metric(title):
             max_lenght = max(max_lenght, 1)
             min_lenght = min(min_lenght, 0)
