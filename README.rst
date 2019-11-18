@@ -50,7 +50,8 @@ displaying the bar labels as a shared legend.
     )
 
 .. image:: https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_legend_minor_rotation_val_auroc.jpg?raw=true
-    :width: 200px
+    :width: 100px
+    :align: center 
 
 This will output the following images (just a few examples reported here):
 
