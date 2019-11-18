@@ -4,11 +4,11 @@ from barplots import barplots
 
 def test_wrong_parameters():
     root = "test_barplots"
-    df = pd.read_csv("tests/test_case_1.csv", index_col=0)
+    df = pd.read_csv("tests/test_case.csv", index_col=0)
     with pytest.raises(ValueError):
         barplots(
             df,
-            ["dataset", "resource", "model"],
+            ["cell_line","task","balancing","model"],
             orientation="pinco",
             path="{root}/{{feature}}.jpg".format(root=root)
         )

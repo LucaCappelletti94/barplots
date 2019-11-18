@@ -30,39 +30,13 @@ def barplot(
     humanize_time_features: bool = True,
     minor_rotation: float = 0,
     major_rotation: float = 0,
-    auto_normalize_metrics: bool = True
+    auto_normalize_metrics: bool = True,
+    custom_defaults: Dict[str, List[str]] = None
 ) -> Tuple[Figure, Axes]:
     """Plot barplot corresponding to given dataframe, containing y value and optionally std.
 
     Parameters
     ----------
-    df: pd.DataFrame,
-        Dataframe from which to extrat data for plotting barplot.
-    bar_width: float=0.3,
-        Width of the bar of the barplot.
-    height: float=None,
-        Height of the barplot. By default golden ratio.
-    dpi: int=100,
-        DPI for plotting the barplots.
-    min_std: float=0.01,
-        Minimum standard deviation for showing error bars.
-    legend_position: str="best",
-        Legend position, by default "best".
-    data_label: str=None,
-        barplot's data_label. None for not showing any data_label (default).
-    title: str=None,
-        barplot's title. None for not showing any title (default).
-    path: str=None,
-        Path where to save the barplot. None for not saving it (default).
-    colors: Dict[str]=None,
-        Dict of colors to be used for innermost index of dataframe.
-        By default None, using the default color tableau from matplotlib.
-    colors: Dict[str]=None,
-        Dict of alphas to be used for innermost index of dataframe.
-        By default None, using the default alpha.
-    orientation: str = "vertical",
-        Orientation of the bars. Can either be "vertical" of "horizontal".
-
     df: pd.DataFrame,
         Dataframe from which to extrat data for plotting barplot.
     bar_width: float = 0.3,
@@ -113,6 +87,8 @@ def barplot(
         Whetever to apply or not automatic normalization
         to the metrics that are recognized to be between
         zero and one. For example AUROC, AUPRC or accuracy.
+    custom_defaults: Dict[str, List[str]],
+        Dictionary to normalize labels.
 
     Raises
     ------
@@ -152,7 +128,7 @@ def barplot(
         alphas = dict(zip(levels[-1], (0.75,)*len(levels[-1])))
 
     figure, axes = get_axes(
-        df, bar_width, height, dpi, title, data_label, vertical, subplots, plots_per_row
+        df, bar_width, height, dpi, title, data_label, vertical, subplots, plots_per_row, custom_defaults
     )
 
     for index, ax in zip(levels[0], axes):
@@ -172,24 +148,26 @@ def barplot(
             len(levels) - int(show_legend) - int(subplots),
             bar_width,
             minor_rotation,
-            major_rotation
+            major_rotation,
+            custom_defaults
         )
 
         if any(e is not None and "time" in e for e in (path, title)):
             humanize_time_ticks(ax, vertical)
 
         if show_legend:
-            remove_duplicated_legend_labels(ax, legend_position)
+            remove_duplicated_legend_labels(ax, legend_position, custom_defaults)
 
+        max_lenght, min_lenght = get_max_bar_lenght(sub_df, bar_width)
+        max_lenght*=1.01
+        min_lenght*=1.01
         if auto_normalize_metrics and is_normalized_metric(title):
-            lenght = max(
-                get_max_bar_lenght(sub_df, bar_width),
-                1
-            )
-            if vertical:
-                ax.set_ylim(0, lenght)
-            else:
-                ax.set_xlim(0, lenght)
+            max_lenght = max(max_lenght, 1)
+            min_lenght = min(min_lenght, 0)
+        if vertical:
+            ax.set_ylim(min_lenght, max_lenght)
+        else:
+            ax.set_xlim(min_lenght, max_lenght)
 
     figure.tight_layout()
 

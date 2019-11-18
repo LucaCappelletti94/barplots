@@ -2,7 +2,7 @@ from matplotlib.axes import Axes
 from matplotlib.figure import Figure
 from .text_positions import text_positions
 import pandas as pd
-from typing import Union
+from typing import Union, Dict, List
 from sanitize_ml_labels import sanitize_ml_labels
 
 
@@ -14,17 +14,18 @@ def plot_bar_labels(
     levels: int,
     bar_width: float,
     minor_rotation: float,
-    major_rotation: float
+    major_rotation: float,
+    custom_defaults: Dict[str, List[str]]
 ):
     other_positions = set()
     for level in reversed(range(max(levels-2, 0), levels)):
         positions, labels = zip(*text_positions(df, bar_width, level))
-        labels = sanitize_ml_labels(labels)
+        labels = sanitize_ml_labels(labels, custom_defaults=custom_defaults)
         positions = [
             round(pos, 5) for pos in positions
         ]
         positions = [
-            position + 0.00014 if position in other_positions else position
+            position + 0.0002 if position in other_positions else position
             for position in positions
         ]
         other_positions |= set(positions)

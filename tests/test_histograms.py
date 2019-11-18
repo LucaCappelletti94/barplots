@@ -1,45 +1,51 @@
 import pandas as pd
 from barplots import barplots
 import shutil
+import itertools
+from tqdm.auto import tqdm
 
 
-def test_horizontal_barplots():
-    root = "test_barplots"
-    df = pd.read_csv("tests/test_case_1.csv", index_col=0)
-    barplots(
-        df,
-        ["dataset", "resource", "model"],
-        path="{root}/{{feature}}.jpg".format(root=root),
-        orientation="horizontal"
-    )
-    shutil.rmtree(root)
+def test_histograms():
+    fuzzy_args = {
+        "df": [
+            pd.read_csv("tests/test_case.csv", index_col=0)
+        ],
+        "indices": [
+            ["cell_line","task","model"]
+        ],
+        "show_legend": [
+            True, False
+        ],
+        "orientation": [
+            "horizontal", "vertical"
+        ],
+        "subplots": [
+            True, False
+        ]
+    }
 
+    custom_defaults = {
+        "P": "promoters",
+        "E": "enhancers",
+        "A": "active ",
+        "I": "inactive ",
+        "+": " and ",
+        "": "anything"
+    }
 
-def test_standard_barplots():
-    root = "test_barplots"
-    df = pd.read_csv("tests/test_case_1.csv", index_col=0)
-    barplots(df, ["dataset", "resource", "model"],
-               path="{root}/{{feature}}.jpg".format(root=root))
-    shutil.rmtree(root)
+    arguments = list(itertools.product(*list(fuzzy_args.values())))
+    for arg in tqdm(arguments):
+        kwargs = dict(zip(fuzzy_args.keys(), arg))
+        path = "examples/{orientation}".format(
+            orientation=kwargs["orientation"]
+        )
 
+        if kwargs["show_legend"]:
+            path += "_legend"
 
-def test_single_index_barplots():
-    root = "test_barplots"
-    df = pd.read_csv("tests/test_case_1.csv", index_col=0)
-    barplots(df, ["dataset"],
-               path="{root}/{{feature}}.jpg".format(root=root))
-    shutil.rmtree(root)
+        if kwargs["subplots"]:
+            path += "_subplots"
+        
+        path += "_{feature}.jpg"
 
-
-def test_single_index_no_std_barplots():
-    root = "test_barplots"
-    df = pd.read_csv("tests/test_case_1.csv", index_col=0)
-    barplots(
-        df,
-        ["dataset"],
-        show_standard_deviation=False,
-        path="{root}/{{feature}}.jpg".format(root=root)
-    )
-    shutil.rmtree(root)
-
-
+        barplots(**kwargs, path=path, custom_defaults=custom_defaults)

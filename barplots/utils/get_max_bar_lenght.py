@@ -1,12 +1,14 @@
 import pandas as pd
 from .bar_positions import bar_positions
-
+from typing import Tuple
 
 def get_max_bar_lenght(
     df: pd.DataFrame,
     bar_width: float
-) -> float:
-    """Return maximum bar lenght, including std.
+) -> Tuple[float, float]:
+    """Return Tuple containing maximum and minimum bar lenght, including std.
+
+    These values could also be negative.
 
     Parameters
     ----------
@@ -17,4 +19,6 @@ def get_max_bar_lenght(
     """
     return max(
         y+std for _, y, std, _ in bar_positions(df, bar_width)
+    ), min(
+        y-std for _, y, std, _ in bar_positions(df, bar_width)
     )

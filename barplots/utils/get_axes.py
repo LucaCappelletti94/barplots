@@ -3,10 +3,10 @@ from matplotlib.axes import Axes
 import pandas as pd
 import numpy as np
 from .get_max_bar_position import get_max_bar_position
-from typing import Tuple
+from typing import Tuple, Dict
 import matplotlib.pyplot as plt
 from scipy.constants import golden_ratio
-from typing import List, Union
+from typing import List, Union, Dict
 from math import ceil
 from sanitize_ml_labels import sanitize_ml_labels
 
@@ -25,7 +25,8 @@ def get_axes(
     data_label: str,
     vertical: bool,
     subplots: bool,
-    plots_per_row: Union[int, str]
+    plots_per_row: Union[int, str],
+    custom_defaults: Dict[str, List[str]]
 ) -> Tuple[Figure, Axes]:
     """Setup axes for barplot plotting.
 
@@ -85,32 +86,36 @@ def get_axes(
 
     if subplots:
         titles = df.index.levels[0]
-    else: 
+    else:
         titles = ("",)
 
     for subtitle, ax in zip(titles, axes):
         if vertical:
             ax.set_xlim(0, side)
-            ax.set_ylim(0)
             ax.set_xticks([])
             ax.yaxis.grid(True, which="both")
             if data_label is not None:
-                ax.set_ylabel(sanitize_ml_labels(data_label))
+                ax.set_ylabel(sanitize_ml_labels(
+                    data_label,
+                    custom_defaults=custom_defaults
+                ))
         else:
             ax.set_ylim(0, side)
-            ax.set_xlim(0)
             ax.set_yticks([])
             ax.xaxis.grid(True, which="both")
             if data_label is not None:
-                ax.set_xlabel(sanitize_ml_labels(data_label))
+                ax.set_xlabel(sanitize_ml_labels(
+                    data_label,
+                    custom_defaults=custom_defaults
+                ))
 
-        ax.set_title(sanitize_ml_labels(subtitle))
+        ax.set_title(sanitize_ml_labels(subtitle, custom_defaults=custom_defaults))
 
     for ax in axes[len(titles):]:
         ax.grid(False)
         ax.axis('off')
 
     if title is not None and len(axes) == 1:
-        axes[0].set_title(sanitize_ml_labels(title))
+        axes[0].set_title(sanitize_ml_labels(title, custom_defaults=custom_defaults))
 
     return fig, axes
