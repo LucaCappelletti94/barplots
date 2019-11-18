@@ -30,9 +30,9 @@ Here follows a set of examples of common usages. Basically, every graph show eit
 or a mean based on the provided group by indices. Choose whetever representation is best for
 visualizing your data, as hardly one is better than another for every possible dataset.
 
-N.B. The data used in the following examples as **randomly generated** so to be useful for test porposes.
+*N.B. The data used in the following examples are **randomly generated** so to be useful for test porposes.
 **DO NOT** consider these values as valid results for experiments using the same labels (cell lines etc...)
-which are only used to show possible usages.
+which are only used to show possible usages.*
 
 For every example, the considered dataframe :code:`df` is loaded as follows:
 
