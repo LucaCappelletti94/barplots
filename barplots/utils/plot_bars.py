@@ -4,16 +4,17 @@ from matplotlib.axes import Axes
 from .plot_bar import plot_bar
 from .bar_positions import bar_positions
 
+
 def plot_bars(
-    axes:Axes, 
+    axes: Axes,
     df: pd.DataFrame,
     bar_width: float,
-    alphas:Dict[str, float],
-    colors:Dict[str, str],
-    **kwargs:Dict
+    alphas: Dict[str, float],
+    colors: Dict[str, str],
+    **kwargs: Dict
 ):
     """Plot bars for given dataframe at given intervals.
-    
+
     Parameters
     ----------
     axes:Axes,

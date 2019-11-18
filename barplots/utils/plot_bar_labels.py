@@ -2,7 +2,7 @@ from matplotlib.axes import Axes
 from matplotlib.figure import Figure
 from .text_positions import text_positions
 import pandas as pd
-from typing import Union, Dict, List
+from typing import Dict, List
 from .get_max_bar_position import get_max_bar_position
 from sanitize_ml_labels import sanitize_ml_labels
 

@@ -7,7 +7,6 @@ from .utils import get_axes, get_jumps, get_levels, is_last, plot_bar, \
     remove_duplicated_legend_labels, get_max_bar_lenght,\
     save_picture, plot_bars, plot_bar_labels, humanize_time_ticks
 from sanitize_ml_labels import is_normalized_metric
-import os
 
 
 def barplot(

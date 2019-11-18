@@ -1,6 +1,5 @@
 import pandas as pd
 from barplots import barplots
-import shutil
 import itertools
 from tqdm.auto import tqdm
 
@@ -11,7 +10,7 @@ def test_histograms():
             pd.read_csv("tests/test_case.csv")
         ],
         "groupby": [
-            ["cell_line","task","model"]
+            ["cell_line", "task", "model"]
         ],
         "show_legend": [
             True, False
@@ -37,7 +36,7 @@ def test_histograms():
         "I": "inactive ",
         "+": " and ",
         "": "anything",
-        "Validation":"val"
+        "Validation": "val"
     }
 
     arguments = list(itertools.product(*list(fuzzy_args.values())))
@@ -53,7 +52,7 @@ def test_histograms():
         if kwargs["subplots"]:
             path += "_subplots"
         else:
-            kwargs["groupby"]=kwargs["groupby"][1:]
+            kwargs["groupby"] = kwargs["groupby"][1:]
 
         if kwargs["show_legend"] and kwargs["major_rotation"]:
             continue
@@ -81,7 +80,7 @@ def test_histograms():
 
         if kwargs["minor_rotation"]:
             path += "_minor_rotation"
-        
+
         path += "_{feature}.jpg"
 
         barplots(**kwargs, path=path, custom_defaults=custom_defaults)

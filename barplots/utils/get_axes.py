@@ -3,10 +3,9 @@ from matplotlib.axes import Axes
 import pandas as pd
 import numpy as np
 from .get_max_bar_position import get_max_bar_position
-from typing import Tuple, Dict
+from typing import Tuple, Dict, Union, List
 import matplotlib.pyplot as plt
 from scipy.constants import golden_ratio
-from typing import List, Union, Dict
 from math import ceil
 from sanitize_ml_labels import sanitize_ml_labels
 
