@@ -58,7 +58,12 @@ def barplots(
             "path":path.format(feature=feature),
             **barplot_kwargs
         } for feature in groupby.columns.levels[0]
+        if not pd.isna(groupby[feature]).any().any()
     ]
+
+    if len(tasks) == 0:
+        raise ValueError("No plottable feature found in given dataframe!")
+
     with Pool(min(len(tasks), cpu_count())) as p:
         list(tqdm(
             p.imap(_barplot, tasks),

@@ -1,6 +1,6 @@
 import pandas as pd
 from typing import List, Tuple, Dict, Union
-from matplotlib.colors import TABLEAU_COLORS
+from matplotlib.colors import TABLEAU_COLORS, CSS4_COLORS
 from matplotlib.figure import Figure
 from matplotlib.axes import Axes
 from .utils import get_axes, get_jumps, get_levels, is_last, plot_bar, \
@@ -14,7 +14,7 @@ def barplot(
     bar_width: float = 0.3,
     height: float = None,
     dpi: int = 200,
-    min_std: float = 0.01,
+    min_std: float = 0,
     show_legend: bool = True,
     legend_position: str = "best",
     data_label: str = None,
@@ -107,6 +107,11 @@ def barplot(
             orientation=orientation
         ))
 
+    if order not in ("alphabetical", "magnitudo"):
+        raise ValueError("Given order \"{order}\" is not supported.".format(
+            order=order
+        ))
+
     if not isinstance(plots_per_row, int) and plots_per_row != "auto" or isinstance(plots_per_row, int) and plots_per_row < 1:
         raise ValueError("Given plots_per_row \"{plots_per_row}\" is not 'auto' or a positive integer.".format(
             plots_per_row=plots_per_row
@@ -122,7 +127,7 @@ def barplot(
             "Unable to split plots with only a single index level.")
 
     if colors is None:
-        colors = dict(zip(levels[-1], TABLEAU_COLORS.keys()))
+        colors = dict(zip(levels[-1], list(TABLEAU_COLORS.keys()) + list(CSS4_COLORS.keys())))
     if alphas is None:
         alphas = dict(zip(levels[-1], (0.75,)*len(levels[-1])))
 
