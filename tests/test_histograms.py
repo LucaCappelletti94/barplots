@@ -24,6 +24,12 @@ def test_histograms():
         "minor_rotation": [
             0, 90
         ],
+        "unique_minor_labels": [
+            True, False
+        ],
+        "unique_major_labels": [
+            True, False
+        ],
         "subplots": [
             True, False
         ]
@@ -75,11 +81,20 @@ def test_histograms():
         if not (kwargs["minor_rotation"] or kwargs["major_rotation"]) and kwargs["orientation"] == "horizontal":
             continue
 
+        if (kwargs["show_legend"] or not kwargs["subplots"]) and (kwargs["unique_minor_labels"] or kwargs["unique_major_labels"]):
+            continue
+
         if kwargs["major_rotation"]:
             path += "_major_rotation"
 
         if kwargs["minor_rotation"]:
             path += "_minor_rotation"
+
+        if kwargs["unique_minor_labels"]:
+            path += "_unique_minor_labels"
+
+        if kwargs["unique_major_labels"]:
+            path += "_unique_major_labels"
 
         path += "_{feature}.jpg"
 

@@ -24,7 +24,7 @@ def get_axes(
     data_label: str,
     vertical: bool,
     subplots: bool,
-    plots_per_row: Union[int, str],
+    plots_per_row: int,
     custom_defaults: Dict[str, List[str]],
     expected_levels: int
 ) -> Tuple[Figure, Axes]:
@@ -64,10 +64,6 @@ def get_axes(
     if height is None:
         exponent = 1 if subplots or expected_levels>1 else 1.5
         height = side/(golden_ratio**exponent)
-
-    if plots_per_row == "auto" and subplots:
-        plots_per_row = 2 if vertical else 4
-        plots_per_row = min(df.index.levels[0].size, plots_per_row)
 
     if subplots:
         nrows = ceil(df.index.levels[0].size/plots_per_row)

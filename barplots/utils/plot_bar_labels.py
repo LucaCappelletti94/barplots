@@ -16,8 +16,18 @@ def plot_bar_labels(
     bar_width: float,
     minor_rotation: float,
     major_rotation: float,
+    unique_minor_labels: bool,
+    unique_major_labels: bool,
     custom_defaults: Dict[str, List[str]]
 ):
+    """
+    Parameters
+    ------------
+    unique_minor_labels: bool = True,
+        Avoid replicating minor labels on the same axis in multiple subplots settings.
+    unique_major_labels: bool = True,
+        Avoid replicating major labels on the same axis in multiple subplots settings.
+    """
     other_positions = set()
     width = get_max_bar_position(df, bar_width)
     for level in reversed(range(max(levels-2, 0), levels)):
@@ -32,6 +42,10 @@ def plot_bar_labels(
         ]
         other_positions |= set(positions)
         minor = level == levels-1
+        if minor and unique_minor_labels:
+            continue
+        if not minor and unique_major_labels:
+            continue
         if vertical:
             axes.set_xticks(positions, minor=minor)
             labels = axes.set_xticklabels(labels, minor=minor, ha="center")
@@ -50,7 +64,12 @@ def plot_bar_labels(
                             figure.canvas.get_renderer()).height
                         for label in labels
                     )/2,
-                    width=0,
+                    width=0
+                )
+            if not minor:
+                axes.tick_params(
+                    axis='x',
+                    which='major',
                     labelrotation=major_rotation
                 )
         else:
@@ -71,6 +90,11 @@ def plot_bar_labels(
                             figure.canvas.get_renderer()).width
                         for label in labels
                     )/2,
-                    width=0,
+                    width=0
+                )
+            if not minor:
+                axes.tick_params(
+                    axis='y',
+                    which='major',
                     labelrotation=major_rotation
                 )

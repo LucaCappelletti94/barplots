@@ -28,6 +28,8 @@ def barplot(
     humanize_time_features: bool = True,
     minor_rotation: float = 0,
     major_rotation: float = 0,
+    unique_minor_labels: bool = False,
+    unique_major_labels: bool = True,
     auto_normalize_metrics: bool = True,
     custom_defaults: Dict[str, List[str]] = None
 ) -> Tuple[Figure, Axes]:
@@ -81,6 +83,10 @@ def barplot(
         Rotation for the minor ticks of the bars.
     major_rotation: float = 0,
         Rotation for the major ticks of the bars.
+    unique_minor_labels: bool = False,
+        Avoid replicating minor labels on the same axis in multiple subplots settings.
+    unique_major_labels: bool = True,
+        Avoid replicating major labels on the same axis in multiple subplots settings.
     auto_normalize_metrics: bool = True,
         Whetever to apply or not automatic normalization
         to the metrics that are recognized to be between
@@ -107,11 +113,6 @@ def barplot(
             orientation=orientation
         ))
 
-    if order not in ("alphabetical", "magnitudo"):
-        raise ValueError("Given order \"{order}\" is not supported.".format(
-            order=order
-        ))
-
     if not isinstance(plots_per_row, int) and plots_per_row != "auto" or isinstance(plots_per_row, int) and plots_per_row < 1:
         raise ValueError("Given plots_per_row \"{plots_per_row}\" is not 'auto' or a positive integer.".format(
             plots_per_row=plots_per_row
@@ -126,16 +127,23 @@ def barplot(
         raise ValueError(
             "Unable to split plots with only a single index level.")
 
+    if plots_per_row == "auto" and subplots:
+        plots_per_row = min(
+            len(levels[0]),
+            2 if vertical else 4
+        )
+
     if colors is None:
-        colors = dict(zip(levels[-1], list(TABLEAU_COLORS.keys()) + list(CSS4_COLORS.keys())))
+        colors = dict(
+            zip(levels[-1], list(TABLEAU_COLORS.keys()) + list(CSS4_COLORS.keys())))
     if alphas is None:
-        alphas = dict(zip(levels[-1], (0.75,)*len(levels[-1])))
+        alphas = dict(zip(levels[-1], (0.9,)*len(levels[-1])))
 
     figure, axes = get_axes(
         df, bar_width, height, dpi, title, data_label, vertical, subplots, plots_per_row, custom_defaults, expected_levels
     )
 
-    for index, ax in zip(levels[0], axes):
+    for i, (index, ax) in enumerate(zip(levels[0], axes)):
         if subplots:
             sub_df = df.loc[index]
         else:
@@ -143,6 +151,11 @@ def barplot(
 
         plot_bars(ax, sub_df, bar_width, alphas, colors,
                   vertical=vertical, min_std=min_std)
+
+        is_not_first_ax = subplots and (
+            (not vertical and i % plots_per_row) or
+            (vertical and i < len(axes) - plots_per_row)
+        )
 
         plot_bar_labels(
             ax,
@@ -153,6 +166,8 @@ def barplot(
             bar_width,
             minor_rotation,
             major_rotation,
+            unique_minor_labels and is_not_first_ax,
+            unique_major_labels and is_not_first_ax,
             custom_defaults
         )
 
