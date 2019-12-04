@@ -99,3 +99,13 @@ def test_histograms():
         path += "_{feature}.jpg"
 
         barplots(**kwargs, path=path, custom_defaults=custom_defaults)
+
+
+def test_single_index():
+    root = "test_barplots"
+    df = pd.read_csv("tests/test_case.csv")
+    barplots(
+        df,
+        ["cell_line"],
+        path="{root}/{{feature}}.jpg".format(root=root)
+    )

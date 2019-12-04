@@ -4,7 +4,7 @@ from barplots import barplots
 
 def test_wrong_parameters():
     root = "test_barplots"
-    df = pd.read_csv("tests/test_case.csv", index_col=0)
+    df = pd.read_csv("tests/test_case.csv")
     with pytest.raises(ValueError):
         barplots(
             df,
