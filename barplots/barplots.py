@@ -64,14 +64,13 @@ def barplots(
     if len(tasks) == 0:
         raise ValueError("No plottable feature found in given dataframe!")
 
-    _barplot(tasks[0])
-    # with Pool(min(len(tasks), cpu_count())) as p:
-    #     list(tqdm(
-    #         p.imap(_barplot, tasks),
-    #         desc="Rendering barplots",
-    #         total=len(tasks),
-    #         dynamic_ncols=True,
-    #         disable=not verbose
-    #     ))
-    #     p.close()
-    #     p.join()
+    with Pool(min(len(tasks), cpu_count())) as p:
+        list(tqdm(
+            p.imap(_barplot, tasks),
+            desc="Rendering barplots",
+            total=len(tasks),
+            dynamic_ncols=True,
+            disable=not verbose
+        ))
+        p.close()
+        p.join()
