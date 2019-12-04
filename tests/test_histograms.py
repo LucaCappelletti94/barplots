@@ -24,6 +24,9 @@ def test_histograms():
         "minor_rotation": [
             0, 90
         ],
+        "plots_per_row":[
+            "auto", 10
+        ],
         "unique_minor_labels": [
             True, False
         ],
