@@ -18,6 +18,7 @@ def plot_bar_labels(
     major_rotation: float,
     unique_minor_labels: bool,
     unique_major_labels: bool,
+    unique_data_label: bool,
     custom_defaults: Dict[str, List[str]]
 ):
     """
@@ -27,9 +28,13 @@ def plot_bar_labels(
         Avoid replicating minor labels on the same axis in multiple subplots settings.
     unique_major_labels: bool = True,
         Avoid replicating major labels on the same axis in multiple subplots settings.
+    unique_data_label: bool = True,
+        Avoid replication of data axis label when using subplots.
     """
     other_positions = set()
     width = get_max_bar_position(df, bar_width)
+    if unique_data_label:
+        axes.set_ylabel("")
     for level in reversed(range(max(levels-2, 0), levels)):
         positions, labels = zip(*text_positions(df, bar_width, level))
         labels = sanitize_ml_labels(labels, custom_defaults=custom_defaults)

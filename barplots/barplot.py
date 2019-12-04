@@ -29,6 +29,7 @@ def barplot(
     major_rotation: float = 0,
     unique_minor_labels: bool = False,
     unique_major_labels: bool = True,
+    unique_data_label: bool = True,
     auto_normalize_metrics: bool = True,
     custom_defaults: Dict[str, List[str]] = None
 ) -> Tuple[Figure, Axes]:
@@ -83,6 +84,8 @@ def barplot(
         Avoid replicating minor labels on the same axis in multiple subplots settings.
     unique_major_labels: bool = True,
         Avoid replicating major labels on the same axis in multiple subplots settings.
+    unique_data_label: bool = True,
+        Avoid replication of data axis label when using subplots.
     auto_normalize_metrics: bool = True,
         Whetever to apply or not automatic normalization
         to the metrics that are recognized to be between
@@ -153,6 +156,11 @@ def barplot(
             (vertical and i < len(axes) - plots_per_row)
         )
 
+        is_not_first_vertical_ax = subplots and (
+            (vertical and i % plots_per_row) or
+            (not vertical and i < len(axes) - plots_per_row)
+        )
+
         plot_bar_labels(
             ax,
             figure,
@@ -164,6 +172,7 @@ def barplot(
             major_rotation,
             unique_minor_labels and is_not_first_ax,
             unique_major_labels and is_not_first_ax,
+            unique_data_label and is_not_first_vertical_ax,
             custom_defaults
         )
 
