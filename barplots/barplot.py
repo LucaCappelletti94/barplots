@@ -5,7 +5,7 @@ from matplotlib.figure import Figure
 from matplotlib.axes import Axes
 from .utils import get_axes, get_jumps, get_levels, is_last, plot_bar, \
     remove_duplicated_legend_labels, get_max_bar_lenght,\
-    save_picture, plot_bars, plot_bar_labels, humanize_time_ticks
+    save_picture, plot_bars, plot_bar_labels
 from sanitize_ml_labels import is_normalized_metric
 
 
@@ -25,7 +25,6 @@ def barplot(
     orientation: str = "vertical",
     subplots: bool = False,
     plots_per_row: Union[int, str] = "auto",
-    humanize_time_features: bool = True,
     minor_rotation: float = 0,
     major_rotation: float = 0,
     unique_minor_labels: bool = False,
@@ -76,9 +75,6 @@ def barplot(
         If subplots is True, specifies the number of plots for row.
         If "auto" is used, for vertical the default is 2 plots per row,
         while for horizontal the default is 4 plots per row.
-    humanize_time_features: bool = True,
-        Whetever to automatically detect by name and humanize time deltas.
-        The considered time values are those containing "time" in the title or path.
     minor_rotation: float = 0,
         Rotation for the minor ticks of the bars.
     major_rotation: float = 0,
@@ -170,9 +166,6 @@ def barplot(
             unique_major_labels and is_not_first_ax,
             custom_defaults
         )
-
-        if humanize_time_features and any(e is not None and "time" in e for e in (path, title)):
-            humanize_time_ticks(ax, vertical)
 
         if show_legend:
             remove_duplicated_legend_labels(
