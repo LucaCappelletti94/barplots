@@ -84,9 +84,7 @@ Description: barplots
                 custom_defaults=custom_defaults
             )
         
-        .. raw:: html
-        
-            <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_legend_minor_rotation_val_auroc.png?raw=true" height="400px">
+        Result can be seen `here <https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_legend_minor_rotation_val_auroc.png?raw=true>`__.
         
         
         Horizontal Example B
@@ -109,9 +107,7 @@ Description: barplots
                 custom_defaults=custom_defaults
             )
         
-        .. raw:: html
-        
-            <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_legend_subplots_minor_rotation_val_auroc.png?raw=true">
+        .. image:: https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_legend_subplots_minor_rotation_val_auroc.png?raw=true
         
         
         Horizontal Example C
@@ -132,9 +128,7 @@ Description: barplots
                 custom_defaults=custom_defaults
             )
         
-        .. raw:: html
-        
-            <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_major_rotation_val_auroc.png?raw=true" height="400px">
+        Result can be seen `here <https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_major_rotation_val_auroc.png?raw=true>`__
         
         
         Horizontal Example D
@@ -157,9 +151,7 @@ Description: barplots
                 custom_defaults=custom_defaults
             )
         
-        .. raw:: html
-        
-            <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_subplots_major_rotation_val_auroc.png?raw=true">
+        .. image:: https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_subplots_major_rotation_val_auroc.png?raw=true
         
         
         Vertical Example A
@@ -179,9 +171,7 @@ Description: barplots
                 custom_defaults=custom_defaults
             )
         
-        .. raw:: html
-        
-            <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/vertical_legend_val_auroc.png" height="400px">
+        Result can be seen `here <https://github.com/LucaCappelletti94/barplots/blob/master/examples/vertical_legend_val_auroc.png>`__
         
         
         Vertical Example B
@@ -202,9 +192,7 @@ Description: barplots
                 custom_defaults=custom_defaults
             )
         
-        .. raw:: html
-        
-            <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/vertical_legend_subplots_val_auroc.png">
+        .. image:: https://github.com/LucaCappelletti94/barplots/blob/master/examples/vertical_legend_subplots_val_auroc.png
         
         
         Vertical Example C
@@ -225,9 +213,7 @@ Description: barplots
                 custom_defaults=custom_defaults
             )
         
-        .. raw:: html
-        
-            <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/vertical_minor_rotation_val_auroc.png" height="400px">
+        Result can be seen `here <https://github.com/LucaCappelletti94/barplots/blob/master/examples/vertical_minor_rotation_val_auroc.png>`__
         
         
         Vertical Example D
@@ -250,9 +236,7 @@ Description: barplots
                 custom_defaults=custom_defaults
             )
         
-        .. raw:: html
-        
-            <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/vertical_subplots_minor_rotation_val_auroc.png">
+        .. image:: https://github.com/LucaCappelletti94/barplots/blob/master/examples/vertical_subplots_minor_rotation_val_auroc.png
         
         
         Future features
