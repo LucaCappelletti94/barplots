@@ -205,9 +205,7 @@ displaying the bar labels as minor ticks.
         custom_defaults=custom_defaults
     )
 
-.. raw:: html
-
-    <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/vertical_minor_rotation_val_auroc.png" height="400px">
+Result can be seen `here <https://github.com/LucaCappelletti94/barplots/blob/master/examples/vertical_minor_rotation_val_auroc.png>`__
 
 
 Vertical Example D
@@ -230,9 +228,7 @@ displaying the bar labels as minor ticks.
         custom_defaults=custom_defaults
     )
 
-.. raw:: html
-
-    <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/vertical_subplots_minor_rotation_val_auroc.png">
+.. image:: https://github.com/LucaCappelletti94/barplots/blob/master/examples/vertical_subplots_minor_rotation_val_auroc.png
 
 
 Future features
