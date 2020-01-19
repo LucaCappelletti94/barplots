@@ -163,9 +163,7 @@ displaying the bar labels as a shared legend.
         custom_defaults=custom_defaults
     )
 
-.. raw:: html
-
-    <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/vertical_legend_val_auroc.png" height="400px">
+Result can be seen `here <https://github.com/LucaCappelletti94/barplots/blob/master/examples/vertical_legend_val_auroc.png>`__
 
 
 Vertical Example B
@@ -186,9 +184,7 @@ subplots with vertical bars  and displaying the bar labels as a shared legend.
         custom_defaults=custom_defaults
     )
 
-.. raw:: html
-
-    <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/vertical_legend_subplots_val_auroc.png">
+.. image:: https://github.com/LucaCappelletti94/barplots/blob/master/examples/vertical_legend_subplots_val_auroc.png
 
 
 Vertical Example C
