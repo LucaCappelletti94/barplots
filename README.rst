@@ -78,7 +78,7 @@ displaying the bar labels as a shared legend.
 
 .. raw:: html
 
-    <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_legend_minor_rotation_val_auroc.jpg?raw=true" height="400px">
+    <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_legend_minor_rotation_val_auroc.png?raw=true" height="400px">
 
 
 Horizontal Example B
@@ -103,7 +103,7 @@ displaying the bar labels as a shared legend.
 
 .. raw:: html
 
-    <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_legend_subplots_minor_rotation_val_auroc.jpg?raw=true">
+    <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_legend_subplots_minor_rotation_val_auroc.png?raw=true">
 
 
 Horizontal Example C
@@ -126,7 +126,7 @@ displaying the bar labels as minor ticks.
 
 .. raw:: html
 
-    <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_major_rotation_val_auroc.jpg?raw=true" height="400px">
+    <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_major_rotation_val_auroc.png?raw=true" height="400px">
 
 
 Horizontal Example D
@@ -151,7 +151,7 @@ displaying the bar labels as minor ticks.
 
 .. raw:: html
 
-    <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_subplots_major_rotation_val_auroc.jpg?raw=true">
+    <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_subplots_major_rotation_val_auroc.png?raw=true">
 
 
 Vertical Example A
@@ -173,7 +173,7 @@ displaying the bar labels as a shared legend.
 
 .. raw:: html
 
-    <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/vertical_legend_val_auroc.jpg" height="400px">
+    <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/vertical_legend_val_auroc.png" height="400px">
 
 
 Vertical Example B
@@ -196,7 +196,7 @@ subplots with vertical bars  and displaying the bar labels as a shared legend.
 
 .. raw:: html
 
-    <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/vertical_legend_subplots_val_auroc.jpg">
+    <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/vertical_legend_subplots_val_auroc.png">
 
 
 Vertical Example C
@@ -219,7 +219,7 @@ displaying the bar labels as minor ticks.
 
 .. raw:: html
 
-    <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/vertical_minor_rotation_val_auroc.jpg" height="400px">
+    <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/vertical_minor_rotation_val_auroc.png" height="400px">
 
 
 Vertical Example D
@@ -244,7 +244,7 @@ displaying the bar labels as minor ticks.
 
 .. raw:: html
 
-    <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/vertical_subplots_minor_rotation_val_auroc.jpg">
+    <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/vertical_subplots_minor_rotation_val_auroc.png">
 
 
 Future features

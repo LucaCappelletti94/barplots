@@ -39,7 +39,7 @@ def barplots(
     data_label: str = "{feature}",
         The label to use for the data axis.
         The `feature` placeholder is replaced with the considered column name.
-    path: str = "barplots/{feature}.jpg",
+    path: str = "barplots/{feature}.png",
         The path where to store the pictures.
         The `feature` placeholder is replaced with the considered column name.
     sanitize_metrics: bool = True,

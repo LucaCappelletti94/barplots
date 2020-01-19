@@ -105,7 +105,7 @@ def test_barplots():
         if kwargs["unique_major_labels"]:
             path += "_unique_major_labels"
 
-        path += "_{feature}.jpg"
+        path += "_{feature}.png"
 
         barplots(**kwargs, path=path,
                  custom_defaults=custom_defaults, verbose=False)
@@ -117,6 +117,6 @@ def test_single_index():
     barplots(
         df,
         ["cell_line"],
-        path="{root}/{{feature}}.jpg".format(root=root),
+        path="{root}/{{feature}}.png".format(root=root),
         verbose=False
     )
