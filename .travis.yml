@@ -24,7 +24,7 @@ after_script:
 script:
 - rm -rf .coverage
 - coverage erase
-- pytest --cov=barplots --cov-report xml:coverage.xml
+- pytest -s --cov=barplots --cov-report xml:coverage.xml
 - coverage combine --append || true
 - coverage report
 - coverage xml
