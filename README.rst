@@ -120,9 +120,7 @@ displaying the bar labels as minor ticks.
         custom_defaults=custom_defaults
     )
 
-.. raw:: html
-
-    <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_major_rotation_val_auroc.png?raw=true" height="400px">
+Result can be seen `here <https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_major_rotation_val_auroc.png?raw=true>`__
 
 
 Horizontal Example D
@@ -145,9 +143,7 @@ displaying the bar labels as minor ticks.
         custom_defaults=custom_defaults
     )
 
-.. raw:: html
-
-    <img src="https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_subplots_major_rotation_val_auroc.png?raw=true">
+.. image:: https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_subplots_major_rotation_val_auroc.png?raw=true
 
 
 Vertical Example A
