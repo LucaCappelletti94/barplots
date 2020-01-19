@@ -16,7 +16,7 @@ def barplots(
     show_standard_deviation: bool = True,
     title: str = "{feature}",
     data_label: str = "{feature}",
-    path: str = "barplots/{feature}.jpg",
+    path: str = "barplots/{feature}.png",
     sanitize_metrics: bool = True,
     verbose: bool = True,
     **barplot_kwargs: Dict
