@@ -3,6 +3,7 @@ from typing import List, Dict
 from .barplot import barplot
 from tqdm.auto import tqdm
 from multiprocessing import Pool, cpu_count
+from sanitize_ml_labels import sanitize_ml_labels
 
 
 def _barplot(kwargs):
@@ -16,6 +17,7 @@ def barplots(
     title: str = "{feature}",
     data_label: str = "{feature}",
     path: str = "barplots/{feature}.jpg",
+    sanitize_metrics: bool = True,
     verbose: bool = True,
     **barplot_kwargs: Dict
 ):
@@ -40,6 +42,9 @@ def barplots(
     path: str = "barplots/{feature}.jpg",
         The path where to store the pictures.
         The `feature` placeholder is replaced with the considered column name.
+    sanitize_metrics: bool = True,
+        Whetever to automatically sanitize to standard name given features.
+        For instance, "acc" to "Accuracy" or "lr" to "Learning rate"
     verbose:bool,
         Whetever to show or not the loading bar.
     barplot_kwargs:Dict,
@@ -57,7 +62,7 @@ def barplots(
             "data_label":data_label.format(feature=feature.replace("_", " ")),
             "path":path.format(feature=feature),
             **barplot_kwargs
-        } for feature in groupby.columns.levels[0]
+        } for feature in sanitize_ml_labels(groupby.columns.levels[0])
         if not pd.isna(groupby[feature]).any().any()
     ]
 
