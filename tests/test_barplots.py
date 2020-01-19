@@ -4,7 +4,7 @@ import itertools
 from tqdm.auto import tqdm
 
 
-def test_histograms():
+def test_barplots():
     fuzzy_args = {
         "df": [
             pd.read_csv("tests/test_case.csv")
@@ -24,7 +24,7 @@ def test_histograms():
         "minor_rotation": [
             0, 90
         ],
-        "plots_per_row":[
+        "plots_per_row": [
             5, "auto"
         ],
         "unique_minor_labels": [
@@ -36,7 +36,7 @@ def test_histograms():
         "unique_major_labels": [
             True, False
         ],
-        "unique_data_label":[
+        "unique_data_label": [
             False, True
         ],
         "subplots": [
