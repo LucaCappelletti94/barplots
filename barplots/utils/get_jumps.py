@@ -23,7 +23,12 @@ def get_jumps(df: pd.DataFrame, row: int, index: Union[List, Any], old_index: Un
     """
     if not old_index:
         return [False]*len(index)
-    return [
-        new != old or is_last(df, row)
-        for new, old in zip(index, old_index)
-    ]
+
+    previous = False
+    jumps = []
+    for new, old in zip(index, old_index):
+        jumps.append(
+            new != old or previous
+        )
+        previous = new != old
+    return jumps
