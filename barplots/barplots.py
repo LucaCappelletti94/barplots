@@ -60,7 +60,7 @@ def barplots(
             "df": groupby[feature],
             "title":title.format(feature=feature.replace("_", " ")),
             "data_label":data_label.format(feature=feature.replace("_", " ")),
-            "path":path.format(feature=feature).lower(),
+            "path":path.format(feature=feature).replace(" ", "_").lower(),
             **barplot_kwargs
         } for feature in sanitize_ml_labels(groupby.columns.levels[0])
         if not pd.isna(groupby[feature]).any().any()
