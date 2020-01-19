@@ -76,7 +76,7 @@ displaying the bar labels as a shared legend.
         custom_defaults=custom_defaults
     )
 
-Result can be seen `here <https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_legend_minor_rotation_val_auroc.png?raw=true`__.
+Result can be seen `here <https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_legend_minor_rotation_val_auroc.png?raw=true>`__.
 
 
 Horizontal Example B
