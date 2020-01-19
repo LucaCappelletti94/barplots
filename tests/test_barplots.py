@@ -55,7 +55,7 @@ def test_barplots():
     }
 
     arguments = list(itertools.product(*list(fuzzy_args.values())))
-    for arg in tqdm(arguments):
+    for arg in tqdm(arguments, desc="Running test suite"):
         kwargs = dict(zip(fuzzy_args.keys(), arg))
         path = "examples/{orientation}".format(
             orientation=kwargs["orientation"]
@@ -107,7 +107,8 @@ def test_barplots():
 
         path += "_{feature}.jpg"
 
-        barplots(**kwargs, path=path, custom_defaults=custom_defaults)
+        barplots(**kwargs, path=path,
+                 custom_defaults=custom_defaults, verbose=False)
 
 
 def test_single_index():
@@ -116,5 +117,6 @@ def test_single_index():
     barplots(
         df,
         ["cell_line"],
-        path="{root}/{{feature}}.jpg".format(root=root)
+        path="{root}/{{feature}}.jpg".format(root=root),
+        verbose=False
     )
