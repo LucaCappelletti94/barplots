@@ -1,0 +1,15 @@
+pillow
+pandas
+scipy
+matplotlib
+tqdm
+humanize
+sanitize_ml_labels
+
+[test]
+pytest
+pytest-cov
+coveralls
+validate_version_code
+codacy-coverage
+numpy
