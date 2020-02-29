@@ -33,6 +33,8 @@ def text_positions(df: pd.DataFrame, bar_width: float, index_level: int) -> Gene
                     yield text_position/2 + bar_width/2, old_index[j]
         if j == index_level and j == len(jumps)-1 and is_last(df, i):
             yield text_position/2 + bar_width*1.5, index[j]
+        if index_level==0 and is_last(df, i):
+            yield text_position/2, index[index_level]
         old_index = index
         for j, value in enumerate(jumps):
             if value:
