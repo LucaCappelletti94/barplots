@@ -24,10 +24,7 @@ def text_positions(df: pd.DataFrame, bar_width: float, index_level: int) -> Gene
                 text_position = old_bar_position
                 if j in labels_offsets:
                     text_position += labels_offsets[j]
-                if is_last(df, i):
-                    if j != len(jumps)-1:
-                        text_position += bar_width
-                else:
+                if not is_last(df, i):
                     bar_position += bar_width
                 if j == index_level:
                     yield text_position/2 + bar_width/2, old_index[j]
