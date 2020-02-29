@@ -16,3 +16,7 @@ __pycache__
 
 coverage.xml
 .ipynb*
+htmlcov
+*.egg-info
+.pytest_cache
+test_barplots

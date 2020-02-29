@@ -11,12 +11,3 @@ def test_single_index():
         path="{root}/{{feature}}.png".format(root=root),
         verbose=False
     )
-
-    # df.cell_line = list(range(len(df)))
-
-    # barplots(
-    #     df,
-    #     df.cell_line,
-    #     path="{root}/{{feature}}.png".format(root=root),
-    #     verbose=False
-    # )
