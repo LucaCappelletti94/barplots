@@ -67,9 +67,9 @@ def barplots(
             "path":path.format(feature=feature).replace(" ", "_").lower(),
             **barplot_kwargs
         } for original, feature in zip(original, features)
-        if not pd.isna(groupby[original]).any().any()
+        if not pd.isna(groupby[original]).any().any() and not len(groupby[original]) == 0
     ]
-
+    
     if len(tasks) == 0:
         raise ValueError("No plottable feature found in given dataframe!")
 

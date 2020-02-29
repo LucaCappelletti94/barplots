@@ -11,7 +11,6 @@ def test_wrong_parameters():
         barplots(
             df[df.cell_line == "CIAO"],
             ["cell_line", "task", "balancing", "model"],
-            orientation="pinco",
             path="{root}/{{feature}}.png".format(root=root)
         )
 
