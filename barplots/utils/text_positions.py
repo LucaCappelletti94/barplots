@@ -1,6 +1,5 @@
 import pandas as pd
 from typing import Generator
-from .is_last import is_last
 from .get_jumps import get_jumps
 from .bar_positions import bar_positions
 

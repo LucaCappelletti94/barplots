@@ -1,6 +1,5 @@
 import pandas as pd
 from typing import Union, List, Any
-from .is_last import is_last
 
 
 def get_jumps(index: Union[List, Any], old_index: Union[List, Any]) -> List[bool]:

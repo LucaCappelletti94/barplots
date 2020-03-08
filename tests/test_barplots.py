@@ -29,7 +29,7 @@ def test_barplots():
             0, 90
         ],
         "plots_per_row": [
-            5, "auto"
+            3, "auto"
         ],
         "unique_minor_labels": [
             True, False
