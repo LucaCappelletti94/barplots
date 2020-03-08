@@ -17,12 +17,10 @@ def bar_positions(df: pd.DataFrame, bar_width: float) -> Generator:
         if not isinstance(index, (list, tuple)):
             index = (index,)
 
-        if not is_last(df, i):
-            bar_position += bar_width * sum(
-                get_jumps(df, i, index, old_index)
-            )
-        else:
-            bar_position += bar_width
+        bar_position += bar_width * sum(
+            get_jumps(df, i, index, old_index)
+        )
+
         old_index = index
 
         if len(values) == 2:

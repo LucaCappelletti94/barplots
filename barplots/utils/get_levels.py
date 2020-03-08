@@ -1,6 +1,6 @@
 import pandas as pd
 from typing import List, Any
-from pandas.core.index import MultiIndex
+from pandas import MultiIndex
 
 
 def get_levels(df: pd.DataFrame) -> List[List[Any]]:

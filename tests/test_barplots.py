@@ -1,13 +1,19 @@
 import pandas as pd
 from barplots import barplots
+import os
 import itertools
 from tqdm.auto import tqdm
 
 
 def test_barplots():
+    df1 = pd.read_csv("tests/test_case.csv")
+    df2 = df1[df1.model.str.contains("bayesian")]
+    df3 = df2[df1.model.str.contains("mlp")]
     fuzzy_args = {
         "df": [
-            pd.read_csv("tests/test_case.csv")
+            #(1, df1),
+            #(2, df2),
+            (3, df3)
         ],
         "groupby": [
             ["cell_line", "task", "model"]
@@ -57,9 +63,12 @@ def test_barplots():
     arguments = list(itertools.product(*list(fuzzy_args.values())))
     for arg in tqdm(arguments, desc="Running test suite"):
         kwargs = dict(zip(fuzzy_args.keys(), arg))
-        path = "examples/{orientation}".format(
+        path = "examples/{i}/{orientation}".format(
+            i=kwargs["df"][0],
             orientation=kwargs["orientation"]
         )
+
+        os.makedirs(os.path.dirname(path), exist_ok=True)
 
         if kwargs["show_legend"]:
             path += "_legend"
@@ -107,7 +116,10 @@ def test_barplots():
 
         path += "_{feature}.png"
 
-        barplots(**kwargs, path=path,
+        kwargs["df"] = kwargs["df"][1]
+
+        barplots(
+            **kwargs, path=path,
                  custom_defaults=custom_defaults, verbose=False)
 
 

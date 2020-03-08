@@ -26,7 +26,8 @@ def get_axes(
     subplots: bool,
     plots_per_row: int,
     custom_defaults: Dict[str, List[str]],
-    expected_levels: int
+    expected_levels: int,
+    scale: str
 ) -> Tuple[Figure, Axes]:
     """Setup axes for barplot plotting.
 
@@ -90,6 +91,7 @@ def get_axes(
 
     for subtitle, ax in zip(titles, axes):
         if vertical:
+            ax.set_yscale(scale)
             ax.set_xlim(0, side)
             ax.set_xticks([])
             ax.yaxis.grid(True, which="both")
@@ -99,6 +101,7 @@ def get_axes(
                     custom_defaults=custom_defaults
                 ))
         else:
+            ax.set_xscale(scale)
             ax.set_ylim(0, side)
             ax.set_yticks([])
             ax.xaxis.grid(True, which="both")

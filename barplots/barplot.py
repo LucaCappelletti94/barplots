@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 from typing import List, Tuple, Dict, Union
 from matplotlib.colors import TABLEAU_COLORS, CSS4_COLORS
 from matplotlib.figure import Figure
@@ -31,6 +32,7 @@ def barplot(
     unique_major_labels: bool = True,
     unique_data_label: bool = True,
     auto_normalize_metrics: bool = True,
+    scale: str = "linear",
     custom_defaults: Dict[str, List[str]] = None
 ) -> Tuple[Figure, Axes]:
     """Plot barplot corresponding to given dataframe, containing y value and optionally std.
@@ -139,7 +141,7 @@ def barplot(
         alphas = dict(zip(levels[-1], (0.9,)*len(levels[-1])))
 
     figure, axes = get_axes(
-        df, bar_width, height, dpi, title, data_label, vertical, subplots, plots_per_row, custom_defaults, expected_levels
+        df, bar_width, height, dpi, title, data_label, vertical, subplots, plots_per_row, custom_defaults, expected_levels, scale
     )
 
     for i, (index, ax) in enumerate(zip(levels[0], axes)):
@@ -183,9 +185,20 @@ def barplot(
         max_lenght, min_lenght = get_max_bar_lenght(sub_df, bar_width)
         max_lenght *= 1.01
         min_lenght *= 1.01
-        if auto_normalize_metrics and is_normalized_metric(title):
+        if auto_normalize_metrics and is_normalized_metric(df.columns[0]):
             max_lenght = max(max_lenght, 1)
             min_lenght = min(min_lenght, 0)
+            # ticks_positions = np.linspace(0, 1, num=11)
+            # ticks_labels = [
+            #     "0", "0.1", "", "0.3", "",
+            #     "0.5", "", "0.7", "", "0.9", "1"
+            # ]
+            # if vertical:
+            #     ax.set_yticks(ticks_positions)
+            #     ax.set_yticklabels(ticks_labels)
+            # else:
+            #     ax.set_xticks(ticks_positions)
+            #     ax.set_xticklabels(ticks_labels)
 
         if vertical:
             ax.set_ylim(min_lenght, max_lenght)
