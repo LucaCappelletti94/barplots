@@ -2,33 +2,23 @@ import pandas as pd
 from typing import Generator
 from .is_last import is_last
 from .get_jumps import get_jumps
-
+from .bar_positions import bar_positions
 
 def text_positions(df: pd.DataFrame, bar_width: float, index_level: int) -> Generator:
-    labels_offsets = {}
-    old_index = tuple()
-    bar_position = 0
-    for i, (index, _) in enumerate(df.iterrows()):
-        if isinstance(index, str):
+    positions = bar_positions(df, bar_width)
+    old_index = None
+    previous_jump_position = 0
+    last_position = 0
+    
+
+    for (index, _), position in zip(df.iterrows(), positions):
+        if not isinstance(index, (list, tuple)):
             index = (index,)
-        jumps = get_jumps(df, i, index, old_index)
-        if not old_index:
-            old_index = index
-        old_bar_position = bar_position
-        for j, value in enumerate(jumps):
-            if value:
-                text_position = old_bar_position
-                if j in labels_offsets:
-                    text_position += labels_offsets[j]
-                if not is_last(df, i):
-                    bar_position += bar_width
-                if j == index_level:
-                    yield text_position/2 + bar_width/2, old_index[j]
-        if j == index_level and j == len(jumps)-1 and is_last(df, i):
-            yield text_position/2 + bar_width*1.5, index[j]
-        if index_level==0 and is_last(df, i):
-            yield text_position/2 + bar_width, index[index_level]
+        jumps = get_jumps(index, old_index)
+        if jumps[index_level]:
+            yield (previous_jump_position + last_position)/2, old_index[index_level]
+            previous_jump_position = position[0] - bar_width/2
+
+        last_position = position[0] + bar_width/2
         old_index = index
-        for j, value in enumerate(jumps):
-            if value:
-                labels_offsets[j] = bar_position
+    yield (previous_jump_position + last_position)/2, old_index[index_level]

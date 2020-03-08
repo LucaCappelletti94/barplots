@@ -13,12 +13,12 @@ def bar_positions(df: pd.DataFrame, bar_width: float) -> Generator:
     """
     old_index = tuple()
     bar_position = 0
-    for i, (index, values) in enumerate(df.iterrows()):
+    for index, values in df.iterrows():
         if not isinstance(index, (list, tuple)):
             index = (index,)
 
         bar_position += bar_width * sum(
-            get_jumps(df, i, index, old_index)
+            get_jumps(index, old_index)
         )
 
         old_index = index

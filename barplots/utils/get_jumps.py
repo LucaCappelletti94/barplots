@@ -3,15 +3,11 @@ from typing import Union, List, Any
 from .is_last import is_last
 
 
-def get_jumps(df: pd.DataFrame, row: int, index: Union[List, Any], old_index: Union[List, Any]) -> List[bool]:
+def get_jumps(index: Union[List, Any], old_index: Union[List, Any]) -> List[bool]:
     """Return list representing the detected jumps from given index and old_index.
 
     Parameters
     ----------
-    df: pd.DataFrame,
-        Dataframe from which to detect index jumps.
-    row: int,
-        Current row number.
     index:Union[List, Any],
         List of indices of index curresponding to given row number.
     old_index:Union[List, Any],

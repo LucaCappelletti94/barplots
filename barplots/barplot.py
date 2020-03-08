@@ -128,10 +128,16 @@ def barplot(
         raise ValueError(
             "Unable to split plots with only a single index level.")
 
-    if plots_per_row == "auto" and subplots:
+    if plots_per_row == "auto":
+        if subplots:
+            plots_per_row = min(
+                len(levels[0]),
+                2 if vertical else 4
+            )
+    else:
         plots_per_row = min(
-            len(levels[0]),
-            2 if vertical else 4
+            plots_per_row,
+            len(levels[0])
         )
 
     if colors is None:
@@ -185,20 +191,9 @@ def barplot(
         max_lenght, min_lenght = get_max_bar_lenght(sub_df, bar_width)
         max_lenght *= 1.01
         min_lenght *= 1.01
-        if auto_normalize_metrics and is_normalized_metric(df.columns[0]):
+        if auto_normalize_metrics and (is_normalized_metric(df.columns[0]) or is_normalized_metric(title)):
             max_lenght = max(max_lenght, 1)
             min_lenght = min(min_lenght, 0)
-            # ticks_positions = np.linspace(0, 1, num=11)
-            # ticks_labels = [
-            #     "0", "0.1", "", "0.3", "",
-            #     "0.5", "", "0.7", "", "0.9", "1"
-            # ]
-            # if vertical:
-            #     ax.set_yticks(ticks_positions)
-            #     ax.set_yticklabels(ticks_labels)
-            # else:
-            #     ax.set_xticks(ticks_positions)
-            #     ax.set_xticklabels(ticks_labels)
 
         if vertical:
             ax.set_ylim(min_lenght, max_lenght)

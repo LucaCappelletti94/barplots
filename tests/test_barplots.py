@@ -8,12 +8,10 @@ from tqdm.auto import tqdm
 def test_barplots():
     df1 = pd.read_csv("tests/test_case.csv")
     df2 = df1[df1.model.str.contains("bayesian")]
-    df3 = df2[df1.model.str.contains("mlp")]
     fuzzy_args = {
         "df": [
-            #(1, df1),
-            #(2, df2),
-            (3, df3)
+            (1, df1),
+            (2, df2)
         ],
         "groupby": [
             ["cell_line", "task", "model"]
