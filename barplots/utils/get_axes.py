@@ -3,7 +3,7 @@ from matplotlib.axes import Axes
 import pandas as pd
 import numpy as np
 from .get_max_bar_position import get_max_bar_position
-from typing import Tuple, Dict, Union, List
+from typing import Tuple, Dict, List
 import matplotlib.pyplot as plt
 from scipy.constants import golden_ratio
 from math import ceil

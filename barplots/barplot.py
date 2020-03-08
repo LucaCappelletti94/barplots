@@ -1,10 +1,9 @@
 import pandas as pd
-import numpy as np
 from typing import List, Tuple, Dict, Union
 from matplotlib.colors import TABLEAU_COLORS, CSS4_COLORS
 from matplotlib.figure import Figure
 from matplotlib.axes import Axes
-from .utils import get_axes, get_jumps, get_levels, plot_bar, \
+from .utils import get_axes, get_jumps, get_levels, \
     remove_duplicated_legend_labels, get_max_bar_lenght,\
     save_picture, plot_bars, plot_bar_labels
 from sanitize_ml_labels import is_normalized_metric

@@ -3,12 +3,12 @@ from typing import Generator
 from .get_jumps import get_jumps
 from .bar_positions import bar_positions
 
+
 def text_positions(df: pd.DataFrame, bar_width: float, index_level: int) -> Generator:
     positions = bar_positions(df, bar_width)
     old_index = None
     previous_jump_position = 0
     last_position = 0
-    
 
     for (index, _), position in zip(df.iterrows(), positions):
         if not isinstance(index, (list, tuple)):
