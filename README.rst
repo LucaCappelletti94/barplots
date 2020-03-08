@@ -76,7 +76,7 @@ displaying the bar labels as a shared legend.
         custom_defaults=custom_defaults
     )
 
-Result can be seen `here <https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_legend_minor_rotation_val_auroc.png?raw=true>`__.
+Result can be seen `here <https://github.com/LucaCappelletti94/barplots/blob/master/examples/1/horizontal_legend_minor_rotation_val_auroc.png?raw=true>`__.
 
 
 Horizontal Example B
@@ -99,7 +99,7 @@ displaying the bar labels as a shared legend.
         custom_defaults=custom_defaults
     )
 
-.. image:: https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_legend_subplots_minor_rotation_val_auroc.png?raw=true
+.. image:: https://github.com/LucaCappelletti94/barplots/blob/master/examples/1/horizontal_legend_subplots_minor_rotation_val_auroc.png?raw=true
 
 
 Horizontal Example C
@@ -120,7 +120,7 @@ displaying the bar labels as minor ticks.
         custom_defaults=custom_defaults
     )
 
-Result can be seen `here <https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_major_rotation_val_auroc.png?raw=true>`__
+Result can be seen `here <https://github.com/LucaCappelletti94/barplots/blob/master/examples/1/horizontal_major_rotation_val_auroc.png?raw=true>`__
 
 
 Horizontal Example D
@@ -143,7 +143,7 @@ displaying the bar labels as minor ticks.
         custom_defaults=custom_defaults
     )
 
-.. image:: https://github.com/LucaCappelletti94/barplots/blob/master/examples/horizontal_subplots_major_rotation_val_auroc.png?raw=true
+.. image:: https://github.com/LucaCappelletti94/barplots/blob/master/examples/1/horizontal_subplots_major_rotation_val_auroc.png?raw=true
 
 
 Vertical Example A
@@ -163,7 +163,7 @@ displaying the bar labels as a shared legend.
         custom_defaults=custom_defaults
     )
 
-Result can be seen `here <https://github.com/LucaCappelletti94/barplots/blob/master/examples/vertical_legend_val_auroc.png>`__
+Result can be seen `here <https://github.com/LucaCappelletti94/barplots/blob/master/examples/1/vertical_legend_val_auroc.png>`__
 
 
 Vertical Example B
@@ -184,7 +184,7 @@ subplots with vertical bars  and displaying the bar labels as a shared legend.
         custom_defaults=custom_defaults
     )
 
-.. image:: https://github.com/LucaCappelletti94/barplots/blob/master/examples/vertical_legend_subplots_val_auroc.png
+.. image:: https://github.com/LucaCappelletti94/barplots/blob/master/examples/1/vertical_legend_subplots_val_auroc.png
 
 
 Vertical Example C
@@ -205,7 +205,7 @@ displaying the bar labels as minor ticks.
         custom_defaults=custom_defaults
     )
 
-Result can be seen `here <https://github.com/LucaCappelletti94/barplots/blob/master/examples/vertical_minor_rotation_val_auroc.png>`__
+Result can be seen `here <https://github.com/LucaCappelletti94/barplots/blob/master/examples/1/vertical_minor_rotation_val_auroc.png>`__
 
 
 Vertical Example D
@@ -228,7 +228,7 @@ displaying the bar labels as minor ticks.
         custom_defaults=custom_defaults
     )
 
-.. image:: https://github.com/LucaCappelletti94/barplots/blob/master/examples/vertical_subplots_minor_rotation_val_auroc.png
+.. image:: https://github.com/LucaCappelletti94/barplots/blob/master/examples/1/vertical_subplots_minor_rotation_val_auroc.png
 
 
 Future features
