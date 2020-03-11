@@ -4,8 +4,8 @@ from .get_jumps import get_jumps
 from .bar_positions import bar_positions
 
 
-def text_positions(df: pd.DataFrame, bar_width: float, index_level: int) -> Generator:
-    positions = bar_positions(df, bar_width)
+def text_positions(df: pd.DataFrame, bar_width: float, space_width:float, index_level: int) -> Generator:
+    positions = bar_positions(df, bar_width, space_width)
     old_index = None
     previous_jump_position = 0
     last_position = 0

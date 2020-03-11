@@ -23,5 +23,6 @@ def test_simple_barplots():
         orientation="horizontal",
         verbose=False,
         custom_defaults=custom_defaults,
-        subplots=True
+        subplots=True,
+        space_width=1,
     )

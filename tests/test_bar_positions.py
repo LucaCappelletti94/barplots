@@ -6,7 +6,7 @@ def execute_test(df, ground_truth):
     df = df.groupby(
         ["cell_line", "task", "balancing", "model"]).mean()
 
-    for x1, x2 in zip(ground_truth, bar_positions(df, 0.5)):
+    for x1, x2 in zip(ground_truth, bar_positions(df, 0.5, 0.5)):
         assert x1 == x2[0]
 
 

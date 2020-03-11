@@ -3,12 +3,14 @@ import pandas as pd
 from .get_jumps import get_jumps
 
 
-def bar_positions(df: pd.DataFrame, bar_width: float) -> Generator:
+def bar_positions(df: pd.DataFrame, bar_width: float, space_width: float) -> Generator:
     """Returns a generator of bar positions.
         df: pd.DataFrame,
             Dataframe to iterate to extract the necessary data.
         bar_width:float,
             Width of any given bar.
+        space_width: float,
+            Width of spaces between spaces.
     """
     old_index = tuple()
     bar_position = 0
@@ -16,9 +18,11 @@ def bar_positions(df: pd.DataFrame, bar_width: float) -> Generator:
         if not isinstance(index, (list, tuple)):
             index = (index,)
 
-        bar_position += bar_width * sum(
-            get_jumps(index, old_index)
-        )
+        jumps = get_jumps(index, old_index)
+
+        bar_position += space_width*sum(jumps[:-1])
+        if jumps[-1]:
+            bar_position += bar_width
 
         old_index = index
 

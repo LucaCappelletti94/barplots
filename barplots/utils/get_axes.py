@@ -18,6 +18,7 @@ def swap(*args: List, flag: bool) -> List:
 def get_axes(
     df: pd.DataFrame,
     bar_width: float,
+    space_width: float,
     height: float,
     dpi: int,
     title: str,
@@ -37,6 +38,8 @@ def get_axes(
         Dataframe from which to obtain the curresponding barplot width.
     bar_width: float,
         Width of bars in considered barplot.
+    space_width: float,
+        Width of spaces between spaces.
     height: float,
         Height of considered barplot.
     dpi: int,
@@ -56,11 +59,11 @@ def get_axes(
     """
     if subplots:
         side = max(
-            get_max_bar_position(df.loc[index], bar_width)
+            get_max_bar_position(df.loc[index], bar_width, space_width)
             for index in df.index.levels[0]
         )
     else:
-        side = get_max_bar_position(df, bar_width)
+        side = get_max_bar_position(df, bar_width, space_width)
 
     if height is None:
         exponent = 1 if subplots or expected_levels>1 else 1.5

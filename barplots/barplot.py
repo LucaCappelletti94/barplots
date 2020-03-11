@@ -12,6 +12,7 @@ from sanitize_ml_labels import is_normalized_metric
 def barplot(
     df: pd.DataFrame,
     bar_width: float = 0.3,
+    space_width: float = 0.3,
     height: float = None,
     dpi: int = 200,
     min_std: float = 0,
@@ -146,7 +147,7 @@ def barplot(
         alphas = dict(zip(levels[-1], (0.9,)*len(levels[-1])))
 
     figure, axes = get_axes(
-        df, bar_width, height, dpi, title, data_label, vertical, subplots, plots_per_row, custom_defaults, expected_levels, scale
+        df, bar_width, space_width, height, dpi, title, data_label, vertical, subplots, plots_per_row, custom_defaults, expected_levels, scale
     )
 
     for i, (index, ax) in enumerate(zip(levels[0], axes)):
@@ -155,7 +156,7 @@ def barplot(
         else:
             sub_df = df
 
-        plot_bars(ax, sub_df, bar_width, alphas, colors,
+        plot_bars(ax, sub_df, bar_width, space_width, alphas, colors,
                   vertical=vertical, min_std=min_std)
 
         is_not_first_ax = subplots and (
@@ -175,6 +176,7 @@ def barplot(
             vertical,
             expected_levels,
             bar_width,
+            space_width,
             minor_rotation,
             major_rotation,
             unique_minor_labels and is_not_first_ax,
@@ -187,7 +189,7 @@ def barplot(
             remove_duplicated_legend_labels(
                 ax, legend_position, custom_defaults)
 
-        max_lenght, min_lenght = get_max_bar_lenght(sub_df, bar_width)
+        max_lenght, min_lenght = get_max_bar_lenght(sub_df, bar_width, space_width)
         max_lenght *= 1.01
         min_lenght *= 1.01
         if auto_normalize_metrics and (is_normalized_metric(df.columns[0]) or is_normalized_metric(title)):

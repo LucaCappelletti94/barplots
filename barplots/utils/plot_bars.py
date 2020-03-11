@@ -9,6 +9,7 @@ def plot_bars(
     axes: Axes,
     df: pd.DataFrame,
     bar_width: float,
+    space_width: float,
     alphas: Dict[str, float],
     colors: Dict[str, str],
     **kwargs: Dict
@@ -22,7 +23,9 @@ def plot_bars(
     df: pd.DataFrame,
         The dataframe from where to extract the data.
     bar_width: float,
-        The width of the bars, used also for spacing
+        The width of the bars, used also for spacing.
+    space_width: float,
+        Width of spaces between spaces.
     alphas:Dict[str, float],
         Dictionary of alphas to be used.
     colors:Dict[str, str],
@@ -30,7 +33,7 @@ def plot_bars(
     kwargs:Dict,
         Parameters to be passed directly to the plot_bar method
     """
-    for x, y, std, index in bar_positions(df, bar_width):
+    for x, y, std, index in bar_positions(df, bar_width, space_width):
         plot_bar(
             axes=axes,
             x=x,

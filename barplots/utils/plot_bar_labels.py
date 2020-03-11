@@ -14,6 +14,7 @@ def plot_bar_labels(
     vertical: bool,
     levels: int,
     bar_width: float,
+    space_width: float,
     minor_rotation: float,
     major_rotation: float,
     unique_minor_labels: bool,
@@ -32,11 +33,11 @@ def plot_bar_labels(
         Avoid replication of data axis label when using subplots.
     """
     other_positions = set()
-    width = get_max_bar_position(df, bar_width)
+    width = get_max_bar_position(df, bar_width, space_width)
     if unique_data_label:
         axes.set_ylabel("")
     for level in reversed(range(max(levels-2, 0), levels)):
-        positions, labels = zip(*text_positions(df, bar_width, level))
+        positions, labels = zip(*text_positions(df, bar_width, space_width, level))
         labels = sanitize_ml_labels(labels, custom_defaults=custom_defaults)
         positions = [
             round(pos, 5) for pos in positions
