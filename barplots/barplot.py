@@ -159,7 +159,7 @@ def barplot(
     if subplots:
         titles = sorted_level
     else:
-        title = ("",)
+        titles = ("",)
 
     figure, axes = get_axes(
         df, bar_width, space_width, height, dpi, title, data_label, vertical, subplots, titles, plots_per_row, custom_defaults, expected_levels, scale
