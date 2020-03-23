@@ -1,5 +1,5 @@
 import pandas as pd
-from typing import List, Tuple, Dict, Union
+from typing import List, Tuple, Dict, Union, Callable
 from matplotlib.colors import TABLEAU_COLORS, CSS4_COLORS
 from matplotlib.figure import Figure
 from matplotlib.axes import Axes
@@ -33,7 +33,9 @@ def barplot(
     unique_data_label: bool = True,
     auto_normalize_metrics: bool = True,
     scale: str = "linear",
-    custom_defaults: Dict[str, List[str]] = None
+    custom_defaults: Dict[str, List[str]] = None,
+    sort_subplots: Callable[[List], List] = None,
+    sort_bars: Callable[[pd.DataFrame], pd.DataFrame] = None
 ) -> Tuple[Figure, Axes]:
     """Plot barplot corresponding to given dataframe, containing y value and optionally std.
 
@@ -146,17 +148,32 @@ def barplot(
     if alphas is None:
         alphas = dict(zip(levels[-1], (0.9,)*len(levels[-1])))
 
+    if sort_subplots is None:
+        sort_subplots = lambda x: x
+    
+    if sort_bars is None:
+        sort_bars = lambda x: x
+
+    sorted_level = sort_subplots(levels[0])
+
+    if subplots:
+        titles = sorted_level
+    else:
+        title = ("",)
+
     figure, axes = get_axes(
-        df, bar_width, space_width, height, dpi, title, data_label, vertical, subplots, plots_per_row, custom_defaults, expected_levels, scale
+        df, bar_width, space_width, height, dpi, title, data_label, vertical, subplots, titles, plots_per_row, custom_defaults, expected_levels, scale
     )
 
-    for i, (index, ax) in enumerate(zip(levels[0], axes)):
+    for i, (index, ax) in enumerate(zip(titles, axes)):
         if subplots:
             sub_df = df.loc[index]
         else:
             sub_df = df
 
-        plot_bars(ax, sub_df, bar_width, space_width, alphas, colors,
+        sub_df = sort_bars(sub_df)
+
+        plot_bars(ax, sub_df, bar_width, space_width, alphas, colors, index,
                   vertical=vertical, min_std=min_std)
 
         is_not_first_ax = subplots and (

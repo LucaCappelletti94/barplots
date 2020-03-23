@@ -35,5 +35,5 @@ def bar_positions(df: pd.DataFrame, bar_width: float, space_width: float) -> Gen
             bar_position + bar_width / 2,
             y,
             std,
-            index[-1]
+            index
         )

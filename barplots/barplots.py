@@ -18,6 +18,7 @@ def barplots(
     data_label: str = "{feature}",
     path: str = "barplots/{feature}.png",
     sanitize_metrics: bool = True,
+    use_multiprocessing: bool = True,
     verbose: bool = True,
     **barplot_kwargs: Dict
 ):
@@ -45,6 +46,8 @@ def barplots(
     sanitize_metrics: bool = True,
         Whetever to automatically sanitize to standard name given features.
         For instance, "acc" to "Accuracy" or "lr" to "Learning rate"
+    use_multiprocessing: bool = True,
+        Whetever to use or not multiple processes.
     verbose:bool,
         Whetever to show or not the loading bar.
     barplot_kwargs:Dict,
@@ -72,19 +75,30 @@ def barplots(
 
     if len(tasks) == 0:
         raise ValueError("No plottable feature found in given dataframe!")
+    
+    use_multiprocessing = use_multiprocessing and not len(tasks) == 1
 
-    with Pool(min(len(tasks), cpu_count())) as p:
-        try:
-            list(tqdm(
-                p.imap(_barplot, tasks),
-                desc="Rendering barplots",
-                total=len(tasks),
-                dynamic_ncols=True,
-                disable=not verbose
-            ))
-            p.close()
-            p.join()
-        except Exception as e:
-            p.close()
-            p.join()
-            raise e
+    if use_multiprocessing: 
+        with Pool(min(len(tasks), cpu_count())) as p:
+            try:
+                list(tqdm(
+                    p.imap(_barplot, tasks),
+                    desc="Rendering barplots",
+                    total=len(tasks),
+                    dynamic_ncols=True,
+                    disable=not verbose
+                ))
+                p.close()
+                p.join()
+            except Exception as e:
+                p.close()
+                p.join()
+                raise e
+    else:
+        for task in tqdm(tasks,
+            desc="Rendering barplots",
+            total=len(tasks),
+            dynamic_ncols=True,
+            disable=not verbose
+        ):
+            _barplot(task)

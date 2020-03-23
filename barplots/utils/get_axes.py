@@ -25,6 +25,7 @@ def get_axes(
     data_label: str,
     vertical: bool,
     subplots: bool,
+    titles: List[str],
     plots_per_row: int,
     custom_defaults: Dict[str, List[str]],
     expected_levels: int,
@@ -86,11 +87,6 @@ def get_axes(
         axes = np.array([axes])
 
     axes = axes.flatten()
-
-    if subplots:
-        titles = df.index.levels[0]
-    else:
-        titles = ("",)
 
     for subtitle, ax in zip(titles, axes):
         if vertical:

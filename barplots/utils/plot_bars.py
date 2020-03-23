@@ -3,6 +3,26 @@ from typing import Dict
 from matplotlib.axes import Axes
 from .plot_bar import plot_bar
 from .bar_positions import bar_positions
+import re
+
+
+def get_best_match(mapping, index):
+    compiled_keys = {
+        key: (re.compile(key),) if isinstance(key, str) else [
+            re.compile(k) for k in key
+        ]
+        for key in mapping
+    }
+    scores = {
+        key: sum(
+            len(match)
+            for pattern in compiled_keys[key]
+            for level in index
+            for match in pattern.findall(level)
+        )
+        for key in mapping
+    }
+    return mapping[max(scores.keys(), key=(lambda key: scores[key]))]
 
 
 def plot_bars(
@@ -12,6 +32,7 @@ def plot_bars(
     space_width: float,
     alphas: Dict[str, float],
     colors: Dict[str, str],
+    top_index: str,
     **kwargs: Dict
 ):
     """Plot bars for given dataframe at given intervals.
@@ -40,8 +61,8 @@ def plot_bars(
             y=y,
             std=std,
             bar_width=bar_width,
-            alpha=alphas[index],
-            color=colors[index],
-            label=index,
+            alpha=get_best_match(alphas, (top_index, *index)),
+            color=get_best_match(colors, (top_index, *index)),
+            label=index[-1],
             **kwargs
         )
