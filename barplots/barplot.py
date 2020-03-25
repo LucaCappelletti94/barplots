@@ -23,6 +23,7 @@ def barplot(
     path: str = None,
     colors: Dict[str, str] = None,
     alphas: Dict[str, float] = None,
+    facecolors: Dict[str, str] = None,
     orientation: str = "vertical",
     subplots: bool = False,
     plots_per_row: Union[int, str] = "auto",
@@ -145,8 +146,12 @@ def barplot(
     if colors is None:
         colors = dict(
             zip(levels[-1], list(TABLEAU_COLORS.keys()) + list(CSS4_COLORS.keys())))
+    
     if alphas is None:
         alphas = dict(zip(levels[-1], (0.9,)*len(levels[-1])))
+    
+    if facecolors is None:
+        facecolors = dict(zip(levels[0], ("white",)*len(levels[0])))
 
     if sort_subplots is None:
         sort_subplots = lambda x: x
@@ -162,7 +167,21 @@ def barplot(
         titles = ("",)
 
     figure, axes = get_axes(
-        df, bar_width, space_width, height, dpi, title, data_label, vertical, subplots, titles, plots_per_row, custom_defaults, expected_levels, scale
+        df,
+        bar_width,
+        space_width,
+        height,
+        dpi,
+        title,
+        data_label,
+        vertical,
+        subplots,
+        titles,
+        plots_per_row,
+        custom_defaults,
+        expected_levels,
+        scale,
+        facecolors
     )
 
     for i, (index, ax) in enumerate(zip(titles, axes)):
@@ -210,7 +229,7 @@ def barplot(
         max_lenght *= 1.01
         min_lenght *= 1.01
         if auto_normalize_metrics and (is_normalized_metric(df.columns[0]) or is_normalized_metric(title)):
-            max_lenght = max(max_lenght, 1)
+            max_lenght = max(max_lenght, 1.01)
             min_lenght = min(min_lenght, 0)
 
         if vertical:

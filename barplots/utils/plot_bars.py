@@ -3,26 +3,7 @@ from typing import Dict
 from matplotlib.axes import Axes
 from .plot_bar import plot_bar
 from .bar_positions import bar_positions
-import re
-
-
-def get_best_match(mapping, index):
-    compiled_keys = {
-        key: (re.compile(key),) if isinstance(key, str) else [
-            re.compile(k) for k in key
-        ]
-        for key in mapping
-    }
-    scores = {
-        key: sum(
-            len(match)
-            for pattern in compiled_keys[key]
-            for level in index
-            for match in pattern.findall(level)
-        )
-        for key in mapping
-    }
-    return mapping[max(scores.keys(), key=(lambda key: scores[key]))]
+from .get_best_match import get_best_match
 
 
 def plot_bars(

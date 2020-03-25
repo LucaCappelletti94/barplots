@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 from scipy.constants import golden_ratio
 from math import ceil
 from sanitize_ml_labels import sanitize_ml_labels
+from .get_best_match import get_best_match
 
 
 def swap(*args: List, flag: bool) -> List:
@@ -29,7 +30,8 @@ def get_axes(
     plots_per_row: int,
     custom_defaults: Dict[str, List[str]],
     expected_levels: int,
-    scale: str
+    scale: str,
+    facecolors: Dict[str, str]
 ) -> Tuple[Figure, Axes]:
     """Setup axes for barplot plotting.
 
@@ -67,7 +69,7 @@ def get_axes(
         side = get_max_bar_position(df, bar_width, space_width)
 
     if height is None:
-        exponent = 1 if subplots or expected_levels>1 else 1.5
+        exponent = 1 if subplots or expected_levels > 1 else 1.5
         height = side/(golden_ratio**exponent)
 
     if subplots:
@@ -89,6 +91,7 @@ def get_axes(
     axes = axes.flatten()
 
     for subtitle, ax in zip(titles, axes):
+        ax.set_facecolor(get_best_match(facecolors, subtitle))
         if vertical:
             ax.set_yscale(scale)
             ax.set_xlim(0, side)
@@ -110,13 +113,15 @@ def get_axes(
                     custom_defaults=custom_defaults
                 ))
 
-        ax.set_title(sanitize_ml_labels(subtitle, custom_defaults=custom_defaults))
+        ax.set_title(sanitize_ml_labels(
+            subtitle, custom_defaults=custom_defaults))
 
     for ax in axes[len(titles):]:
         ax.grid(False)
         ax.axis('off')
 
     if title is not None and len(axes) == 1:
-        axes[0].set_title(sanitize_ml_labels(title, custom_defaults=custom_defaults))
+        axes[0].set_title(sanitize_ml_labels(
+            title, custom_defaults=custom_defaults))
 
     return fig, axes

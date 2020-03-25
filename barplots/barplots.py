@@ -101,4 +101,4 @@ def barplots(
             dynamic_ncols=True,
             disable=not verbose
         ):
-            _barplot(task)
+            barplot(**task)
