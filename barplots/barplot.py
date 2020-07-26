@@ -33,10 +33,11 @@ def barplot(
     unique_major_labels: bool = True,
     unique_data_label: bool = True,
     auto_normalize_metrics: bool = True,
+    facsimile: bool = False,
     scale: str = "linear",
     custom_defaults: Dict[str, List[str]] = None,
     sort_subplots: Callable[[List], List] = None,
-    sort_bars: Callable[[pd.DataFrame], pd.DataFrame] = None
+    sort_bars: Callable[[pd.DataFrame], pd.DataFrame] = None,
 ) -> Tuple[Figure, Axes]:
     """Plot barplot corresponding to given dataframe, containing y value and optionally std.
 
@@ -95,6 +96,9 @@ def barplot(
         Whetever to apply or not automatic normalization
         to the metrics that are recognized to be between
         zero and one. For example AUROC, AUPRC or accuracy.
+    facsimile: bool = False,
+        Whetever to add a text on top of the barplots to show
+        the word "FACSIMILE". Useful when generating placeholder data.
     custom_defaults: Dict[str, List[str]],
         Dictionary to normalize labels.
 
@@ -223,7 +227,10 @@ def barplot(
 
         if show_legend:
             remove_duplicated_legend_labels(
-                ax, legend_position, custom_defaults)
+                ax,
+                legend_position,
+                custom_defaults
+            )
 
         max_lenght, min_lenght = get_max_bar_lenght(sub_df, bar_width, space_width)
         max_lenght *= 1.01
@@ -231,6 +238,19 @@ def barplot(
         if auto_normalize_metrics and (is_normalized_metric(df.columns[0]) or is_normalized_metric(title)):
             max_lenght = max(max_lenght, 1.01)
             min_lenght = min(min_lenght, 0)
+
+        if facsimile:
+            ax.text(
+                0.5, 0.5,
+                "FACSIMILE",
+                fontsize=50,
+                alpha=0.75,
+                color="red",
+                rotation=8,
+                horizontalalignment='center',
+                verticalalignment='center',
+                transform=ax.transAxes
+            )
 
         if vertical:
             ax.set_ylim(min_lenght, max_lenght)
