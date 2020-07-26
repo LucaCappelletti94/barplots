@@ -1,13 +1,15 @@
-import pandas as pd
-from typing import List, Dict
-from .barplot import barplot
-from tqdm.auto import tqdm
 from multiprocessing import Pool, cpu_count
+from typing import Dict, List
+
+import pandas as pd
 from sanitize_ml_labels import sanitize_ml_labels
+from tqdm.auto import tqdm
+
+from .barplot import barplot
 
 
 def _barplot(kwargs):
-    barplot(**kwargs)
+    return barplot(**kwargs)
 
 
 def barplots(
@@ -75,19 +77,22 @@ def barplots(
 
     if len(tasks) == 0:
         raise ValueError("No plottable feature found in given dataframe!")
-    
-    use_multiprocessing = use_multiprocessing and not len(tasks) == 1
 
-    if use_multiprocessing: 
+    use_multiprocessing = use_multiprocessing and not len(tasks) == 1
+    arguments = dict(
+        desc="Rendering barplots",
+        total=len(tasks),
+        dynamic_ncols=True,
+        disable=not verbose
+    )
+
+    if use_multiprocessing:
         with Pool(min(len(tasks), cpu_count())) as p:
             try:
-                list(tqdm(
+                figures, axes = list(zip(*list(tqdm(
                     p.imap(_barplot, tasks),
-                    desc="Rendering barplots",
-                    total=len(tasks),
-                    dynamic_ncols=True,
-                    disable=not verbose
-                ))
+                    **arguments
+                ))))
                 p.close()
                 p.join()
             except Exception as e:
@@ -95,10 +100,8 @@ def barplots(
                 p.join()
                 raise e
     else:
-        for task in tqdm(tasks,
-            desc="Rendering barplots",
-            total=len(tasks),
-            dynamic_ncols=True,
-            disable=not verbose
-        ):
+        figures, axes = list(zip(*[
             barplot(**task)
+            for task in tqdm(tasks, **arguments)
+        ]))
+    return figures, axes
