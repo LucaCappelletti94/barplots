@@ -33,7 +33,7 @@ def barplot(
     unique_major_labels: bool = True,
     unique_data_label: bool = True,
     auto_normalize_metrics: bool = True,
-    facsimile: bool = False,
+    placeholder: bool = False,
     scale: str = "linear",
     custom_defaults: Dict[str, List[str]] = None,
     sort_subplots: Callable[[List], List] = None,
@@ -96,9 +96,9 @@ def barplot(
         Whetever to apply or not automatic normalization
         to the metrics that are recognized to be between
         zero and one. For example AUROC, AUPRC or accuracy.
-    facsimile: bool = False,
+    placeholder: bool = False,
         Whetever to add a text on top of the barplots to show
-        the word "FACSIMILE". Useful when generating placeholder data.
+        the word "placeholder". Useful when generating placeholder data.
     custom_defaults: Dict[str, List[str]],
         Dictionary to normalize labels.
 
@@ -239,10 +239,10 @@ def barplot(
             max_lenght = max(max_lenght, 1.01)
             min_lenght = min(min_lenght, 0)
 
-        if facsimile:
+        if placeholder:
             ax.text(
                 0.5, 0.5,
-                "FACSIMILE",
+                "PLACEHOLDER",
                 fontsize=50,
                 alpha=0.75,
                 color="red",
