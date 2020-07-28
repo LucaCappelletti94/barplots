@@ -243,7 +243,7 @@ def barplot(
             ax.text(
                 0.5, 0.5,
                 "PLACEHOLDER",
-                fontsize=50,
+                fontsize=30,
                 alpha=0.75,
                 color="red",
                 rotation=8,
