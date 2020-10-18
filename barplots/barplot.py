@@ -235,9 +235,10 @@ def barplot(
         max_lenght, min_lenght = get_max_bar_lenght(sub_df, bar_width, space_width)
         max_lenght *= 1.01
         min_lenght *= 1.01
+        min_lenght = min(min_lenght, 0)
+
         if auto_normalize_metrics and (is_normalized_metric(df.columns[0]) or is_normalized_metric(title)):
             max_lenght = max(max_lenght, 1.01)
-            min_lenght = min(min_lenght, 0)
 
         if placeholder:
             ax.text(
