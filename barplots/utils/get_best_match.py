@@ -6,7 +6,7 @@ def get_best_match(mapping, index):
         key: (re.compile(key),) if isinstance(key, str) else [
             re.compile(k) for k in key
         ]
-        for key in mapping
+        for key in str(mapping)
     }
     if not isinstance(index, tuple):
         index = (index,)
