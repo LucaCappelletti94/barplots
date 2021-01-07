@@ -61,6 +61,8 @@ def barplots(
         groupby = df.groupby(groupby).agg(
             ("mean",)+(("std",) if show_standard_deviation else tuple())
         ).sort_index()
+    else:
+        groupby = df
 
     features = original = groupby.columns.levels[0]
     if sanitize_metrics:
