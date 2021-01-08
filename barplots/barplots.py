@@ -64,7 +64,10 @@ def barplots(
     else:
         groupby = df
 
-    features = original = groupby.columns.levels[0]
+    features = original = {
+        col[0]
+        for col in groupby.columns
+    }
     if sanitize_metrics:
         features = sanitize_ml_labels(features)
 

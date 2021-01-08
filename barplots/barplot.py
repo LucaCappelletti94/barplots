@@ -16,6 +16,8 @@ def barplot(
     height: float = None,
     dpi: int = 200,
     min_std: float = 0,
+    min_value: float = None,
+    max_value: float = None,
     show_legend: bool = True,
     legend_position: str = "best",
     data_label: str = None,
@@ -53,6 +55,10 @@ def barplot(
         DPI for plotting the barplots.
     min_std: float = 0.001,
         Minimum standard deviation for showing error bars.
+    min_value: float = None,
+        Minimum value for the barplot.
+    max_value: float = 0,
+        Maximum value for the barplot.
     show_legend: bool = True,
         Whetever to show or not the legend.
         If legend is hidden, the bar ticks are shown alternatively.
@@ -237,8 +243,14 @@ def barplot(
         min_lenght *= 1.01
         min_lenght = min(min_lenght, 0)
 
+        if min_value is not None:
+            min_lenght = min_value
+
         if auto_normalize_metrics and (is_normalized_metric(df.columns[0]) or is_normalized_metric(title)):
             max_lenght = max(max_lenght, 1.01)
+
+        if max_value is not None:
+            max_lenght = max_value
 
         if placeholder:
             ax.text(
