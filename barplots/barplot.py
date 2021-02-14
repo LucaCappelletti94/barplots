@@ -19,6 +19,7 @@ def barplot(
     min_value: float = None,
     max_value: float = None,
     show_legend: bool = True,
+    show_title: str = True,
     legend_position: str = "best",
     data_label: str = None,
     title: str = None,
@@ -62,6 +63,8 @@ def barplot(
     show_legend: bool = True,
         Whetever to show or not the legend.
         If legend is hidden, the bar ticks are shown alternatively.
+    show_title: str = True,
+        Whetever to show or not the barplot title.
     legend_position: str = "best",
         Legend position, by default "best".
     data_label: str = None,
@@ -105,6 +108,9 @@ def barplot(
     placeholder: bool = False,
         Whetever to add a text on top of the barplots to show
         the word "placeholder". Useful when generating placeholder data.
+    scale: str = "linear",
+        Scale to use for the barplots.
+        Can either be "linear" or "log".
     custom_defaults: Dict[str, List[str]],
         Dictionary to normalize labels.
 
@@ -191,7 +197,8 @@ def barplot(
         custom_defaults,
         expected_levels,
         scale,
-        facecolors
+        facecolors,
+        show_title
     )
 
     for i, (index, ax) in enumerate(zip(titles, axes)):

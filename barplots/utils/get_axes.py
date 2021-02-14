@@ -31,7 +31,8 @@ def get_axes(
     custom_defaults: Dict[str, List[str]],
     expected_levels: int,
     scale: str,
-    facecolors: Dict[str, str]
+    facecolors: Dict[str, str],
+    show_title: bool
 ) -> Tuple[Figure, Axes]:
     """Setup axes for barplot plotting.
 
@@ -55,6 +56,13 @@ def get_axes(
         Whetever to build the axis to show the bars as vertical or as horizontal.
     expected_levels: int,
         Number of levels to expect to plot as labels.
+    scale: str,
+        Scale to use for the barplots.
+        Can either be "linear" or "log".
+    facecolors: Dict[str, str],
+        Colors for the background.
+    show_title: str = True,
+        Whetever to show or not the barplot title.
 
     Returns
     -----------
@@ -112,15 +120,15 @@ def get_axes(
                     data_label,
                     custom_defaults=custom_defaults
                 ))
-
-        ax.set_title(sanitize_ml_labels(
-            subtitle, custom_defaults=custom_defaults))
+        if show_title:
+            ax.set_title(sanitize_ml_labels(
+                subtitle, custom_defaults=custom_defaults))
 
     for ax in axes[len(titles):]:
         ax.grid(False)
         ax.axis('off')
 
-    if title is not None and len(axes) == 1:
+    if title is not None and len(axes) == 1 and show_title:
         axes[0].set_title(sanitize_ml_labels(
             title, custom_defaults=custom_defaults))
 
