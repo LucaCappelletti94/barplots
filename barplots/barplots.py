@@ -85,7 +85,7 @@ def barplots(
             "title":title.format(feature=feature.replace("_", " ")),
             "data_label":data_label.format(feature=feature.replace("_", " ")),
             "path":path.format(feature=feature).replace(" ", "_").lower(),
-            "letter": letters.get(original, None)
+            "letter": letters.get(original, None),
             **barplot_kwargs
         } for original, feature in zip(original, features)
         if not pd.isna(groupby[original]).any().any() and not len(groupby[original]) == 0
