@@ -49,6 +49,11 @@ def barplots(
     sanitize_metrics: bool = True,
         Whetever to automatically sanitize to standard name given features.
         For instance, "acc" to "Accuracy" or "lr" to "Learning rate"
+    letters: Dict[str, str] = None,
+        Dictionary of letters to add to the top left of the barplots.
+        Use the name of the metric (the dataframe column) as key of the dictionary.
+        This is sometimes necessary on papers.
+        By default it is None, that is no letter to be shown.
     use_multiprocessing: bool = True,
         Whetever to use or not multiple processes.
     verbose:bool,
@@ -68,6 +73,8 @@ def barplots(
         col[0]
         for col in groupby.columns
     }
+    if letters is None:
+        letters = {}
     if sanitize_metrics:
         features = sanitize_ml_labels(features)
 
@@ -77,6 +84,7 @@ def barplots(
             "title":title.format(feature=feature.replace("_", " ")),
             "data_label":data_label.format(feature=feature.replace("_", " ")),
             "path":path.format(feature=feature).replace(" ", "_").lower(),
+            "letter": letters.get(original, None)
             **barplot_kwargs
         } for original, feature in zip(original, features)
         if not pd.isna(groupby[original]).any().any() and not len(groupby[original]) == 0

@@ -41,6 +41,7 @@ def barplot(
     custom_defaults: Dict[str, List[str]] = None,
     sort_subplots: Callable[[List], List] = None,
     sort_bars: Callable[[pd.DataFrame], pd.DataFrame] = None,
+    letter: str = None
 ) -> Tuple[Figure, Axes]:
     """Plot barplot corresponding to given dataframe, containing y value and optionally std.
 
@@ -113,6 +114,10 @@ def barplot(
         Can either be "linear" or "log".
     custom_defaults: Dict[str, List[str]],
         Dictionary to normalize labels.
+    letter: str = None,
+        Letter to show on the top left of the figure.
+        This is sometimes necessary on papers.
+        By default it is None, that is no letter to be shown.
 
     Raises
     ------
@@ -162,18 +167,18 @@ def barplot(
     if colors is None:
         colors = dict(
             zip(levels[-1], list(TABLEAU_COLORS.keys()) + list(CSS4_COLORS.keys())))
-    
+
     if alphas is None:
         alphas = dict(zip(levels[-1], (0.9,)*len(levels[-1])))
-    
+
     if facecolors is None:
         facecolors = dict(zip(levels[0], ("white",)*len(levels[0])))
 
     if sort_subplots is None:
-        sort_subplots = lambda x: x
-    
+        def sort_subplots(x): return x
+
     if sort_bars is None:
-        sort_bars = lambda x: x
+        def sort_bars(x): return x
 
     sorted_level = sort_subplots(levels[0])
 
@@ -245,7 +250,8 @@ def barplot(
                 custom_defaults
             )
 
-        max_lenght, min_lenght = get_max_bar_lenght(sub_df, bar_width, space_width)
+        max_lenght, min_lenght = get_max_bar_lenght(
+            sub_df, bar_width, space_width)
         max_lenght *= 1.01
         min_lenght *= 1.01
         min_lenght = min(min_lenght, 0)
@@ -276,6 +282,15 @@ def barplot(
             ax.set_ylim(min_lenght, max_lenght)
         else:
             ax.set_xlim(min_lenght, max_lenght)
+
+    if letter:
+        figure.text(
+            0, 1, letter,
+            horizontalalignment='center',
+            verticalalignment='center',
+            weight='bold',
+            fontsize=15
+        )
 
     figure.tight_layout()
 
