@@ -20,6 +20,7 @@ def barplots(
     data_label: str = "{feature}",
     path: str = "barplots/{feature}.png",
     sanitize_metrics: bool = True,
+    letters: Dict[str, str] = None,
     use_multiprocessing: bool = True,
     verbose: bool = True,
     **barplot_kwargs: Dict
