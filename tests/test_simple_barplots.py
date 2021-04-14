@@ -1,5 +1,6 @@
 import pandas as pd
 from barplots import barplots
+import matplotlib.pyplot as plt
 
 
 def test_simple_barplots():
@@ -26,3 +27,4 @@ def test_simple_barplots():
         subplots=True,
         space_width=1,
     )
+    plt.close()

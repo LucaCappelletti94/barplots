@@ -1,5 +1,6 @@
 import pandas as pd
 from barplots import barplots
+import matplotlib.pyplot as plt
 
 
 def test_single_index():
@@ -11,3 +12,4 @@ def test_single_index():
         path="{root}/{{feature}}.png".format(root=root),
         verbose=False
     )
+    plt.close()

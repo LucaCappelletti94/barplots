@@ -1,3 +1,4 @@
+"""Module implementing plotting of a barplot."""
 import pandas as pd
 from typing import List, Tuple, Dict, Union, Callable
 from matplotlib.colors import TABLEAU_COLORS, CSS4_COLORS
@@ -174,13 +175,10 @@ def barplot(
     if facecolors is None:
         facecolors = dict(zip(levels[0], ("white",)*len(levels[0])))
 
-    if sort_subplots is None:
-        def sort_subplots(x): return x
+    sorted_level = levels[0]
 
-    if sort_bars is None:
-        def sort_bars(x): return x
-
-    sorted_level = sort_subplots(levels[0])
+    if sort_subplots is not None:
+        sorted_level = sort_subplots(sorted_level)
 
     if subplots:
         titles = sorted_level
@@ -212,7 +210,8 @@ def barplot(
         else:
             sub_df = df
 
-        sub_df = sort_bars(sub_df)
+        if sort_bars is not None:
+            sub_df = sort_bars(sub_df)
 
         plot_bars(ax, sub_df, bar_width, space_width, alphas, colors, index,
                   vertical=vertical, min_std=min_std)
@@ -285,7 +284,7 @@ def barplot(
 
     if letter:
         figure.text(
-            0, 1, letter,
+            0.01, 0.9, letter,
             horizontalalignment='center',
             verticalalignment='center',
             weight='bold',

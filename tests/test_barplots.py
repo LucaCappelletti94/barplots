@@ -3,6 +3,7 @@ from barplots import barplots
 import os
 import itertools
 from tqdm.auto import tqdm
+import matplotlib.pyplot as plt
 
 
 def test_barplots():
@@ -118,7 +119,8 @@ def test_barplots():
 
         barplots(
             **kwargs, path=path,
-                 custom_defaults=custom_defaults, verbose=False)
+            custom_defaults=custom_defaults, verbose=False)
+        plt.close()
 
 
 def test_single_index():
@@ -130,3 +132,4 @@ def test_single_index():
         path="{root}/{{feature}}.png".format(root=root),
         verbose=False
     )
+    plt.close()
