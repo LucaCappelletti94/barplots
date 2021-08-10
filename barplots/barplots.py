@@ -168,9 +168,10 @@ def barplots(
         groupby = df
 
     features = original = {
-        col[0]
+        col if isinstance(col, str) else col[0]
         for col in groupby.columns
     }
+
     if letters is None:
         letters = {}
     if sanitize_metrics:
@@ -178,7 +179,7 @@ def barplots(
 
     tasks = [
         dict(
-            df=groupby[original],
+            df=groupby[[original]],
             title=title.format(feature=feature.replace("_", " ")),
             data_label=data_label.format(feature=feature.replace("_", " ")),
             path=path.format(feature=feature).replace(" ", "_").lower(),
