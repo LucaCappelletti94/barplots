@@ -246,7 +246,8 @@ def barplot(
             remove_duplicated_legend_labels(
                 ax,
                 legend_position,
-                custom_defaults
+                df.index.names[-1],
+                custom_defaults,
             )
 
         max_length, min_length = get_max_bar_length(
