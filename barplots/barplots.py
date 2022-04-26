@@ -1,6 +1,6 @@
 """Module implementing plotting of multiple barplots in parallel and sequential manner."""
 from multiprocessing import Pool, cpu_count
-from typing import Dict, List, Tuple, Callable, Union
+from typing import Dict, List, Tuple, Callable, Union, Optional
 
 import pandas as pd
 from sanitize_ml_labels import sanitize_ml_labels
@@ -18,26 +18,26 @@ def _barplot(kwargs: Dict) -> Tuple[Figure, Axis]:
 
 def barplots(
     df: pd.DataFrame,
-    groupby: List = None,
+    groupby: Optional[List[str]] = None,
     show_standard_deviation: bool = True,
     title: str = "{feature}",
     data_label: str = "{feature}",
     path: str = "barplots/{feature}.png",
     sanitize_metrics: bool = True,
-    letters: Dict[str, str] = None,
+    letters: Optional[Dict[str, str]] = None,
     bar_width: float = 0.3,
     space_width: float = 0.3,
-    height: float = None,
+    height: Optional[float] = None,
     dpi: int = 200,
     min_std: float = 0,
-    min_value: float = None,
-    max_value: float = None,
+    min_value: Optional[float] = None,
+    max_value: Optional[float] = None,
     show_legend: bool = True,
     show_title: str = True,
     legend_position: str = "best",
-    colors: Dict[str, str] = None,
+    colors: Optional[Dict[str, str]] = None,
     alphas: Dict[str, float] = None,
-    facecolors: Dict[str, str] = None,
+    facecolors: Optional[Dict[str, str]] = None,
     orientation: str = "vertical",
     subplots: bool = False,
     plots_per_row: Union[int, str] = "auto",
@@ -81,20 +81,20 @@ def barplots(
     sanitize_metrics: bool = True,
         Whetever to automatically sanitize to standard name given features.
         For instance, "acc" to "Accuracy" or "lr" to "Learning rate"
-    letters: Dict[str, str] = None,
+    letters: Optional[Dict[str, str]] = None,
         Dictionary of letters to add to the top left of the barplots.
         Use the name of the metric (the dataframe column) as key of the dictionary.
         This is sometimes necessary on papers.
         By default it is None, that is no letter to be shown.
     bar_width: float = 0.3,
         Width of the bar of the barplot.
-    height: float = None,
+    height: Optional[float] = None,
         Height of the barplot. By default golden ratio of the width.
     dpi: int = 200,
         DPI for plotting the barplots.
     min_std: float = 0.001,
         Minimum standard deviation for showing error bars.
-    min_value: float = None,
+    min_value: Optional[float] = None,
         Minimum value for the barplot.
     max_value: float = 0,
         Maximum value for the barplot.
@@ -114,7 +114,7 @@ def barplots(
     path: str = None,
         Path where to save the barplot.
         Use None for not saving it (default).
-    colors: Dict[str, str] = None,
+    colors: Optional[Dict[str, str]] = None,
         Dict of colors to be used for innermost index of dataframe.
         By default None, using the default color tableau from matplotlib.
     alphas: Dict[str, float] = None,

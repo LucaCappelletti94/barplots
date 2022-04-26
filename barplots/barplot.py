@@ -1,33 +1,33 @@
 """Module implementing plotting of a barplot."""
 import pandas as pd
-from typing import List, Tuple, Dict, Union, Callable
+from typing import List, Tuple, Dict, Union, Callable, Optional
 from matplotlib.colors import TABLEAU_COLORS, CSS4_COLORS
 from matplotlib.figure import Figure
 from matplotlib.axes import Axes
 from .utils import get_axes, get_levels, \
-    remove_duplicated_legend_labels, get_max_bar_lenght,\
+    remove_duplicated_legend_labels, get_max_bar_length,\
     save_picture, plot_bars, plot_bar_labels
-from sanitize_ml_labels import is_normalized_metric
+from sanitize_ml_labels import is_normalized_metric, is_absolutely_normalized_metric
 
 
 def barplot(
     df: pd.DataFrame,
     bar_width: float = 0.3,
     space_width: float = 0.3,
-    height: float = None,
+    height: Optional[float] = None,
     dpi: int = 200,
     min_std: float = 0,
-    min_value: float = None,
-    max_value: float = None,
+    min_value: Optional[float] = None,
+    max_value: Optional[float] = None,
     show_legend: bool = True,
     show_title: str = True,
     legend_position: str = "best",
-    data_label: str = None,
-    title: str = None,
-    path: str = None,
-    colors: Dict[str, str] = None,
-    alphas: Dict[str, float] = None,
-    facecolors: Dict[str, str] = None,
+    data_label: Optional[str] = None,
+    title: Optional[str] = None,
+    path: Optional[str] = None,
+    colors: Optional[Dict[str, str]] = None,
+    alphas: Optional[Dict[str, float]] = None,
+    facecolors: Optional[Dict[str, str]] = None,
     orientation: str = "vertical",
     subplots: bool = False,
     plots_per_row: Union[int, str] = "auto",
@@ -42,7 +42,7 @@ def barplot(
     custom_defaults: Dict[str, List[str]] = None,
     sort_subplots: Callable[[List], List] = None,
     sort_bars: Callable[[pd.DataFrame], pd.DataFrame] = None,
-    letter: str = None
+    letter: Optional[str] = None
 ) -> Tuple[Figure, Axes]:
     """Plot barplot corresponding to given dataframe, containing y value and optionally std.
 
@@ -52,13 +52,13 @@ def barplot(
         Dataframe from which to extrat data for plotting barplot.
     bar_width: float = 0.3,
         Width of the bar of the barplot.
-    height: float = None,
+    height: Optional[float] = None,
         Height of the barplot. By default golden ratio of the width.
     dpi: int = 200,
         DPI for plotting the barplots.
     min_std: float = 0.001,
         Minimum standard deviation for showing error bars.
-    min_value: float = None,
+    min_value: Optional[float] = None,
         Minimum value for the barplot.
     max_value: float = 0,
         Maximum value for the barplot.
@@ -69,19 +69,19 @@ def barplot(
         Whetever to show or not the barplot title.
     legend_position: str = "best",
         Legend position, by default "best".
-    data_label: str = None,
+    data_label: Optional[str] = None,
         Barplot's data_label.
         Use None for not showing any data_label (default).
-    title: str = None,
+    title: Optional[str] = None,
         Barplot's title.
         Use None for not showing any title (default).
-    path: str = None,
+    path: Optional[str] = None,
         Path where to save the barplot.
         Use None for not saving it (default).
-    colors: Dict[str, str] = None,
+    colors: Optional[Dict[str, str]] = None,
         Dict of colors to be used for innermost index of dataframe.
         By default None, using the default color tableau from matplotlib.
-    alphas: Dict[str, float] = None,
+    alphas: Optional[Dict[str, float]] = None,
         Dict of alphas to be used for innermost index of dataframe.
         By default None, using the default alpha.
     orientation: str = "vertical",
@@ -115,7 +115,7 @@ def barplot(
         Can either be "linear" or "log".
     custom_defaults: Dict[str, List[str]],
         Dictionary to normalize labels.
-    letter: str = None,
+    letter: Optional[str] = None,
         Letter to show on the top left of the figure.
         This is sometimes necessary on papers.
         By default it is None, that is no letter to be shown.
@@ -249,20 +249,24 @@ def barplot(
                 custom_defaults
             )
 
-        max_lenght, min_lenght = get_max_bar_lenght(
+        max_length, min_length = get_max_bar_length(
             sub_df, bar_width, space_width)
-        max_lenght *= 1.01
-        min_lenght *= 1.01
-        min_lenght = min(min_lenght, 0)
+        max_length *= 1.01
+        min_length *= 1.01
+        min_length = min(min_length, 0)
 
         if min_value is not None:
-            min_lenght = min_value
+            min_length = min_value
 
-        if auto_normalize_metrics and (is_normalized_metric(df.columns[0]) or is_normalized_metric(title)):
-            max_lenght = max(max_lenght, 1.01)
+        if auto_normalize_metrics:
+            if is_normalized_metric(df.columns[0]) or is_normalized_metric(title):
+                max_length = max(max_length, 1.01)
+            elif is_absolutely_normalized_metric(df.columns[0]) or is_absolutely_normalized_metric(title):
+                max_length = max(max_length, 1.01)
+                min_length = min(min_length, -1.01)
 
         if max_value is not None:
-            max_lenght = max_value
+            max_length = max_value
 
         if placeholder:
             ax.text(
@@ -278,9 +282,9 @@ def barplot(
             )
 
         if vertical:
-            ax.set_ylim(min_lenght, max_lenght)
+            ax.set_ylim(min_length, max_length)
         else:
-            ax.set_xlim(min_lenght, max_lenght)
+            ax.set_xlim(min_length, max_length)
 
     if letter:
         figure.text(
