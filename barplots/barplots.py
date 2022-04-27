@@ -4,6 +4,7 @@ from typing import Dict, List, Tuple, Callable, Union, Optional
 
 import pandas as pd
 from sanitize_ml_labels import sanitize_ml_labels
+from userinput.utils import closest
 from tqdm.auto import tqdm
 from matplotlib.figure import Figure
 from matplotlib.axis import Axis
@@ -161,6 +162,27 @@ def barplots(
     Tuple with list of rendered figures and rendered axes.
     """
     if groupby is not None:
+        if len(groupby) == 0:
+            raise ValueError(
+                "The provided list of columns to execute groupby on "
+                "is empty."
+            )
+        for column_name in groupby:
+            if column_name not in df.columns:
+                raise ValueError(
+                    (
+                        "The provided column {column_name} is not available "
+                        "in the set of columns of the dataframe. Di you mean "
+                        "the column {closest_column_name}?"
+                    ).format(
+                        column_name=column_name,
+                        closest_column_name=closest(column_name, df.columns)
+                    )
+                )
+            else:
+                # So we can standardize this.
+                df[column_name] = df[column_name].astype(str)
+
         groupby = df.groupby(groupby).agg(
             ("mean",)+(("std",) if show_standard_deviation else tuple())
         ).sort_index()
