@@ -19,7 +19,7 @@ def _barplot(kwargs: Dict) -> Tuple[Figure, Axis]:
 
 def barplots(
     df: pd.DataFrame,
-    groupby: Optional[List[str]] = None,
+    groupby: Optional[Union[List[str], str]] = None,
     show_standard_deviation: bool = True,
     title: str = "{feature}",
     data_label: str = "{feature}",
@@ -63,104 +63,106 @@ def barplots(
 
     Parameters
     ----------
-    df: pd.DataFrame,
+    df: pd.DataFrame
         Dataframe from which to extrat data for plotting barplot.
-    groupby: List = None,
+    groupby: Optional[Union[List[str], str]] = None
         List of groupby over to run group by.
         If groupby was previously executed, leave this as None.
-    show_standard_deviation:bool=True,
+    show_standard_deviation:bool=True
         Whetever to show or not the standard deviation. By default True.
-    title: str = "{feature}",
+    title: str = "{feature}"
         The title to use for the subgraphs.
         The `feature` placeholder is replaced with the considered column name.
-    data_label: str = "{feature}",
+    data_label: str = "{feature}"
         The label to use for the data axis.
         The `feature` placeholder is replaced with the considered column name.
-    path: str = "barplots/{feature}.png",
+    path: str = "barplots/{feature}.png"
         The path where to store the pictures.
         The `feature` placeholder is replaced with the considered column name.
-    sanitize_metrics: bool = True,
+    sanitize_metrics: bool = True
         Whetever to automatically sanitize to standard name given features.
         For instance, "acc" to "Accuracy" or "lr" to "Learning rate"
-    letters: Optional[Dict[str, str]] = None,
+    letters: Optional[Dict[str, str]] = None
         Dictionary of letters to add to the top left of the barplots.
         Use the name of the metric (the dataframe column) as key of the dictionary.
         This is sometimes necessary on papers.
         By default it is None, that is no letter to be shown.
-    bar_width: float = 0.3,
+    bar_width: float = 0.3
         Width of the bar of the barplot.
-    height: Optional[float] = None,
+    height: Optional[float] = None
         Height of the barplot. By default golden ratio of the width.
-    dpi: int = 200,
+    dpi: int = 200
         DPI for plotting the barplots.
-    min_std: float = 0.001,
+    min_std: float = 0.001
         Minimum standard deviation for showing error bars.
-    min_value: Optional[float] = None,
+    min_value: Optional[float] = None
         Minimum value for the barplot.
-    max_value: float = 0,
+    max_value: float = 0
         Maximum value for the barplot.
-    show_legend: bool = True,
+    show_legend: bool = True
         Whetever to show or not the legend.
         If legend is hidden, the bar ticks are shown alternatively.
-    show_title: str = True,
+    show_title: str = True
         Whetever to show or not the barplot title.
-    legend_position: str = "best",
+    legend_position: str = "best"
         Legend position, by default "best".
-    data_label: str = None,
+    data_label: str = None
         Barplot's data_label.
         Use None for not showing any data_label (default).
-    title: str = None,
+    title: str = None
         Barplot's title.
         Use None for not showing any title (default).
-    path: str = None,
+    path: str = None
         Path where to save the barplot.
         Use None for not saving it (default).
-    colors: Optional[Dict[str, str]] = None,
+    colors: Optional[Dict[str, str]] = None
         Dict of colors to be used for innermost index of dataframe.
         By default None, using the default color tableau from matplotlib.
-    alphas: Dict[str, float] = None,
+    alphas: Dict[str, float] = None
         Dict of alphas to be used for innermost index of dataframe.
         By default None, using the default alpha.
-    orientation: str = "vertical",
+    orientation: str = "vertical"
         Orientation of the bars.
         Can either be "vertical" of "horizontal".
-    subplots: bool = False,
+    subplots: bool = False
         Whetever to slit the top indexing layer to multiple subplots.
-    plots_per_row: Union[int, str] = "auto",
+    plots_per_row: Union[int, str] = "auto"
         If subplots is True, specifies the number of plots for row.
         If "auto" is used, for vertical the default is 2 plots per row,
         while for horizontal the default is 4 plots per row.
-    minor_rotation: float = 0,
+    minor_rotation: float = 0
         Rotation for the minor ticks of the bars.
-    major_rotation: float = 0,
+    major_rotation: float = 0
         Rotation for the major ticks of the bars.
-    unique_minor_labels: bool = False,
+    unique_minor_labels: bool = False
         Avoid replicating minor labels on the same axis in multiple subplots settings.
-    unique_major_labels: bool = True,
+    unique_major_labels: bool = True
         Avoid replicating major labels on the same axis in multiple subplots settings.
-    unique_data_label: bool = True,
+    unique_data_label: bool = True
         Avoid replication of data axis label when using subplots.
-    auto_normalize_metrics: bool = True,
+    auto_normalize_metrics: bool = True
         Whetever to apply or not automatic normalization
         to the metrics that are recognized to be between
         zero and one. For example AUROC, AUPRC or accuracy.
-    placeholder: bool = False,
+    placeholder: bool = False
         Whetever to add a text on top of the barplots to show
         the word "placeholder". Useful when generating placeholder data.
-    scale: str = "linear",
+    scale: str = "linear"
         Scale to use for the barplots.
         Can either be "linear" or "log".
-    custom_defaults: Dict[str, List[str]],
+    custom_defaults: Dict[str, List[str]]
         Dictionary to normalize labels.
-    use_multiprocessing: bool = True,
+    use_multiprocessing: bool = True
         Whetever to use or not multiple processes.
-    verbose:bool,
+    verbose: bool
         Whetever to show or not the loading bar.
 
     Returns
     ---------------------
     Tuple with list of rendered figures and rendered axes.
     """
+    if isinstance(groupby, str):
+        groupby = [groupby]
     if groupby is not None:
         if len(groupby) == 0:
             raise ValueError(
