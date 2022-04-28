@@ -40,6 +40,9 @@ The dataframe to be provided to the barplots library may looks like the followin
 Specifically, in this example, we may create bar plots for the features Miss rate, fallout and Matthew Correlation Coefficient
 by grouping on the evaluation_type, unbalance, graph_name and normalization_name columns.
 
+An example CSV file can be seen `here <https://github.com/LucaCappelletti94/barplots/blob/master/tests/test_case.csv>`__.
+
+
 Usage examples
 ----------------------------------------------
 Here follows a set of examples of common usages. Basically, every graph show either the same data
