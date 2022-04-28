@@ -26,7 +26,7 @@ Consider reading these docstrings for learning the most recent updates to the li
 
 Examples of the DataFrame structure
 ----------------------------------------------
-The dataframe to be provided to the barplots library looks like:
+The dataframe to be provided to the barplots library may looks like the following:
 
 ===========  ==========  ==========  =================  ===========  =========================  ====================
   miss_rate    fall_out         mcc  evaluation_type      unbalance  graph_name                 normalization_name
@@ -42,6 +42,9 @@ The dataframe to be provided to the barplots library looks like:
   0.0859375    0.810547   0.150206   train                       10  MusMusculus                Right Laplacian
   0.0273438    0.646484   0.415357   test                        10  MusMusculus                Right Laplacian
 ===========  ==========  ==========  =================  ===========  =========================  ====================
+
+Specifically, in this example, we may create bar plots for the features Miss rate, fallout and Matthew Correlation Coefficient
+by grouping on the evaluation_type, unbalance, graph_name and normalization_name columns.
 
 Usage examples
 ----------------------------------------------

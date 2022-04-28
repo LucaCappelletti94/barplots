@@ -40,7 +40,7 @@ def barplots(
     alphas: Dict[str, float] = None,
     facecolors: Optional[Dict[str, str]] = None,
     orientation: str = "vertical",
-    subplots: bool = False,
+    subplots: Union[bool, str] = "auto",
     plots_per_row: Union[int, str] = "auto",
     minor_rotation: float = 0,
     major_rotation: float = 0,
@@ -124,8 +124,10 @@ def barplots(
     orientation: str = "vertical"
         Orientation of the bars.
         Can either be "vertical" of "horizontal".
-    subplots: bool = False
+    subplots: Union[bool, str] = "auto"
         Whetever to slit the top indexing layer to multiple subplots.
+        If left to "auto", it will enable automatically subplots when
+        an index in four dimensions is provided in the group by.
     plots_per_row: Union[int, str] = "auto"
         If subplots is True, specifies the number of plots for row.
         If "auto" is used, for vertical the default is 2 plots per row,
@@ -163,6 +165,18 @@ def barplots(
     """
     if isinstance(groupby, str):
         groupby = [groupby]
+
+    if subplots == "auto" and len(groupby) == 4:
+        subplots = True
+
+    if not subplots and len(groupby) > 3:
+        raise ValueError(
+            (
+                "Without subplots it is not possible to visualize a "
+                "dataframe with an index of size of {}."
+            ).format(len(groupby))
+        )
+
     if groupby is not None:
         if len(groupby) == 0:
             raise ValueError(
