@@ -28,18 +28,20 @@ Examples of the DataFrame structure
 ----------------------------------------------
 The dataframe to be provided to the barplots library looks like:
 
-  miss_rate    fall_out          mcc  evaluation_type      unbalance  graph_name                 normalization_name
------------  ----------  -----------  -----------------  -----------  -------------------------  --------------------
-  0.0253906    0.611328   0.448298    train                       10  AmanitaMuscariaKoideBx008  Right Laplacian
-  0.144531     0.466797   0.410576    test                       100  HomoSapiens                Right Laplacian
-  0.0664062    0.929688   0.00773939  test                       100  DrosophilaMelanogaster     Traditional
-  0            0.783203   0.348679    test                        10  CanisLupus                 Traditional
-  0.0117188    0.341797   0.684869    test                         1  AlligatorSinensis          Right Laplacian
-  0.0683594    0.621094   0.372645    test                        10  SusScrofa                  Right Laplacian
-  0.148438     0.890625  -0.0582855   test                       100  MusMusculus                Traditional
-  0.0722656    0.90625    0.0389359   test                        10  MusMusculus                Traditional
-  0.0800781    0.880859   0.0652175   train                        1  MusMusculus                Traditional
-  0.0234375    0.447266   0.584379    test                         1  AlligatorSinensis          Traditional
+===========  ==========  ==========  =================  ===========  =========================  ====================
+  miss_rate    fall_out         mcc  evaluation_type      unbalance  graph_name                 normalization_name
+===========  ==========  ==========  =================  ===========  =========================  ====================
+  0.0332031    0.705078   0.353357   train                       10  AlligatorSinensis          Traditional
+  0.240234     0.478516   0.289591   train                        1  CanisLupus                 Right Laplacian
+  0.0253906    0.931641   0.101643   train                      100  AlligatorSinensis          Right Laplacian
+  0.121094     0.699219   0.220219   train                       10  HomoSapiens                Traditional
+  0.0136719    0.292969   0.722095   test                         1  CanisLupus                 Right Laplacian
+  0.0605469    0.90625    0.0622185  test                        10  AmanitaMuscariaKoideBx008  Traditional
+  0.0078125    0.4375     0.614287   train                      100  AmanitaMuscariaKoideBx008  Traditional
+  0.171875     0.869141  -0.0572194  train                      100  AlligatorSinensis          Traditional
+  0.0859375    0.810547   0.150206   train                       10  MusMusculus                Right Laplacian
+  0.0273438    0.646484   0.415357   test                        10  MusMusculus                Right Laplacian
+===========  ==========  ==========  =================  ===========  =========================  ====================
 
 Usage examples
 ----------------------------------------------
