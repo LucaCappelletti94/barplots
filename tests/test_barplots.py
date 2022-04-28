@@ -35,9 +35,6 @@ def test_barplots():
         "unique_minor_labels": [
             True, False
         ],
-        "show_standard_deviation": [
-            True, False
-        ],
         "unique_major_labels": [
             True, False
         ],
