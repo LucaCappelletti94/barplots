@@ -166,8 +166,11 @@ def barplots(
     if isinstance(groupby, str):
         groupby = [groupby]
 
-    if subplots == "auto" and len(groupby) == 4:
-        subplots = True
+    if subplots == "auto":
+        if len(groupby) == 4:
+            subplots = True
+        else:
+            subplots = False
 
     if not subplots and len(groupby) > 3:
         raise ValueError(
