@@ -24,6 +24,23 @@ Documentation
 Most methods, in particular those exposed to user usage, are provided with doc strings.
 Consider reading these docstrings for learning the most recent updates to the library.
 
+Examples of the DataFrame structure
+----------------------------------------------
+The dataframe to be provided to the barplots library looks like:
+
+  miss_rate    fall_out          mcc  evaluation_type      unbalance  graph_name                 normalization_name
+-----------  ----------  -----------  -----------------  -----------  -------------------------  --------------------
+  0.0253906    0.611328   0.448298    train                       10  AmanitaMuscariaKoideBx008  Right Laplacian
+  0.144531     0.466797   0.410576    test                       100  HomoSapiens                Right Laplacian
+  0.0664062    0.929688   0.00773939  test                       100  DrosophilaMelanogaster     Traditional
+  0            0.783203   0.348679    test                        10  CanisLupus                 Traditional
+  0.0117188    0.341797   0.684869    test                         1  AlligatorSinensis          Right Laplacian
+  0.0683594    0.621094   0.372645    test                        10  SusScrofa                  Right Laplacian
+  0.148438     0.890625  -0.0582855   test                       100  MusMusculus                Traditional
+  0.0722656    0.90625    0.0389359   test                        10  MusMusculus                Traditional
+  0.0800781    0.880859   0.0652175   train                        1  MusMusculus                Traditional
+  0.0234375    0.447266   0.584379    test                         1  AlligatorSinensis          Traditional
+
 Usage examples
 ----------------------------------------------
 Here follows a set of examples of common usages. Basically, every graph show either the same data
