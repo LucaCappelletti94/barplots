@@ -3,6 +3,7 @@ from multiprocessing import Pool, cpu_count
 from typing import Dict, List, Tuple, Callable, Union, Optional
 
 import pandas as pd
+import numpy as np
 from sanitize_ml_labels import sanitize_ml_labels
 from userinput.utils import closest
 from tqdm.auto import tqdm
@@ -15,6 +16,26 @@ from .barplot import barplot
 def _barplot(kwargs: Dict) -> Tuple[Figure, Axis]:
     """Wrapper over barplot call to expand given kwargs."""
     return barplot(**kwargs)
+
+
+def plot_feature(
+    values: pd.Series,
+    skip_constant_columns: bool = True,
+    skip_boolean_columns: bool = True,
+) -> bool:
+    """Returns whether to plot a given column."""
+    return (
+        # It does not contain NaN values
+        not pd.isna(values).any().any() and
+        # This is not an empty dataframe
+        not len(values) == 0 and
+        # It is not a sporiously loaded numeric index
+        (values != np.arange(values.size)).any() and
+        # It is not a binary-only column
+        (not skip_boolean_columns or values.dtype != bool) and
+        # It is not a column with constant values
+        (not skip_constant_columns or (values != values.iloc[0]).any())
+    )
 
 
 def barplots(
@@ -48,6 +69,8 @@ def barplots(
     unique_major_labels: bool = True,
     unique_data_label: bool = True,
     auto_normalize_metrics: bool = True,
+    skip_constant_columns: bool = True,
+    skip_boolean_columns: bool = True,
     placeholder: bool = False,
     scale: str = "linear",
     custom_defaults: Dict[str, List[str]] = None,
@@ -146,6 +169,10 @@ def barplots(
         Whetever to apply or not automatic normalization
         to the metrics that are recognized to be between
         zero and one. For example AUROC, AUPRC or accuracy.
+    skip_constant_columns: bool = True
+        Whether to drop the constant columns from plotting.
+    skip_boolean_columns: bool = True
+        Whether to drop the boolean columns from plotting.
     placeholder: bool = False
         Whetever to add a text on top of the barplots to show
         the word "placeholder". Useful when generating placeholder data.
@@ -179,6 +206,17 @@ def barplots(
                 "dataframe with an index of size of {}."
             ).format(len(groupby))
         )
+
+    # Filtering out columns that are not visualizable.
+    df = df[[
+        column
+        for column in df.columns
+        if groupby is not None and column in groupby or plot_feature(
+            df[column],
+            skip_constant_columns=skip_constant_columns,
+            skip_boolean_columns=skip_boolean_columns
+        )
+    ]]
 
     if groupby is not None:
         if len(groupby) == 0:
@@ -253,7 +291,6 @@ def barplots(
             sort_subplots=sort_subplots,
             sort_bars=sort_bars,
         ) for original, feature in zip(original, features)
-        if not pd.isna(groupby[original]).any().any() and not len(groupby[original]) == 0
     ]
 
     if len(tasks) == 0:
