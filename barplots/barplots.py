@@ -29,6 +29,8 @@ def plot_feature(
         not pd.isna(values).any().any() and
         # This is not an empty dataframe
         not len(values) == 0 and
+        # This is not a column of objects
+        values.dtype != object and
         # It is not a sporiously loaded numeric index
         (values != np.arange(values.size)).any() and
         # It is not a binary-only column
