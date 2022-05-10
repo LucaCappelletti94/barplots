@@ -1,6 +1,7 @@
 import pandas as pd
 import pytest
 from barplots import barplots
+import warnings
 
 
 def test_wrong_parameters():

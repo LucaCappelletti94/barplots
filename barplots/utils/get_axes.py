@@ -92,6 +92,7 @@ def get_axes(
         figsize=(width*plots_per_row, height*nrows),
         dpi=dpi
     )
+    fig.patch.set_facecolor("white")
 
     if isinstance(axes, Axes):
         axes = np.array([axes])

@@ -240,7 +240,10 @@ def barplots(
                 )
             else:
                 # So we can standardize this.
+                backup = pd.options.mode.chained_assignment
+                pd.options.mode.chained_assignment = None
                 df[column_name] = df[column_name].astype(str)
+                pd.options.mode.chained_assignment = backup
 
         groupby = df.groupby(groupby).agg(
             ("mean",)+(("std",) if show_standard_deviation else tuple())
