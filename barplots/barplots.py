@@ -196,7 +196,7 @@ def barplots(
         groupby = [groupby]
 
     if subplots == "auto":
-        if len(groupby) == 4:
+        if groupby is not None and len(groupby) == 4:
             subplots = True
         else:
             subplots = False
