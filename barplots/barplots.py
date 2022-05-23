@@ -1,5 +1,4 @@
 """Module implementing plotting of multiple barplots in parallel and sequential manner."""
-from multiprocessing import Pool, cpu_count
 from typing import Dict, List, Tuple, Callable, Union, Optional
 
 import pandas as pd
@@ -12,10 +11,6 @@ from matplotlib.axis import Axis
 
 from .barplot import barplot
 
-
-def _barplot(kwargs: Dict) -> Tuple[Figure, Axis]:
-    """Wrapper over barplot call to expand given kwargs."""
-    return barplot(**kwargs)
 
 
 def plot_feature(
@@ -78,7 +73,6 @@ def barplots(
     custom_defaults: Dict[str, List[str]] = None,
     sort_subplots: Callable[[List], List] = None,
     sort_bars: Callable[[pd.DataFrame], pd.DataFrame] = None,
-    use_multiprocessing: bool = True,
     verbose: bool = True,
 ) -> Tuple[List[Figure], List[Axis]]:
     """Returns list of the built figures and axes.
@@ -183,8 +177,6 @@ def barplots(
         Can either be "linear" or "log".
     custom_defaults: Dict[str, List[str]]
         Dictionary to normalize labels.
-    use_multiprocessing: bool = True
-        Whetever to use or not multiple processes.
     verbose: bool
         Whetever to show or not the loading bar.
 
@@ -258,11 +250,12 @@ def barplots(
 
     if letters is None:
         letters = {}
+
     if sanitize_metrics:
         features = sanitize_ml_labels(features)
 
-    tasks = [
-        dict(
+    return [
+        barplot(
             df=groupby[[original]],
             title=title.format(feature=feature.replace("_", " ")),
             data_label=data_label.format(feature=feature.replace("_", " ")),
@@ -295,36 +288,12 @@ def barplots(
             custom_defaults=custom_defaults,
             sort_subplots=sort_subplots,
             sort_bars=sort_bars,
-        ) for original, feature in zip(original, features)
+        ) for original, feature in tqdm(
+            zip(original, features),
+            desc="Rendering barplots",
+            total=len(original),
+            dynamic_ncols=True,
+            leave=False,
+            disable=not verbose or len(original) == 1
+        )
     ]
-
-    if len(tasks) == 0:
-        raise ValueError("No plottable feature found in given dataframe!")
-
-    use_multiprocessing = use_multiprocessing and not len(tasks) == 1
-    arguments = dict(
-        desc="Rendering barplots",
-        total=len(tasks),
-        dynamic_ncols=True,
-        disable=not verbose
-    )
-
-    if use_multiprocessing:
-        with Pool(min(len(tasks), cpu_count())) as p:
-            try:
-                figures, axes = list(zip(*list(tqdm(
-                    p.imap(_barplot, tasks),
-                    **arguments
-                ))))
-                p.close()
-                p.join()
-            except Exception as e:
-                p.close()
-                p.join()
-                raise e
-    else:
-        figures, axes = list(zip(*[
-            barplot(**task)
-            for task in tqdm(tasks, **arguments)
-        ]))
-    return figures, axes
