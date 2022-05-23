@@ -39,8 +39,15 @@ def plot_bar_labels(
     for level in reversed(range(max(levels-2, 0), levels)):
         positions, labels = zip(*text_positions(df, bar_width, space_width, level))
         labels = sanitize_ml_labels(labels, custom_defaults=custom_defaults)
+
+        max_characters_number_in_minor_label = max((
+            len(label)
+            for label in labels
+        ))
+
         positions = [
-            round(pos, 5) for pos in positions
+            round(pos, 5)
+            for pos in positions
         ]
         positions = [
             position + width*0.0002 if position in other_positions else position
@@ -61,18 +68,20 @@ def plot_bar_labels(
                     which='minor',
                     labelrotation=minor_rotation
                 )
+
+                if minor_rotation > 80:
+                    length = 8 * max_characters_number_in_minor_label
+                else:
+                    length = 10
+
                 axes.tick_params(
                     axis='x',
                     which='major',
                     direction='out',
-                    length=max(
-                        label.get_window_extent(
-                            figure.canvas.get_renderer()).height
-                        for label in labels
-                    )/2,
+                    length=length,
                     width=0
                 )
-            if not minor:
+            else:
                 axes.tick_params(
                     axis='x',
                     which='major',
@@ -87,18 +96,24 @@ def plot_bar_labels(
                     which='minor',
                     labelrotation=minor_rotation
                 )
+
+                if minor_rotation > 80:
+                    length = 10
+                else:
+                    length = 8 * max_characters_number_in_minor_label
+
                 axes.tick_params(
                     axis='y',
                     which='major',
                     direction='out',
-                    length=max(
-                        label.get_window_extent(
-                            figure.canvas.get_renderer()).width
-                        for label in labels
-                    )/2,
+                    length=length,
+                    # This is the size of the actual `tick`
+                    # in the plot, which we do not want to show
+                    # for the major ticks in this case and therefore
+                    # we set it to zero.
                     width=0
                 )
-            if not minor:
+            else:
                 axes.tick_params(
                     axis='y',
                     which='major',

@@ -1,15 +1,27 @@
 """Module implementing plotting of a barplot."""
 import pandas as pd
 from typing import List, Tuple, Dict, Union, Callable, Optional
-from matplotlib.colors import TABLEAU_COLORS, CSS4_COLORS
+from matplotlib.colors import TABLEAU_COLORS as OLD_TABLEAU_COLORS
 from matplotlib.figure import Figure
-from matplotlib.patches import FancyBboxPatch
 from matplotlib.axes import Axes
 from .utils import get_axes, get_levels, \
     remove_duplicated_legend_labels, get_max_bar_length,\
     save_picture, plot_bars, plot_bar_labels
 from sanitize_ml_labels import is_normalized_metric, is_absolutely_normalized_metric
 
+# These colors are from Tableau
+TABLEAU_COLORS = [
+    '#4e79a7',
+    '#f28e2b',
+    '#e15759',
+    '#76b7b2',
+    '#59a14e',
+    "#edc949",
+    "#b07aa2",
+    "#ff9da7",
+    "#9c755f",
+    "#bab0ac",
+]
 
 def barplot(
     df: pd.DataFrame,
@@ -168,10 +180,10 @@ def barplot(
 
     if colors is None:
         colors = dict(
-            zip(levels[-1], list(TABLEAU_COLORS.keys()) + list(CSS4_COLORS.keys())))
+            zip(levels[-1], TABLEAU_COLORS + list(OLD_TABLEAU_COLORS.keys())))
 
     if alphas is None:
-        alphas = dict(zip(levels[-1], (0.9,)*len(levels[-1])))
+        alphas = dict(zip(levels[-1], (0.95,)*len(levels[-1])))
 
     if facecolors is None:
         facecolors = dict(zip(levels[0], ("white",)*len(levels[0])))
@@ -252,7 +264,10 @@ def barplot(
             )
 
         max_length, min_length = get_max_bar_length(
-            sub_df, bar_width, space_width)
+            sub_df,
+            bar_width,
+            space_width
+        )
         max_length *= 1.01
         min_length *= 1.01
         min_length = min(min_length, 0)

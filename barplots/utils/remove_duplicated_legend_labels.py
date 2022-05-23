@@ -24,12 +24,16 @@ def remove_duplicated_legend_labels(
     """
     handles, labels = axes.get_legend_handles_labels()
     by_label = dict(zip(labels, handles))
-    axes.legend(
+    legend = axes.legend(
         by_label.values(),
         sanitize_ml_labels(
             by_label.keys(),
             custom_defaults=custom_defaults
         ),
-        title=sanitize_ml_labels(legend_title, custom_defaults=custom_defaults),
+        prop={'size': 9},
         loc=legend_position
+    )
+    legend.set_title(
+        sanitize_ml_labels(legend_title, custom_defaults=custom_defaults),
+        prop=dict(weight='bold', size=9)
     )
