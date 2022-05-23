@@ -64,10 +64,10 @@ setup(
         "pillow",
         "pandas",
         "scipy",
-        "matplotlib",
+        "matplotlib>=3.5.2",
         "tqdm",
         "humanize",
-        "sanitize_ml_labels"
+        "sanitize_ml_labels>=1.0.39"
     ],
     extras_require=extras,
 )
