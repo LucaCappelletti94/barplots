@@ -38,7 +38,7 @@ def plot_feature(
 def barplots(
     df: pd.DataFrame,
     groupby: Optional[Union[List[str], str]] = None,
-    show_standard_deviation: bool = True,
+    show_standard_deviation: Union[bool, str] = "auto",
     title: str = "{feature}",
     data_label: str = "{feature}",
     path: str = "barplots/{feature}.png",
@@ -87,8 +87,13 @@ def barplots(
     groupby: Optional[Union[List[str], str]] = None
         List of groupby over to run group by.
         If groupby was previously executed, leave this as None.
-    show_standard_deviation:bool=True
-        Whetever to show or not the standard deviation. By default True.
+    show_standard_deviation: Union[bool, str] = "auto",
+        Whetever to show or not the standard deviation.
+        This can either be a boolean or "auto". With auto, we show the
+        standard deviation for all the metrics where two or more values
+        were provided, and we turn it off otherwise as it would not 
+        be defined with a single value.
+        By default "auto".
     title: str = "{feature}"
         The title to use for the subgraphs.
         The `feature` placeholder is replaced with the considered column name.
@@ -187,6 +192,11 @@ def barplots(
     if isinstance(groupby, str):
         groupby = [groupby]
 
+    if len(df.columns) == 0:
+        raise ValueError(
+            "The provided DataFrame does not have any column."
+        )
+
     if subplots == "auto":
         if groupby is not None and len(groupby) == 4:
             subplots = True
@@ -242,6 +252,30 @@ def barplots(
         ).sort_index()
     else:
         groupby = df
+
+    # If the use has left it to us to decide whether to show
+    # or not the standard deviation, we go hunting for Nan values.
+    # We proceed to drop the columns of the standard deviation with
+    # NaN values in every occasion we encounter them.
+    if show_standard_deviation == "auto":
+        # First we check whether the dataframe we are currently
+        # processing has multi-index columns. If it does not,
+        # then this is a custom dataframe and we need to interfere
+        # with it.
+        if issubclass(groupby.columns.__class__, pd.MultiIndex):
+            for column in groupby.columns:
+                # We also need to check whether there is any "std"
+                # column, as it may be the case that this is a custom
+                # dataframe without such a sub-column.
+                if "std" not in groupby[column]:
+                    continue
+                # If we find any NaN value, we drop the sub-column.
+                if groupby[column]["std"].isna().any():
+                    groupby.drop(
+                        columns=[(column, "std")],
+                        inplace=True
+                    )
+
 
     features = original = {
         col if isinstance(col, str) else col[0]
