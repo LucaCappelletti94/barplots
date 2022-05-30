@@ -267,15 +267,14 @@ def barplots(
                 # We also need to check whether there is any "std"
                 # column, as it may be the case that this is a custom
                 # dataframe without such a sub-column.
-                if "std" not in groupby[column]:
+                if "std" not in column:
                     continue
                 # If we find any NaN value, we drop the sub-column.
-                if groupby[column]["std"].isna().any():
+                if groupby[column].isna().any():
                     groupby.drop(
-                        columns=[(column, "std")],
+                        columns=[column],
                         inplace=True
                     )
-
 
     features = original = {
         col if isinstance(col, str) else col[0]
