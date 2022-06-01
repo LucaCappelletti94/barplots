@@ -49,6 +49,7 @@ def plot_bar_labels(
 
     if unique_data_label:
         axes.set_ylabel("")
+    
     for level in reversed(range(max(levels-2, 0), levels)):
         positions, labels = zip(
             *text_positions(df, bar_width, space_width, level))
@@ -77,9 +78,11 @@ def plot_bar_labels(
                 max_characters_number_in_labels > 4 and
                 vertical
             ):
-                minor_rotation = 90
+                adapted_minor_rotation = 90
             else:
-                minor_rotation = 0
+                adapted_minor_rotation = 0
+        else:
+            adapted_minor_rotation = minor_rotation
 
         # Handle the automatic rotation of major labels.
         if major_rotation == "auto":
@@ -96,9 +99,11 @@ def plot_bar_labels(
                 width * 10 / max_characters_number_in_labels > len(set(labels)) and
                 not vertical
             ):
-                major_rotation = 90
+                adapted_major_rotation = 90
             else:
-                major_rotation = 0
+                adapted_major_rotation = 0
+        else:
+            adapted_major_rotation = major_rotation
 
         if minor and unique_minor_labels:
             continue
@@ -111,10 +116,10 @@ def plot_bar_labels(
                 axes.tick_params(
                     axis='x',
                     which='minor',
-                    labelrotation=minor_rotation
+                    labelrotation=adapted_minor_rotation
                 )
 
-                if minor_rotation > 80:
+                if adapted_minor_rotation > 80:
                     length = 8 * max_characters_number_in_labels
                 else:
                     length = 10
@@ -130,7 +135,7 @@ def plot_bar_labels(
                 axes.tick_params(
                     axis='x',
                     which='major',
-                    labelrotation=major_rotation
+                    labelrotation=adapted_major_rotation
                 )
         else:
             axes.set_yticks(positions, minor=minor)
@@ -139,10 +144,10 @@ def plot_bar_labels(
                 axes.tick_params(
                     axis='y',
                     which='minor',
-                    labelrotation=minor_rotation
+                    labelrotation=adapted_minor_rotation
                 )
 
-                if minor_rotation > 80:
+                if adapted_minor_rotation > 80:
                     length = 10
                 else:
                     length = 8 * max_characters_number_in_labels
@@ -159,9 +164,8 @@ def plot_bar_labels(
                     width=0
                 )
             else:
-                print(major_rotation)
                 axes.tick_params(
                     axis='y',
                     which='major',
-                    labelrotation=major_rotation
+                    labelrotation=adapted_major_rotation
                 )
