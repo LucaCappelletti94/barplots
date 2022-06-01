@@ -54,7 +54,7 @@ def plot_bar_labels(
             *text_positions(df, bar_width, space_width, level))
         labels = sanitize_ml_labels(labels, custom_defaults=custom_defaults)
 
-        max_characters_number_in_labels = max((c
+        max_characters_number_in_labels = max((
             len(label)
             for label in labels
         ))
