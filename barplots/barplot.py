@@ -280,7 +280,8 @@ def barplot(
                 max_length = max(max_length, 1.01)
             elif is_absolutely_normalized_metric(df.columns[0]) or is_absolutely_normalized_metric(title):
                 max_length = max(max_length, 1.01)
-                min_length = min(min_length, -1.01)
+                if min_length < 0:
+                    min_length = min(min_length, -1.01)
 
         if max_value is not None:
             max_length = max_value
