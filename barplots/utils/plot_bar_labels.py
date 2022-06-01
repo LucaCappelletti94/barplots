@@ -83,6 +83,14 @@ def plot_bar_labels(
 
         # Handle the automatic rotation of major labels.
         if major_rotation == "auto":
+            print(
+                not minor,
+                width * 10,
+                max_characters_number_in_labels,
+                len(set(labels)),
+                width * 10 / max_characters_number_in_labels > len(set(labels)),
+                not vertical
+            )
             if (
                 not minor and
                 width * 10 / max_characters_number_in_labels > len(set(labels)) and
