@@ -1,10 +1,12 @@
+from typing import Dict, List, Union
+
+import pandas as pd
 from matplotlib.axes import Axes
 from matplotlib.figure import Figure
-from .text_positions import text_positions
-import pandas as pd
-from typing import Dict, List
-from .get_max_bar_position import get_max_bar_position
 from sanitize_ml_labels import sanitize_ml_labels
+
+from .get_max_bar_position import get_max_bar_position
+from .text_positions import text_positions
 
 
 def plot_bar_labels(
@@ -15,8 +17,8 @@ def plot_bar_labels(
     levels: int,
     bar_width: float,
     space_width: float,
-    minor_rotation: float,
-    major_rotation: float,
+    minor_rotation: Union[float, str],
+    major_rotation: Union[float, str],
     unique_minor_labels: bool,
     unique_major_labels: bool,
     unique_data_label: bool,
@@ -25,6 +27,16 @@ def plot_bar_labels(
     """
     Parameters
     ------------
+    minor_rotation: Union[float, str]
+        Rotation for the minor ticks of the bars.
+        By default, with the "auto" mode, the library tries to find
+        the rotation with which we minimize the overlap for the provided
+        labels, including also the overlap with minor and major.
+    major_rotation: Union[float, str]
+        Rotation for the major ticks of the bars.
+        By default, with the "auto" mode, the library tries to find
+        the rotation with which we minimize the overlap for the provided
+        labels, including also the overlap with minor and major.
     unique_minor_labels: bool = True,
         Avoid replicating minor labels on the same axis in multiple subplots settings.
     unique_major_labels: bool = True,
@@ -34,13 +46,15 @@ def plot_bar_labels(
     """
     other_positions = set()
     width = get_max_bar_position(df, bar_width, space_width)
+
     if unique_data_label:
         axes.set_ylabel("")
     for level in reversed(range(max(levels-2, 0), levels)):
-        positions, labels = zip(*text_positions(df, bar_width, space_width, level))
+        positions, labels = zip(
+            *text_positions(df, bar_width, space_width, level))
         labels = sanitize_ml_labels(labels, custom_defaults=custom_defaults)
 
-        max_characters_number_in_minor_label = max((
+        max_characters_number_in_labels = max((
             len(label)
             for label in labels
         ))
@@ -55,6 +69,25 @@ def plot_bar_labels(
         ]
         other_positions |= set(positions)
         minor = level == levels-1
+
+        # Handle the automatic rotation of minor labels.
+        if (
+            minor and
+            max_characters_number_in_labels > 4 and
+            minor_rotation == "auto" and
+            vertical
+        ):
+            minor_rotation = 90
+
+        # Handle the automatic rotation of major labels.
+        if (
+            not minor and
+            width / (8 * max_characters_number_in_labels) > len(set(labels)) and
+            minor_rotation == "auto" and
+            not vertical
+        ):
+            major_rotation = 90
+
         if minor and unique_minor_labels:
             continue
         if not minor and unique_major_labels:
@@ -70,7 +103,7 @@ def plot_bar_labels(
                 )
 
                 if minor_rotation > 80:
-                    length = 8 * max_characters_number_in_minor_label
+                    length = 8 * max_characters_number_in_labels
                 else:
                     length = 10
 
@@ -100,7 +133,7 @@ def plot_bar_labels(
                 if minor_rotation > 80:
                     length = 10
                 else:
-                    length = 8 * max_characters_number_in_minor_label
+                    length = 8 * max_characters_number_in_labels
 
                 axes.tick_params(
                     axis='y',

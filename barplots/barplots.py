@@ -60,9 +60,9 @@ def barplots(
     orientation: str = "vertical",
     subplots: Union[bool, str] = "auto",
     plots_per_row: Union[int, str] = "auto",
-    minor_rotation: float = 0,
-    major_rotation: float = 0,
-    unique_minor_labels: bool = False,
+    minor_rotation: Union[float, str] = "auto",
+    major_rotation: Union[float, str] = "auto",
+    unique_minor_labels: bool = True,
     unique_major_labels: bool = True,
     unique_data_label: bool = True,
     auto_normalize_metrics: bool = True,
@@ -156,10 +156,16 @@ def barplots(
         If subplots is True, specifies the number of plots for row.
         If "auto" is used, for vertical the default is 2 plots per row,
         while for horizontal the default is 4 plots per row.
-    minor_rotation: float = 0
+    minor_rotation: Union[float, str] = "auto"
         Rotation for the minor ticks of the bars.
-    major_rotation: float = 0
+        By default, with the "auto" mode, the library tries to find
+        the rotation with which we minimize the overlap for the provided
+        labels, including also the overlap with minor and major.
+    major_rotation: Union[float, str] = "auto"
         Rotation for the major ticks of the bars.
+        By default, with the "auto" mode, the library tries to find
+        the rotation with which we minimize the overlap for the provided
+        labels, including also the overlap with minor and major.
     unique_minor_labels: bool = False
         Avoid replicating minor labels on the same axis in multiple subplots settings.
     unique_major_labels: bool = True

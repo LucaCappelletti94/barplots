@@ -67,7 +67,7 @@ setup(
         "matplotlib>=3.5.2",
         "tqdm",
         "humanize",
-        "sanitize_ml_labels>=1.0.39"
+        "sanitize_ml_labels>=1.0.41"
     ],
     extras_require=extras,
 )
