@@ -186,7 +186,8 @@ def barplot(
 
     if colors is None:
         colors = dict(
-            zip(levels[-1], TABLEAU_COLORS + list(OLD_TABLEAU_COLORS.keys())))
+            zip(levels[-1], TABLEAU_COLORS + list(OLD_TABLEAU_COLORS.keys()))
+        )
 
     if alphas is None:
         alphas = dict(zip(levels[-1], (0.95,)*len(levels[-1])))

@@ -10,6 +10,7 @@ def get_best_match(mapping, index):
     }
     if not isinstance(index, tuple):
         index = (index,)
+    
     scores = {
         key: sum(
             len(match)
@@ -19,4 +20,5 @@ def get_best_match(mapping, index):
         )
         for key in mapping
     }
+    
     return mapping[max(scores.keys(), key=(lambda key: scores[key]))]
