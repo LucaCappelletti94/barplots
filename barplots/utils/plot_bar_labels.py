@@ -54,7 +54,7 @@ def plot_bar_labels(
             *text_positions(df, bar_width, space_width, level))
         labels = sanitize_ml_labels(labels, custom_defaults=custom_defaults)
 
-        max_characters_number_in_labels = max((
+        max_characters_number_in_labels = max((c
             len(label)
             for label in labels
         ))
@@ -85,7 +85,7 @@ def plot_bar_labels(
         if major_rotation == "auto":
             if (
                 not minor and
-                width / (8 * max_characters_number_in_labels) > len(set(labels)) and
+                width * 10 / max_characters_number_in_labels > len(set(labels)) and
                 not vertical
             ):
                 major_rotation = 90
