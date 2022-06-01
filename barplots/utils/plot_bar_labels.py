@@ -71,22 +71,26 @@ def plot_bar_labels(
         minor = level == levels-1
 
         # Handle the automatic rotation of minor labels.
-        if (
-            minor and
-            max_characters_number_in_labels > 4 and
-            minor_rotation == "auto" and
-            vertical
-        ):
-            minor_rotation = 90
+        if minor_rotation == "auto":
+            if (
+                minor and
+                max_characters_number_in_labels > 4 and
+                vertical
+            ):
+                minor_rotation = 90
+            else:
+                minor_rotation = 0
 
         # Handle the automatic rotation of major labels.
-        if (
-            not minor and
-            width / (8 * max_characters_number_in_labels) > len(set(labels)) and
-            minor_rotation == "auto" and
-            not vertical
-        ):
-            major_rotation = 90
+        if major_rotation == "auto":
+            if (
+                not minor and
+                width / (8 * max_characters_number_in_labels) > len(set(labels)) and
+                not vertical
+            ):
+                major_rotation = 90
+            else:
+                major_rotation = 0
 
         if minor and unique_minor_labels:
             continue
