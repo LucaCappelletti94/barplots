@@ -81,8 +81,6 @@ def plot_bar_labels(
             else:
                 minor_rotation = 0
 
-        print(len(set(labels)), width * 10, max_characters_number_in_labels, minor, vertical)
-
         # Handle the automatic rotation of major labels.
         if major_rotation == "auto":
             if (
@@ -121,6 +119,7 @@ def plot_bar_labels(
                     width=0
                 )
             else:
+                print(major_rotation)
                 axes.tick_params(
                     axis='x',
                     which='major',
