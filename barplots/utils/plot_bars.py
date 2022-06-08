@@ -42,8 +42,8 @@ def plot_bars(
             y=y,
             std=std,
             bar_width=bar_width,
-            alpha=alphas[index[-1]],#get_best_match(alphas, (top_index, *index)),
-            color=colors[index[-1]],#get_best_match(colors, (top_index, *index)),
+            alpha=alphas[index[-1]] if index[-1] in alphas else get_best_match(alphas, (top_index, *index)),
+            color=colors[index[-1]] if index[-1] in colors else get_best_match(colors, (top_index, *index)),
             label=index[-1],
             **kwargs
         )
