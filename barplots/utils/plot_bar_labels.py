@@ -75,7 +75,7 @@ def plot_bar_labels(
         if minor_rotation == "auto":
             if (
                 minor and
-                width * 7 / max_characters_number_in_labels < len(set(labels))
+                width * 5 / max_characters_number_in_labels < len(set(labels))
             ):
                 adapted_minor_rotation = 90
             else:
