@@ -94,13 +94,13 @@ def plot_bar_labels(
         if major_rotation == "auto":
             if (
                 not minor and
-                width * 4 / max_characters_number_in_labels > len(set(labels)) and
+                len(set(labels)) < width * 6 / max_characters_number_in_labels and
                 not vertical
             ):
                 adapted_major_rotation = 90
             elif (
                 not minor and
-                width * 6 / max_characters_number_in_labels < len(set(labels)) and
+                width * 6 / max_characters_number_in_labels > len(set(labels)) and
                 vertical
             ):
                 adapted_major_rotation = 90
