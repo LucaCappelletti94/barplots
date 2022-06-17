@@ -45,7 +45,7 @@ def barplots(
     sanitize_metrics: bool = True,
     letters: Optional[Dict[str, str]] = None,
     bar_width: float = 0.3,
-    space_width: float = 0.3,
+    space_width: float = 0.2,
     height: Optional[float] = None,
     dpi: int = 200,
     min_std: float = 0,
@@ -113,6 +113,8 @@ def barplots(
         By default it is None, that is no letter to be shown.
     bar_width: float = 0.3
         Width of the bar of the barplot.
+    space_width: float = 0.2
+        Width of the space between bar groups.
     height: Optional[float] = None
         Height of the barplot. By default golden ratio of the width.
     dpi: int = 200

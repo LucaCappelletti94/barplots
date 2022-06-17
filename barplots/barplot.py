@@ -26,7 +26,7 @@ TABLEAU_COLORS = [
 def barplot(
     df: pd.DataFrame,
     bar_width: float = 0.3,
-    space_width: float = 0.3,
+    space_width: float = 0.2,
     height: Optional[float] = None,
     dpi: int = 200,
     min_std: float = 0,
@@ -65,6 +65,8 @@ def barplot(
         Dataframe from which to extrat data for plotting barplot.
     bar_width: float = 0.3,
         Width of the bar of the barplot.
+    space_width: float = 0.2
+        Width of the space between bar groups.
     height: Optional[float] = None,
         Height of the barplot. By default golden ratio of the width.
     dpi: int = 200,
