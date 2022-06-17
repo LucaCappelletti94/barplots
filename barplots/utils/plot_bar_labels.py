@@ -92,10 +92,9 @@ def plot_bar_labels(
 
         # Handle the automatic rotation of major labels.
         if major_rotation == "auto":
-            print(not minor, width * 5 / max_characters_number_in_labels, not vertical)
             if (
                 not minor and
-                len(set(labels)) >= width * 5 / max_characters_number_in_labels and
+                len(set(labels)) <= width * 5 / max_characters_number_in_labels and
                 not vertical
             ):
                 adapted_major_rotation = 90
