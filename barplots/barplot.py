@@ -23,6 +23,7 @@ TABLEAU_COLORS = [
     "#bab0ac",
 ]
 
+
 def barplot(
     df: pd.DataFrame,
     bar_width: float = 0.3,
@@ -178,7 +179,7 @@ def barplot(
         if subplots:
             plots_per_row = min(
                 len(levels[0]),
-                (1 if df.shape[0] > 10 else 2) if vertical else 4
+                (1 if df.shape[0] > 20 else 2) if vertical else 4
             )
     else:
         plots_per_row = min(
