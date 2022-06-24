@@ -125,7 +125,7 @@ def plot_bar_labels(
                 )
 
                 if adapted_minor_rotation > 80:
-                    length = 7 * max_characters_number_in_labels
+                    length = 6 * max_characters_number_in_labels
                 else:
                     length = 20
 
@@ -158,7 +158,7 @@ def plot_bar_labels(
                 if adapted_minor_rotation > 80:
                     length = 20
                 else:
-                    length = 7 * max_characters_number_in_labels
+                    length = 6 * max_characters_number_in_labels
 
                 axes.tick_params(
                     axis='y',
