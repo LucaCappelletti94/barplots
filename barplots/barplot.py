@@ -199,9 +199,6 @@ def barplot(
 
     sorted_level = levels[0]
 
-    if sort_subplots is not None:
-        sorted_level = sort_subplots(sorted_level)
-
     if subplots:
         titles = sorted_level
     else:
