@@ -34,7 +34,8 @@ def barplot(
     min_value: Optional[float] = None,
     max_value: Optional[float] = None,
     show_legend: bool = True,
-    show_title: str = True,
+    show_title: bool = True,
+    show_column_name: bool = True,
     legend_position: str = "best",
     data_label: Optional[str] = None,
     title: Optional[str] = None,
@@ -81,7 +82,7 @@ def barplot(
     show_legend: bool = True,
         Whetever to show or not the legend.
         If legend is hidden, the bar ticks are shown alternatively.
-    show_title: str = True,
+    show_title: bool = True,
         Whetever to show or not the barplot title.
     legend_position: str = "best",
         Legend position, by default "best".
@@ -221,7 +222,8 @@ def barplot(
         expected_levels,
         scale,
         facecolors,
-        show_title
+        show_title,
+        show_column_name
     )
 
     for i, (index, ax) in enumerate(zip(titles, axes)):
