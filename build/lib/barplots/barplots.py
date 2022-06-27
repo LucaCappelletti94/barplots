@@ -13,7 +13,7 @@ from .barplot import barplot
 
 
 
-def plot_feature(
+def should_plot_feature(
     values: pd.Series,
     skip_constant_columns: bool = True,
     skip_boolean_columns: bool = True,
@@ -52,7 +52,7 @@ def barplots(
     min_value: Optional[float] = None,
     max_value: Optional[float] = None,
     show_legend: bool = True,
-    show_title: bool = True,
+    show_title: str = True,
     show_column_name: bool = True,
     legend_position: str = "best",
     colors: Optional[Dict[str, str]] = None,
@@ -129,8 +129,10 @@ def barplots(
     show_legend: bool = True
         Whetever to show or not the legend.
         If legend is hidden, the bar ticks are shown alternatively.
-    show_title: bool = True
+    show_title: str = True
         Whetever to show or not the barplot title.
+    show_column_name: bool = True
+        Whether to show the metric name.
     legend_position: str = "best"
         Legend position, by default "best".
     data_label: str = None
@@ -224,12 +226,19 @@ def barplots(
     df = df[[
         column
         for column in df.columns
-        if groupby is not None and column in groupby or plot_feature(
+        if groupby is not None and column in groupby or should_plot_feature(
             df[column],
             skip_constant_columns=skip_constant_columns,
             skip_boolean_columns=skip_boolean_columns
         )
     ]]
+
+    if len(df.columns) == 0:
+        raise ValueError(
+            "Once the columns have been filtered for NaN values, "
+            "constant values and non-numeric values, "
+            "no columns remain."
+        )
 
     if groupby is not None:
         if len(groupby) == 0:
