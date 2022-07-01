@@ -262,8 +262,6 @@ def barplots(
                 df[column_name] = df[column_name].astype(str)
                 pd.options.mode.chained_assignment = backup
 
-        print(df)
-
         groupby = df.groupby(groupby).agg(
             ("mean",)+(("std",) if show_standard_deviation else tuple())
         ).sort_index()
