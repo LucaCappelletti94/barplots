@@ -53,6 +53,7 @@ def barplots(
     min_value: Optional[float] = None,
     max_value: Optional[float] = None,
     show_legend: bool = True,
+    show_last_level_as_legend: bool = True,
     show_title: str = True,
     show_column_name: bool = True,
     legend_position: str = "best",
@@ -130,7 +131,9 @@ def barplots(
         Minimum value for the barplot.
     max_value: float = 0
         Maximum value for the barplot.
-    show_legend: bool = True
+    show_legend: bool = True,
+        Whether to show the legend.
+    show_last_level_as_legend: bool = True
         Whetever to show or not the legend.
         If legend is hidden, the bar ticks are shown alternatively.
     show_title: str = True
@@ -316,6 +319,7 @@ def barplots(
             min_value=min_value,
             max_value=max_value,
             show_legend=show_legend,
+            show_last_level_as_legend=show_last_level_as_legend,
             show_title=show_title,
             show_column_name=show_column_name,
             legend_position=legend_position,

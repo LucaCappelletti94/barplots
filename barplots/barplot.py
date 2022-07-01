@@ -34,6 +34,7 @@ def barplot(
     min_value: Optional[float] = None,
     max_value: Optional[float] = None,
     show_legend: bool = True,
+    show_last_level_as_legend: bool = True,
     show_title: str = True,
     show_column_name: bool = True,
     legend_position: str = "best",
@@ -81,6 +82,8 @@ def barplot(
     max_value: float = 0,
         Maximum value for the barplot.
     show_legend: bool = True,
+        Whether to show the legend.
+    show_last_level_as_legend: bool = True,
         Whetever to show or not the legend.
         If legend is hidden, the bar ticks are shown alternatively.
     show_title: str = True
@@ -176,7 +179,7 @@ def barplot(
     vertical = orientation == "vertical"
 
     levels = get_levels(df)
-    expected_levels = len(levels) - int(show_legend) - int(subplots)
+    expected_levels = len(levels) - int(show_last_level_as_legend) - int(subplots)
 
     if len(levels) <= 1 and subplots:
         raise ValueError(
@@ -270,7 +273,7 @@ def barplot(
             custom_defaults
         )
 
-        if show_legend:
+        if show_last_level_as_legend and show_legend:
             remove_duplicated_legend_labels(
                 ax,
                 legend_position,
