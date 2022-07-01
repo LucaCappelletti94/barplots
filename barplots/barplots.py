@@ -44,11 +44,11 @@ def barplots(
     path: str = "barplots/{feature}.png",
     sanitize_metrics: bool = True,
     letters: Optional[Dict[str, str]] = None,
-    letter_font_size: int = 15,
+    letter_font_size: int = 20,
     bar_width: float = 0.3,
     space_width: float = 0.2,
     height: Optional[float] = None,
-    dpi: int = 200,
+    dpi: int = 150,
     min_std: float = 0,
     min_value: Optional[float] = None,
     max_value: Optional[float] = None,
@@ -112,7 +112,7 @@ def barplots(
         Use the name of the metric (the dataframe column) as key of the dictionary.
         This is sometimes necessary on papers.
         By default it is None, that is no letter to be shown.
-    letter_font_size: int = 15
+    letter_font_size: int = 20
         Font size to use for the barplot letter,
         if provided.
     bar_width: float = 0.3
@@ -121,7 +121,7 @@ def barplots(
         Width of the space between bar groups.
     height: Optional[float] = None
         Height of the barplot. By default golden ratio of the width.
-    dpi: int = 200
+    dpi: int = 150
         DPI for plotting the barplots.
     min_std: float = 0.001
         Minimum standard deviation for showing error bars.
