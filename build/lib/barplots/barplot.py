@@ -58,7 +58,7 @@ def barplot(
     sort_subplots: Callable[[List], List] = None,
     sort_bars: Callable[[pd.DataFrame], pd.DataFrame] = None,
     letter: Optional[str] = None,
-    letter_font_size: int = 15
+    letter_font_size: int = 20
 ) -> Tuple[Figure, Axes]:
     """Plot barplot corresponding to given dataframe, containing y value and optionally std.
 
@@ -83,11 +83,11 @@ def barplot(
     show_legend: bool = True,
         Whetever to show or not the legend.
         If legend is hidden, the bar ticks are shown alternatively.
-    show_title: str = True,
+    show_title: str = True
         Whetever to show or not the barplot title.
     show_column_name: bool = True
         Whether to show the metric name.
-    legend_position: str = "best"
+    legend_position: str = "best",
         Legend position, by default "best".
     data_label: Optional[str] = None,
         Barplot's data_label.
@@ -145,7 +145,7 @@ def barplot(
         Letter to show on the top left of the figure.
         This is sometimes necessary on papers.
         By default it is None, that is no letter to be shown.
-    letter_font_size: int = 15
+    letter_font_size: int = 20
         Font size to use for the barplot letter,
         if provided.
 
@@ -228,8 +228,7 @@ def barplot(
         expected_levels,
         scale,
         facecolors,
-        show_title,
-        show_column_name
+        show_title
     )
 
     for i, (index, ax) in enumerate(zip(titles, axes)):
@@ -325,7 +324,7 @@ def barplot(
             horizontalalignment='center',
             verticalalignment='center',
             weight='bold',
-            fontsize=15
+            fontsize=letter_font_size
         )
 
     figure.tight_layout()

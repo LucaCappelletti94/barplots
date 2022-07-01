@@ -119,7 +119,7 @@ def plot_bar_labels(
             if minor:
                 axes.tick_params(
                     axis='x',
-                    labelsize=8,
+                    labelsize=9,
                     which='minor',
                     labelrotation=adapted_minor_rotation
                 )
@@ -131,7 +131,7 @@ def plot_bar_labels(
 
                 axes.tick_params(
                     axis='x',
-                    labelsize=9,
+                    labelsize=10,
                     which='major',
                     direction='out',
                     length=length,
@@ -140,7 +140,7 @@ def plot_bar_labels(
             else:
                 axes.tick_params(
                     axis='x',
-                    labelsize=9,
+                    labelsize=10,
                     which='major',
                     labelrotation=adapted_major_rotation
                 )
@@ -151,7 +151,7 @@ def plot_bar_labels(
                 axes.tick_params(
                     axis='y',
                     which='minor',
-                    labelsize=8,
+                    labelsize=9,
                     labelrotation=adapted_minor_rotation
                 )
 
@@ -163,7 +163,7 @@ def plot_bar_labels(
                 axes.tick_params(
                     axis='y',
                     which='major',
-                    labelsize=9,
+                    labelsize=10,
                     direction='out',
                     length=length,
                     # This is the size of the actual `tick`

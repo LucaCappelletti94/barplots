@@ -32,8 +32,7 @@ def get_axes(
     expected_levels: int,
     scale: str,
     facecolors: Dict[str, str],
-    show_title: bool,
-    show_column_name: bool
+    show_title: bool
 ) -> Tuple[Figure, Axes]:
     """Setup axes for barplot plotting.
 
@@ -64,8 +63,6 @@ def get_axes(
         Colors for the background.
     show_title: str = True,
         Whetever to show or not the barplot title.
-    show_column_name: bool
-        Whether to show the metric name.
 
     Returns
     -----------
@@ -109,7 +106,7 @@ def get_axes(
             ax.set_xlim(0, side)
             ax.set_xticks([])
             ax.yaxis.grid(True, which="both")
-            if data_label is not None and show_column_name:
+            if data_label is not None:
                 ax.set_ylabel(sanitize_ml_labels(
                     data_label,
                     custom_defaults=custom_defaults
@@ -119,7 +116,7 @@ def get_axes(
             ax.set_ylim(0, side)
             ax.set_yticks([])
             ax.xaxis.grid(True, which="both")
-            if data_label is not None and show_column_name:
+            if data_label is not None:
                 ax.set_xlabel(sanitize_ml_labels(
                     data_label,
                     custom_defaults=custom_defaults
@@ -134,8 +131,6 @@ def get_axes(
 
     if title is not None and len(axes) == 1 and show_title:
         axes[0].set_title(sanitize_ml_labels(
-            title,
-            custom_defaults=custom_defaults
-        ))
+            title, custom_defaults=custom_defaults))
 
     return fig, axes
