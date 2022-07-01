@@ -319,16 +319,16 @@ def barplot(
         else:
             ax.set_xlim(min_length, max_length)
 
+    figure.tight_layout()
+
     if letter:
         figure.text(
-            0, 1, letter,
-            horizontalalignment='center',
-            verticalalignment='center',
+            0, 0.95, letter,
+            horizontalalignment='left',
+            verticalalignment='top',
             weight='bold',
             fontsize=letter_font_size
         )
-
-    figure.tight_layout()
 
     if path is not None:
         save_picture(path, figure)
