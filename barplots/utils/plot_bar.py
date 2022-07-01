@@ -36,7 +36,7 @@ def plot_bar(
             height=y,
             width=bar_width,
             **({"yerr": std} if std > min_std else {}),
-            capsize=5,
+            capsize=7 * bar_width / 0.3,
             **kwargs
         )
     else:
@@ -45,6 +45,6 @@ def plot_bar(
             width=y,
             height=bar_width,
             **({"xerr": std} if std > min_std else {}),
-            capsize=5,
+            capsize=7 * bar_width / 0.3,
             **kwargs
         )

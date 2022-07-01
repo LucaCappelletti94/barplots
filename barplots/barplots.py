@@ -48,7 +48,7 @@ def barplots(
     bar_width: float = 0.3,
     space_width: float = 0.2,
     height: Optional[float] = None,
-    dpi: int = 150,
+    dpi: int = 200,
     min_std: float = 0,
     min_value: Optional[float] = None,
     max_value: Optional[float] = None,
@@ -122,7 +122,7 @@ def barplots(
         Width of the space between bar groups.
     height: Optional[float] = None
         Height of the barplot. By default golden ratio of the width.
-    dpi: int = 150
+    dpi: int = 200
         DPI for plotting the barplots.
     min_std: float = 0.001
         Minimum standard deviation for showing error bars.

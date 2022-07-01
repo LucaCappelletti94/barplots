@@ -228,7 +228,8 @@ def barplot(
         expected_levels,
         scale,
         facecolors,
-        show_title
+        show_title,
+        show_column_name
     )
 
     for i, (index, ax) in enumerate(zip(titles, axes)):
@@ -320,7 +321,7 @@ def barplot(
 
     if letter:
         figure.text(
-            0.01, 0.9, letter,
+            0, 1, letter,
             horizontalalignment='center',
             verticalalignment='center',
             weight='bold',
