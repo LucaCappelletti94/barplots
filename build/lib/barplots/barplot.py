@@ -57,7 +57,8 @@ def barplot(
     custom_defaults: Dict[str, List[str]] = None,
     sort_subplots: Callable[[List], List] = None,
     sort_bars: Callable[[pd.DataFrame], pd.DataFrame] = None,
-    letter: Optional[str] = None
+    letter: Optional[str] = None,
+    letter_font_size: int = 15
 ) -> Tuple[Figure, Axes]:
     """Plot barplot corresponding to given dataframe, containing y value and optionally std.
 
@@ -140,10 +141,13 @@ def barplot(
         Can either be "linear" or "log".
     custom_defaults: Dict[str, List[str]],
         Dictionary to normalize labels.
-    letter: Optional[str] = None,
+    letter: Optional[str] = None
         Letter to show on the top left of the figure.
         This is sometimes necessary on papers.
         By default it is None, that is no letter to be shown.
+    letter_font_size: int = 15
+        Font size to use for the barplot letter,
+        if provided.
 
     Raises
     ------

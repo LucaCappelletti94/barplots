@@ -44,6 +44,7 @@ def barplots(
     path: str = "barplots/{feature}.png",
     sanitize_metrics: bool = True,
     letters: Optional[Dict[str, str]] = None,
+    letter_font_size: int = 15,
     bar_width: float = 0.3,
     space_width: float = 0.2,
     height: Optional[float] = None,
@@ -112,6 +113,9 @@ def barplots(
         Use the name of the metric (the dataframe column) as key of the dictionary.
         This is sometimes necessary on papers.
         By default it is None, that is no letter to be shown.
+    letter_font_size: int = 15
+        Font size to use for the barplot letter,
+        if provided.
     bar_width: float = 0.3
         Width of the bar of the barplot.
     space_width: float = 0.2
@@ -311,7 +315,6 @@ def barplots(
             title=title.format(feature=feature.replace("_", " ")),
             data_label=data_label.format(feature=feature.replace("_", " ")),
             path=path.format(feature=feature).replace(" ", "_").lower(),
-            letter=letters.get(original, None),
             bar_width=bar_width,
             space_width=space_width,
             height=height,
@@ -340,6 +343,8 @@ def barplots(
             custom_defaults=custom_defaults,
             sort_subplots=sort_subplots,
             sort_bars=sort_bars,
+            letter=letters.get(original, None),
+            letter_font_size=letter_font_size
         ) for original, feature in tqdm(
             zip(original, features),
             desc="Rendering barplots",
