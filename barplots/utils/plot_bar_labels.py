@@ -30,21 +30,25 @@ factors = [
     ("Z", 10e21),
     ("Y", 10e24),
     ("_", float("inf")),
-
 ]
 
 def sanitize_digits(digit: float, unit: Optional[str], normalized: bool):
     unit = "" if unit is None else unit
     absolute_digit = abs(digit)
     if not normalized and digit != 0.0 and (absolute_digit <= 10e-3 or absolute_digit >= 10e3):
-        for (_, lower_value), (factor, higher_value) in zip(
+        for (lower_factor, lower_value), (higher_factor, higher_value) in zip(
             factors[:-1],
             factors[1:],
         ):
-            if absolute_digit > lower_value and absolute_digit < higher_value:
+            if absolute_digit < higher_value:
+                if lower_factor == "_":
+                    denominator = higher_value
+                    factor = higher_factor
+                else:
+                    denominator = lower_value
+                    factor = lower_value
+                digit /= denominator
                 unit = factor + unit
-                digit = digit * 10e3 / higher_value
-                break
 
     return sanitize_ml_labels(digit) + unit
 
