@@ -38,8 +38,8 @@ def sanitize_digits(digit: float, unit: Optional[str], normalized: bool):
     absolute_digit = abs(digit)
     if not normalized and digit != 0.0 and (absolute_digit <= 10e-3 or absolute_digit >= 10e3):
         for (_, lower_value), (factor, higher_value) in zip(
-            factors[1:],
             factors[:-1],
+            factors[1:],
         ):
             if absolute_digit > lower_value and absolute_digit < higher_value:
                 unit = factor + unit
