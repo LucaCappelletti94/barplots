@@ -6,36 +6,35 @@ from matplotlib.axes import Axes
 from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
 from sanitize_ml_labels import sanitize_ml_labels
-from torch import absolute
 
 from .get_max_bar_position import get_max_bar_position
 from .text_positions import text_positions
 
 factors = [
     ("_", 0),
-    ("y", 10e-24),
-    ("z", 10e-21),
-    ("a", 10e-18),
-    ("f", 10e-15),
-    ("p", 10e-12),
-    ("n", 10e-9),
-    ("µ", 10e-6),
-    ("m", 10e-3),
-    ("K", 10e3),
-    ("M", 10e6),
-    ("G", 10e9),
-    ("T", 10e12),
-    ("P", 10e15),
-    ("E", 10e18),
-    ("Z", 10e21),
-    ("Y", 10e24),
+    ("y", 1e-24),
+    ("z", 1e-21),
+    ("a", 1e-18),
+    ("f", 1e-15),
+    ("p", 1e-12),
+    ("n", 1e-9),
+    ("µ", 1e-6),
+    ("m", 1e-3),
+    ("K", 1e3),
+    ("M", 1e6),
+    ("G", 1e9),
+    ("T", 1e12),
+    ("P", 1e15),
+    ("E", 1e18),
+    ("Z", 1e21),
+    ("Y", 1e24),
     ("_", float("inf")),
 ]
 
 def sanitize_digits(digit: float, unit: Optional[str], normalized: bool):
     unit = "" if unit is None else unit
     absolute_digit = abs(digit)
-    if not normalized and digit != 0.0 and (absolute_digit <= 10e-3 or absolute_digit >= 10e3):
+    if not normalized and digit != 0.0 and (absolute_digit <= 1e-3 or absolute_digit >= 1e3):
         for (lower_factor, lower_value), (higher_factor, higher_value) in zip(
             factors[:-1],
             factors[1:],
