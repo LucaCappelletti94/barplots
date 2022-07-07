@@ -31,10 +31,10 @@ factors = [
 def sanitize_digits(digit: float, unit: Optional[str], normalized: bool):
     unit = "" if unit is None else unit
     if not normalized and (digit <= 10e-3 or digit >= 10e3):
-        for factor, range in factors:
-            if digit < range:
+        for factor, values_range in factors:
+            if digit < values_range:
                 unit = factor + unit
-                digit = digit / factor
+                digit = digit / values_range
                 break
 
     return sanitize_ml_labels(digit) + unit
