@@ -49,6 +49,7 @@ def sanitize_digits(digit: float, unit: Optional[str], normalized: bool):
                     factor = lower_factor
                 digit /= denominator
                 unit = factor + unit
+                break
 
     return sanitize_ml_labels(digit) + unit
 
