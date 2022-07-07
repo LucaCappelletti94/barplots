@@ -1,3 +1,4 @@
+from cmath import inf
 from typing import Dict, List, Union, Optional
 
 import pandas as pd
@@ -5,11 +6,13 @@ from matplotlib.axes import Axes
 from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
 from sanitize_ml_labels import sanitize_ml_labels
+from torch import absolute
 
 from .get_max_bar_position import get_max_bar_position
 from .text_positions import text_positions
 
 factors = [
+    ("_", 0),
     ("y", 10e-24),
     ("z", 10e-21),
     ("a", 10e-18),
@@ -25,16 +28,22 @@ factors = [
     ("P", 10e15),
     ("E", 10e18),
     ("Z", 10e21),
-    ("Y", 10e24)
+    ("Y", 10e24),
+    ("_", float("inf")),
+
 ]
 
 def sanitize_digits(digit: float, unit: Optional[str], normalized: bool):
     unit = "" if unit is None else unit
-    if not normalized and (digit <= 10e-3 or digit >= 10e3):
-        for factor, values_range in factors:
-            if digit < values_range:
+    absolute_digit = abs(digit)
+    if not normalized and digit != 0.0 and (absolute_digit <= 10e-3 or absolute_digit >= 10e3):
+        for (_, lower_value), (factor, higher_value) in zip(
+            factors[1:],
+            factors[:-1],
+        ):
+            if absolute_digit > lower_value and absolute_digit < higher_value:
                 unit = factor + unit
-                digit = digit / values_range
+                absolute_digit = absolute_digit * 10e3 / higher_value
                 break
 
     return sanitize_ml_labels(digit) + unit
