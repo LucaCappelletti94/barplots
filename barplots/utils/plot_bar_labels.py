@@ -46,7 +46,7 @@ def sanitize_digits(digit: float, unit: Optional[str], normalized: bool):
                     factor = higher_factor
                 else:
                     denominator = lower_value
-                    factor = lower_value
+                    factor = lower_factor
                 digit /= denominator
                 unit = factor + unit
 
