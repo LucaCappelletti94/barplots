@@ -55,6 +55,7 @@ def barplot(
     auto_normalize_metrics: bool = True,
     placeholder: bool = False,
     scale: str = "linear",
+    unit: Optional[str] = None,
     custom_defaults: Dict[str, List[str]] = None,
     sort_subplots: Callable[[List], List] = None,
     sort_bars: Callable[[pd.DataFrame], pd.DataFrame] = None,
@@ -142,6 +143,8 @@ def barplot(
     scale: str = "linear",
         Scale to use for the barplots.
         Can either be "linear" or "log".
+    unit: Optional[str] = None
+        The unit to show in the value axis of the plot.
     custom_defaults: Dict[str, List[str]],
         Dictionary to normalize labels.
     letter: Optional[str] = None
@@ -232,7 +235,7 @@ def barplot(
         scale,
         facecolors,
         show_title,
-        show_column_name
+        show_column_name,
     )
 
     for i, (index, ax) in enumerate(zip(titles, axes)):
@@ -257,6 +260,9 @@ def barplot(
             (not vertical and i < len(axes) - plots_per_row)
         )
 
+        normalized_metric = auto_normalize_metrics and (is_normalized_metric(df.columns[0]) or is_normalized_metric(title))
+        absolutely_normalized_metric = auto_normalize_metrics and (is_absolutely_normalized_metric(df.columns[0]) or is_absolutely_normalized_metric(title))
+
         plot_bar_labels(
             ax,
             figure,
@@ -270,7 +276,10 @@ def barplot(
             unique_minor_labels and is_not_first_ax,
             unique_major_labels and is_not_first_ax,
             unique_data_label and is_not_first_vertical_ax,
-            custom_defaults
+            custom_defaults,
+            unit,
+            normalized_metric=normalized_metric,
+            absolutely_normalized_metric=absolutely_normalized_metric
         )
 
         if show_last_level_as_legend and show_legend:
@@ -293,13 +302,12 @@ def barplot(
         if min_value is not None:
             min_length = min_value
 
-        if auto_normalize_metrics:
-            if is_normalized_metric(df.columns[0]) or is_normalized_metric(title):
-                max_length = max(max_length, 1.01)
-            elif is_absolutely_normalized_metric(df.columns[0]) or is_absolutely_normalized_metric(title):
-                max_length = max(max_length, 1.01)
-                if min_length < 0:
-                    min_length = min(min_length, -1.01)
+        if normalized_metric:
+            max_length = max(max_length, 1.01)
+        elif absolutely_normalized_metric:
+            max_length = max(max_length, 1.01)
+            if min_length < 0:
+                min_length = min(min_length, -1.01)
 
         if max_value is not None:
             max_length = max_value

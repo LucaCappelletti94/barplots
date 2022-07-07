@@ -73,9 +73,10 @@ def barplots(
     skip_boolean_columns: bool = True,
     placeholder: bool = False,
     scale: str = "linear",
-    custom_defaults: Dict[str, List[str]] = None,
-    sort_subplots: Callable[[List], List] = None,
-    sort_bars: Callable[[pd.DataFrame], pd.DataFrame] = None,
+    custom_defaults: Optional[Dict[str, List[str]]] = None,
+    units: Optional[Dict[str, str]] = None,
+    sort_subplots: Optional[Callable[[List], List]] = None,
+    sort_bars: Optional[Callable[[pd.DataFrame], pd.DataFrame]] = None,
     verbose: bool = True,
 ) -> Tuple[List[Figure], List[Axis]]:
     """Returns list of the built figures and axes.
@@ -198,8 +199,16 @@ def barplots(
     scale: str = "linear"
         Scale to use for the barplots.
         Can either be "linear" or "log".
-    custom_defaults: Dict[str, List[str]]
-        Dictionary to normalize labels.
+    custom_defaults: Optional[Dict[str, List[str]]] = None
+        Dictionary to use to normalize the various labels.
+        This argoment will be forwarded to sanitize ML labels.
+    units: Optional[Dict[str, str]] = None
+        Dictionary of the units to be shown on the side of the metrics.
+        The dictionary expected is of the form: {metric: unit}
+    sort_subplots: Optional[Callable[[List], List]] = None
+        Callable that receives a list of the subplot and applies an abitrary sorting.
+    sort_bars: Optional[Callable[[pd.DataFrame], pd.DataFrame]] = None
+        Callable that receives a dataframe and returns it arbitrarily sorted.
     verbose: bool
         Whetever to show or not the loading bar.
 
@@ -302,6 +311,9 @@ def barplots(
     if letters is None:
         letters = {}
 
+    if units is None:
+        units = {}
+
     if sanitize_metrics:
         features = sanitize_ml_labels(features)
 
@@ -340,6 +352,7 @@ def barplots(
             custom_defaults=custom_defaults,
             sort_subplots=sort_subplots,
             sort_bars=sort_bars,
+            unit=units.get(original, None),
             letter=letters.get(original, None),
             letter_font_size=letter_font_size
         ) for original, feature in tqdm(

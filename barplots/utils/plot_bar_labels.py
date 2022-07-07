@@ -1,4 +1,4 @@
-from typing import Dict, List, Union
+from typing import Dict, List, Union, Optional
 
 import pandas as pd
 from matplotlib.axes import Axes
@@ -9,9 +9,36 @@ from sanitize_ml_labels import sanitize_ml_labels
 from .get_max_bar_position import get_max_bar_position
 from .text_positions import text_positions
 
+factors = [
+    ("y", 10e-24),
+    ("z", 10e-21),
+    ("a", 10e-18),
+    ("f", 10e-15),
+    ("p", 10e-12),
+    ("n", 10e-9),
+    ("µ", 10e-6),
+    ("m", 10e-3),
+    ("K", 10e3),
+    ("M", 10e6),
+    ("G", 10e9),
+    ("T", 10e12),
+    ("P", 10e15),
+    ("E", 10e18),
+    ("Z", 10e21),
+    ("Y", 10e24)
+]
 
-def sanitize_digits(digit: float, *args, **kwargs):
-    return sanitize_ml_labels(str(digit))
+def sanitize_digits(digit: float, unit: Optional[str], normalized: bool):
+    unit = "" if unit is None else unit
+    if not normalized and (digit <= 10e-3 or digit >= 10e3):
+        for factor, range in factors:
+            if digit < range:
+                unit = factor + unit
+                digit = digit / factor
+                break
+
+    return sanitize_ml_labels(digit) + unit
+
 
 
 def plot_bar_labels(
@@ -27,7 +54,10 @@ def plot_bar_labels(
     unique_minor_labels: bool,
     unique_major_labels: bool,
     unique_data_label: bool,
-    custom_defaults: Dict[str, List[str]]
+    custom_defaults: Dict[str, List[str]],
+    unit: Optional[str],
+    normalized_metric: bool,
+    absolutely_normalized_metric: bool,
 ):
     """
     Parameters
@@ -48,6 +78,12 @@ def plot_bar_labels(
         Avoid replicating major labels on the same axis in multiple subplots settings.
     unique_data_label: bool = True,
         Avoid replication of data axis label when using subplots.
+    unit: Optional[str]
+        Optional unit to show on the value axis.
+    normalized_metric: bool
+        Whether to consider the current metric normalized in a range (0, 1)
+    absolutely_normalized_metric: bool
+        Whether to consider the current metric absolutely normalized in a range (-1, 1)
     """
     other_positions = set()
     width = get_max_bar_position(df, bar_width, space_width)
@@ -55,21 +91,33 @@ def plot_bar_labels(
     if unique_data_label:
         axes.set_ylabel("")
 
+    if normalized_metric or absolutely_normalized_metric:
+        nbins = 5 if normalized_metric else 10
+
+        if vertical:
+            axes.locator_params(
+                axis='y',
+                nbins=nbins
+            )
+        else:
+            axes.locator_params(
+                axis='x',
+                nbins=nbins
+            )
+
+    def sanitizer(x, *args, **kwargs): return sanitize_digits(
+        x,
+        unit=unit,
+        normalized=normalized_metric or absolutely_normalized_metric
+    )
+
     if vertical:
-        axes.locator_params(
-            axis='y',
-            nbins=5
-        )
         axes.yaxis.set_major_formatter(
-            plt.FuncFormatter(sanitize_digits)
+            plt.FuncFormatter(sanitizer)
         )
     else:
-        axes.locator_params(
-            axis='x',
-            nbins=5
-        )
         axes.xaxis.set_major_formatter(
-            plt.FuncFormatter(sanitize_digits)
+            plt.FuncFormatter(sanitizer)
         )
 
     for level in reversed(range(max(levels-2, 0), levels)):

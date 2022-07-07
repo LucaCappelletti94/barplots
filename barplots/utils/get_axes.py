@@ -33,7 +33,7 @@ def get_axes(
     scale: str,
     facecolors: Dict[str, str],
     show_title: bool,
-    show_column_name: bool
+    show_column_name: bool,
 ) -> Tuple[Figure, Axes]:
     """Setup axes for barplot plotting.
 
