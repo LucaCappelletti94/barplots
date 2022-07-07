@@ -43,7 +43,7 @@ def sanitize_digits(digit: float, unit: Optional[str], normalized: bool):
         ):
             if absolute_digit > lower_value and absolute_digit < higher_value:
                 unit = factor + unit
-                absolute_digit = absolute_digit * 10e3 / higher_value
+                digit = digit * 10e3 / higher_value
                 break
 
     return sanitize_ml_labels(digit) + unit
