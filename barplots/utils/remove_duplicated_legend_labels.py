@@ -40,7 +40,7 @@ def remove_duplicated_legend_labels(
             custom_defaults=custom_defaults
         ),
         ncol=ncol,
-        prop={'size': 9},
+        prop={'size': 8},
         loc=legend_position
     )
     legend.set_title(
