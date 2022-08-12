@@ -77,6 +77,7 @@ def barplots(
     units: Optional[Dict[str, str]] = None,
     sort_subplots: Optional[Callable[[List], List]] = None,
     sort_bars: Optional[Callable[[pd.DataFrame], pd.DataFrame]] = None,
+    ncol: Optional[int] = None,
     verbose: bool = True,
 ) -> Tuple[List[Figure], List[Axis]]:
     """Returns list of the built figures and axes.
@@ -209,6 +210,8 @@ def barplots(
         Callable that receives a list of the subplot and applies an abitrary sorting.
     sort_bars: Optional[Callable[[pd.DataFrame], pd.DataFrame]] = None
         Callable that receives a dataframe and returns it arbitrarily sorted.
+    ncol: Optional[int] = None
+        The number of columns to show in the barplot.
     verbose: bool
         Whetever to show or not the loading bar.
 
@@ -354,7 +357,8 @@ def barplots(
             sort_bars=sort_bars,
             unit=units.get(original, None),
             letter=letters.get(original, None),
-            letter_font_size=letter_font_size
+            letter_font_size=letter_font_size,
+            ncol=ncol
         ) for original, feature in tqdm(
             zip(original, features),
             desc="Rendering barplots",

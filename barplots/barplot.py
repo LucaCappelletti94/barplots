@@ -60,7 +60,8 @@ def barplot(
     sort_subplots: Callable[[List], List] = None,
     sort_bars: Callable[[pd.DataFrame], pd.DataFrame] = None,
     letter: Optional[str] = None,
-    letter_font_size: int = 20
+    letter_font_size: int = 20,
+    ncol: Optional[int] = None,
 ) -> Tuple[Figure, Axes]:
     """Plot barplot corresponding to given dataframe, containing y value and optionally std.
 
@@ -154,6 +155,8 @@ def barplot(
     letter_font_size: int = 20
         Font size to use for the barplot letter,
         if provided.
+    ncol: Optional[int] = None
+        The number of columns to show in the barplot.
 
     Raises
     ------
@@ -288,6 +291,7 @@ def barplot(
                 legend_position,
                 df.index.names[-1],
                 custom_defaults,
+                ncol
             )
 
         max_length, min_length = get_max_bar_length(

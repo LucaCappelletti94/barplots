@@ -1,6 +1,6 @@
 from matplotlib.axes import Axes
 from sanitize_ml_labels import sanitize_ml_labels
-from typing import Dict, List
+from typing import Dict, List, Optional
 import math
 
 
@@ -8,7 +8,8 @@ def remove_duplicated_legend_labels(
     axes: Axes,
     legend_position: str,
     legend_title: str,
-    custom_defaults: Dict[str, List[str]]
+    custom_defaults: Dict[str, List[str]],
+    ncol: Optional[int] = None,
 ):
     """Remove duplicated labels from the plot legend.
 
@@ -22,6 +23,8 @@ def remove_duplicated_legend_labels(
         Title for the legend.
     custom_defaults: Dict[str, List[str]]
         The defaults for normalizing the provided keys.
+    ncol: Optional[int] = None
+        The number of columns to show in the barplot.
     """
     handles, labels = axes.get_legend_handles_labels()
     
@@ -31,7 +34,10 @@ def remove_duplicated_legend_labels(
         len(label) for label in by_label.keys()
     ) / len(by_label) + length__of_padding
 
-    ncol = math.ceil(len(legend_title) / mean_label_length)
+    ncol = max(
+        math.ceil(len(legend_title) / mean_label_length),
+        0 if ncol is None else ncol
+    )
 
     legend = axes.legend(
         by_label.values(),
