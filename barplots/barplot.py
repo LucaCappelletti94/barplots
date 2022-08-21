@@ -60,6 +60,7 @@ def barplot(
     legend_entries_size: float = 8,
     legend_title_size: float = 9,
     letter_per_subplot: Optional[List[str]] = None,
+    show_legend_title: bool = True,
     custom_defaults: Dict[str, List[str]] = None,
     sort_subplots: Callable[[List], List] = None,
     sort_bars: Callable[[pd.DataFrame], pd.DataFrame] = None,
@@ -156,6 +157,8 @@ def barplot(
         Size for the legend entries font.
     legend_title_size: float = 9
         Size for the legend title font.
+    show_legend_title: bool = True
+        Whether to show the legend title.
     custom_defaults: Dict[str, List[str]],
         Dictionary to normalize labels.
     letter: Optional[str] = None
@@ -325,6 +328,7 @@ def barplot(
                 legend_marker_style,
                 legend_entries_size,
                 legend_title_size,
+                show_legend_title,
                 custom_defaults,
                 ncol
             )

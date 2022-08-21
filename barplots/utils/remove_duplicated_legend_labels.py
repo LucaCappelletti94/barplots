@@ -12,6 +12,7 @@ def remove_duplicated_legend_labels(
     legend_marker_style: str,
     legend_entries_size: float,
     legend_title_size: float,
+    show_legend_title: bool,
     custom_defaults: Dict[str, List[str]],
     ncol: Optional[int] = None,
 ):
@@ -31,6 +32,8 @@ def remove_duplicated_legend_labels(
         Size for the legend entries font.
     legend_title_size: float
         Size for the legend title font.
+    show_legend_title: bool
+        Whether to show the legend title.
     custom_defaults: Dict[str, List[str]]
         The defaults for normalizing the provided keys.
     ncol: Optional[int] = None
@@ -69,7 +72,8 @@ def remove_duplicated_legend_labels(
         prop={'size': legend_entries_size},
         loc=legend_position
     )
-    legend.set_title(
-        sanitize_ml_labels(legend_title, custom_defaults=custom_defaults),
-        prop=dict(weight='bold', size=legend_title_size)
-    )
+    if show_legend_title:
+        legend.set_title(
+            sanitize_ml_labels(legend_title, custom_defaults=custom_defaults),
+            prop=dict(weight='bold', size=legend_title_size)
+        )
