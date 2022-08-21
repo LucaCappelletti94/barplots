@@ -66,6 +66,7 @@ def remove_duplicated_legend_labels(
             custom_defaults=custom_defaults
         ),
         ncol=ncol,
+        columnspacing=1.0,
         prop={'size': legend_entries_size},
         loc=legend_position
     )
