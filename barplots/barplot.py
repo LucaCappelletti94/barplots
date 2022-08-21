@@ -261,7 +261,7 @@ def barplot(
             for _ in range(len(axes))
         ]
 
-    for i, (letter, index, ax) in enumerate(zip(letter_per_subplot, titles, axes)):
+    for i, (subplot_letter, index, ax) in enumerate(zip(letter_per_subplot, titles, axes)):
         if subplots:
             sub_df = df.loc[index]
         else:
@@ -308,7 +308,7 @@ def barplot(
         ax.text(
             x=0.0,
             y=1.1,
-            s=letter,
+            s=subplot_letter,
             size=16,
             color="black",
             weight="bold",
