@@ -307,7 +307,7 @@ def barplot(
 
         ax.text(
             x=0.0,
-            y=1.0,
+            y=1.05,
             s=subplot_letter,
             size=12,
             color="black",
