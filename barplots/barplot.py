@@ -309,7 +309,7 @@ def barplot(
             x=0.0,
             y=1.1,
             s=subplot_letter,
-            size=16,
+            size=12,
             color="black",
             weight="bold",
             horizontalalignment="left",
