@@ -59,6 +59,7 @@ def barplot(
     legend_marker_style: str = "o",
     legend_entries_size: float = 8,
     legend_title_size: float = 9,
+    letter_per_subplot: Optional[List[str]] = None,
     custom_defaults: Dict[str, List[str]] = None,
     sort_subplots: Callable[[List], List] = None,
     sort_bars: Callable[[pd.DataFrame], pd.DataFrame] = None,
@@ -161,6 +162,10 @@ def barplot(
         Letter to show on the top left of the figure.
         This is sometimes necessary on papers.
         By default it is None, that is no letter to be shown.
+    letter_per_subplot: Optional[List[str]] = None
+        Letter to show on the top left of each subplot.
+        This is sometimes necessary on papers.
+        By default it is None, that is no letter to be shown.
     letter_font_size: int = 20
         Font size to use for the barplot letter,
         if provided.
@@ -250,7 +255,13 @@ def barplot(
         show_column_name,
     )
 
-    for i, (index, ax) in enumerate(zip(titles, axes)):
+    if letter_per_subplot is None:
+        letter_per_subplot = [
+            ""
+            for _ in range(len(axes))
+        ]
+
+    for i, (letter, index, ax) in enumerate(zip(letter_per_subplot, titles, axes)):
         if subplots:
             sub_df = df.loc[index]
         else:
@@ -292,6 +303,18 @@ def barplot(
             unit,
             normalized_metric=normalized_metric,
             absolutely_normalized_metric=absolutely_normalized_metric
+        )
+
+        ax.text(
+            x=0.0,
+            y=1.1,
+            s=letter,
+            size=16,
+            color="black",
+            weight="bold",
+            horizontalalignment="left",
+            verticalalignment="center",
+            transform=ax.transAxes,
         )
 
         if show_last_level_as_legend and show_legend:

@@ -76,6 +76,7 @@ def barplots(
     legend_marker_style: str = "o",
     legend_entries_size: float = 8,
     legend_title_size: float = 9,
+    letter_per_subplot: Optional[List[str]] = None,
     custom_defaults: Optional[Dict[str, List[str]]] = None,
     units: Optional[Dict[str, str]] = None,
     sort_subplots: Optional[Callable[[List], List]] = None,
@@ -209,6 +210,10 @@ def barplots(
         Size for the legend entries font.
     legend_title_size: float = 9
         Size for the legend title font.
+    letter_per_subplot: Optional[List[str]] = None
+        Letter to show on the top left of each subplot.
+        This is sometimes necessary on papers.
+        By default it is None, that is no letter to be shown.
     custom_defaults: Optional[Dict[str, List[str]]] = None
         Dictionary to use to normalize the various labels.
         This argoment will be forwarded to sanitize ML labels.
@@ -364,6 +369,7 @@ def barplots(
             legend_marker_style=legend_marker_style,
             legend_entries_size=legend_entries_size,
             legend_title_size=legend_title_size,
+            letter_per_subplot=letter_per_subplot,
             custom_defaults=custom_defaults,
             sort_subplots=sort_subplots,
             sort_bars=sort_bars,
