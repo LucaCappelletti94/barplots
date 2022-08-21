@@ -76,7 +76,7 @@ def barplots(
     legend_marker_style: str = "o",
     legend_entries_size: float = 8,
     legend_title_size: float = 9,
-    show_legend_title: bool = true,
+    show_legend_title: bool = True,
     letter_per_subplot: Optional[List[str]] = None,
     custom_defaults: Optional[Dict[str, List[str]]] = None,
     units: Optional[Dict[str, str]] = None,
