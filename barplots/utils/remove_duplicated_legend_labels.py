@@ -2,12 +2,14 @@ from matplotlib.axes import Axes
 from sanitize_ml_labels import sanitize_ml_labels
 from typing import Dict, List, Optional
 import math
+from matplotlib.lines import Line2D
 
 
 def remove_duplicated_legend_labels(
     axes: Axes,
     legend_position: str,
     legend_title: str,
+    legend_marker_style: str,
     legend_entries_size: float,
     legend_title_size: float,
     custom_defaults: Dict[str, List[str]],
@@ -23,6 +25,8 @@ def remove_duplicated_legend_labels(
         Legend position.
     legend_title: str
         Title for the legend.
+    legend_marker_style: str
+        Marker style to use for the legend.
     legend_entries_size: float
         Size for the legend entries font.
     legend_title_size: float
@@ -33,7 +37,7 @@ def remove_duplicated_legend_labels(
         The number of columns to show in the barplot.
     """
     handles, labels = axes.get_legend_handles_labels()
-    
+
     by_label = dict(zip(labels, handles))
     length__of_padding = 6
     mean_label_length = sum(
@@ -46,7 +50,17 @@ def remove_duplicated_legend_labels(
     )
 
     legend = axes.legend(
-        by_label.values(),
+        [
+            Line2D(
+                [0], [0],
+                linestyle='none',
+                mfc=handler.patches[0].get_facecolor(),
+                mec=handler.patches[0].get_facecolor(),
+                markersize=legend_entries_size*0.75,
+                marker=legend_marker_style
+            )
+            for handler in by_label.values()
+        ],
         sanitize_ml_labels(
             by_label.keys(),
             custom_defaults=custom_defaults

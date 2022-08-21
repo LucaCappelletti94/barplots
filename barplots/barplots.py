@@ -73,6 +73,7 @@ def barplots(
     skip_boolean_columns: bool = True,
     placeholder: bool = False,
     scale: str = "linear",
+    legend_marker_style: str = "o",
     legend_entries_size: float = 8,
     legend_title_size: float = 9,
     custom_defaults: Optional[Dict[str, List[str]]] = None,
@@ -202,9 +203,11 @@ def barplots(
     scale: str = "linear"
         Scale to use for the barplots.
         Can either be "linear" or "log".
-    legend_entries_size: float
+    legend_marker_style: str = "o"
+        Marker style to use for the legend.
+    legend_entries_size: float = 8
         Size for the legend entries font.
-    legend_title_size: float
+    legend_title_size: float = 9
         Size for the legend title font.
     custom_defaults: Optional[Dict[str, List[str]]] = None
         Dictionary to use to normalize the various labels.
@@ -358,6 +361,7 @@ def barplots(
             auto_normalize_metrics=auto_normalize_metrics,
             placeholder=placeholder,
             scale=scale,
+            legend_marker_style=legend_marker_style,
             legend_entries_size=legend_entries_size,
             legend_title_size=legend_title_size,
             custom_defaults=custom_defaults,
