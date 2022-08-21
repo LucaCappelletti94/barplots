@@ -56,6 +56,8 @@ def barplot(
     placeholder: bool = False,
     scale: str = "linear",
     unit: Optional[str] = None,
+    legend_entries_size: float = 8,
+    legend_title_size: float = 9,
     custom_defaults: Dict[str, List[str]] = None,
     sort_subplots: Callable[[List], List] = None,
     sort_bars: Callable[[pd.DataFrame], pd.DataFrame] = None,
@@ -146,6 +148,14 @@ def barplot(
         Can either be "linear" or "log".
     unit: Optional[str] = None
         The unit to show in the value axis of the plot.
+    legend_entries_size: float
+        Size for the legend entries font.
+    legend_title_size: float
+        Size for the legend title font.
+    legend_entries_size: float
+        Size for the legend entries font.
+    legend_title_size: float
+        Size for the legend title font.
     custom_defaults: Dict[str, List[str]],
         Dictionary to normalize labels.
     letter: Optional[str] = None
@@ -290,6 +300,8 @@ def barplot(
                 ax,
                 legend_position,
                 df.index.names[-1],
+                legend_entries_size,
+                legend_title_size,
                 custom_defaults,
                 ncol
             )

@@ -73,6 +73,8 @@ def barplots(
     skip_boolean_columns: bool = True,
     placeholder: bool = False,
     scale: str = "linear",
+    legend_entries_size: float = 8,
+    legend_title_size: float = 9,
     custom_defaults: Optional[Dict[str, List[str]]] = None,
     units: Optional[Dict[str, str]] = None,
     sort_subplots: Optional[Callable[[List], List]] = None,
@@ -200,6 +202,10 @@ def barplots(
     scale: str = "linear"
         Scale to use for the barplots.
         Can either be "linear" or "log".
+    legend_entries_size: float
+        Size for the legend entries font.
+    legend_title_size: float
+        Size for the legend title font.
     custom_defaults: Optional[Dict[str, List[str]]] = None
         Dictionary to use to normalize the various labels.
         This argoment will be forwarded to sanitize ML labels.
@@ -352,6 +358,8 @@ def barplots(
             auto_normalize_metrics=auto_normalize_metrics,
             placeholder=placeholder,
             scale=scale,
+            legend_entries_size=legend_entries_size,
+            legend_title_size=legend_title_size,
             custom_defaults=custom_defaults,
             sort_subplots=sort_subplots,
             sort_bars=sort_bars,
