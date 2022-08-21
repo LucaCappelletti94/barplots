@@ -44,10 +44,8 @@ def remove_duplicated_legend_labels(
         len(label) for label in by_label.keys()
     ) / len(by_label) + length__of_padding
 
-    ncol = max(
-        math.ceil(len(legend_title) / mean_label_length),
-        0 if ncol is None else ncol
-    )
+    ncol = math.ceil(len(legend_title) /
+                     mean_label_length) if ncol is None else ncol
 
     legend = axes.legend(
         [
