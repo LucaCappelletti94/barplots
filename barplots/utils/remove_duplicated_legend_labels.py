@@ -51,7 +51,7 @@ def remove_duplicated_legend_labels(
                      mean_label_length) if ncol is None else ncol
 
     legend = axes.legend(
-        [
+        handles=[
             Circle(
                 (0, 0),
                 linestyle='none',
