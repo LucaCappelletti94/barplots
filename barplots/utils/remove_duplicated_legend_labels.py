@@ -55,16 +55,19 @@ def remove_duplicated_legend_labels(
             Circle(
                 (0, 0),
                 linestyle='none',
+                label=label,
                 facecolor=handler.patches[0].get_facecolor(),
                 hatch=handler.patches[0].get_hatch(),
                 radius=legend_entries_size*0.9,
             )
-            for handler in by_label.values()
+            for handler, label in zip(
+                by_label.values(),
+                sanitize_ml_labels(
+                    by_label.keys(),
+                    custom_defaults=custom_defaults
+                )
+            )
         ],
-        sanitize_ml_labels(
-            by_label.keys(),
-            custom_defaults=custom_defaults
-        ),
         ncol=ncol,
         handletextpad=0,
         columnspacing=0,
