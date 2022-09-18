@@ -55,11 +55,8 @@ def remove_duplicated_legend_labels(
             Circle(
                 (0, 0),
                 linestyle='none',
-                mfc=handler.patches[0].get_facecolor(),
-                mec=handler.patches[0].get_facecolor(),
+                facecolor=handler.patches[0].get_facecolor(),
                 hatch=handler.patches[0].get_hatch(),
-                markersize=legend_entries_size*0.9,
-                marker=legend_marker_style
             )
             for handler in by_label.values()
         ],
