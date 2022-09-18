@@ -2,7 +2,7 @@ from matplotlib.axes import Axes
 from sanitize_ml_labels import sanitize_ml_labels
 from typing import Dict, List, Optional
 import math
-from matplotlib.patches import Rectangle
+from matplotlib.patches import Patch
 
 
 def remove_duplicated_legend_labels(
@@ -52,12 +52,10 @@ def remove_duplicated_legend_labels(
 
     legend = axes.legend(
         handles=[
-            Rectangle(
-                (0, 0),
-                width=legend_entries_size,
-                height=legend_entries_size,
+            Patch(
                 linestyle='none',
                 label=label,
+                linewidth=legend_entries_size,
                 facecolor=handler.patches[0].get_facecolor(),
                 hatch=handler.patches[0].get_hatch(),
             )
