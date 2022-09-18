@@ -53,6 +53,7 @@ def remove_duplicated_legend_labels(
     legend = axes.legend(
         [
             Circle(
+                (0, 0),
                 linestyle='none',
                 mfc=handler.patches[0].get_facecolor(),
                 mec=handler.patches[0].get_facecolor(),
