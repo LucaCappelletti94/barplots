@@ -42,6 +42,7 @@ def barplot(
     title: Optional[str] = None,
     path: Optional[str] = None,
     colors: Optional[Dict[str, str]] = None,
+    hatch: Optional[Dict[str, str]] = None,
     alphas: Optional[Dict[str, float]] = None,
     facecolors: Optional[Dict[str, str]] = None,
     orientation: str = "vertical",
@@ -111,6 +112,8 @@ def barplot(
     colors: Optional[Dict[str, str]] = None,
         Dict of colors to be used for innermost index of dataframe.
         By default None, using the default color tableau from matplotlib.
+    hatch: Optional[Dict[str, str]] = None
+        Dict of hatch, i.e. patterns for the bars, to be used for innermost index of dataframe.
     alphas: Optional[Dict[str, float]] = None,
         Dict of alphas to be used for innermost index of dataframe.
         By default None, using the default alpha.

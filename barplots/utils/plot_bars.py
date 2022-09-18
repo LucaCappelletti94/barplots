@@ -1,5 +1,5 @@
 import pandas as pd
-from typing import Dict
+from typing import Dict, Optional
 from matplotlib.axes import Axes
 from .plot_bar import plot_bar
 from .bar_positions import bar_positions
@@ -13,6 +13,7 @@ def plot_bars(
     space_width: float,
     alphas: Dict[str, float],
     colors: Dict[str, str],
+    hatch: Optional[Dict[str, str]],
     top_index: str,
     **kwargs: Dict
 ):
@@ -32,6 +33,8 @@ def plot_bars(
         Dictionary of alphas to be used.
     colors:Dict[str, str],
         Dictionary of colors to be used.
+    hatch: Optional[Dict[str, str]]
+        Dict of hatch, i.e. patterns for the bars, to be used for innermost index of dataframe.
     kwargs:Dict,
         Parameters to be passed directly to the plot_bar method
     """
@@ -44,6 +47,7 @@ def plot_bars(
             bar_width=bar_width,
             alpha=alphas[index[-1]] if index[-1] in alphas else get_best_match(alphas, (top_index, *index)),
             color=colors[index[-1]] if index[-1] in colors else get_best_match(colors, (top_index, *index)),
+            hatch=None if hatch is None else hatch[index[-1]] if index[-1] in hatch else get_best_match(hatch, (top_index, *index)),
             label=index[-1],
             **kwargs
         )
