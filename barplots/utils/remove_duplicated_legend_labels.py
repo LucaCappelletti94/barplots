@@ -55,6 +55,7 @@ def remove_duplicated_legend_labels(
             Patch(
                 linestyle='none',
                 label=label,
+                capstyle="round",
                 linewidth=legend_entries_size,
                 facecolor=handler.patches[0].get_facecolor(),
                 hatch=handler.patches[0].get_hatch(),
