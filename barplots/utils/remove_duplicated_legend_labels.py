@@ -2,7 +2,7 @@ from matplotlib.axes import Axes
 from sanitize_ml_labels import sanitize_ml_labels
 from typing import Dict, List, Optional
 import math
-from matplotlib.lines import Line2D
+from matplotlib.patches import Circle
 
 
 def remove_duplicated_legend_labels(
@@ -52,8 +52,7 @@ def remove_duplicated_legend_labels(
 
     legend = axes.legend(
         [
-            Line2D(
-                [0], [0],
+            Circle(
                 linestyle='none',
                 mfc=handler.patches[0].get_facecolor(),
                 mec=handler.patches[0].get_facecolor(),
