@@ -276,7 +276,7 @@ def barplot(
         if sort_bars is not None:
             sub_df = sort_bars(sub_df)
 
-        plot_bars(ax, sub_df, bar_width, space_width, alphas, colors, index,
+        plot_bars(ax, sub_df, bar_width, space_width, alphas, colors, hatch, index,
                   vertical=vertical, min_std=min_std)
 
         is_not_first_ax = subplots and (
