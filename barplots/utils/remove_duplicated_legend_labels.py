@@ -70,6 +70,7 @@ def remove_duplicated_legend_labels(
         ncol=ncol,
         handletextpad=0,
         columnspacing=0,
+        handlelength=0.5,
         prop={'size': legend_entries_size},
         loc=legend_position
     )
