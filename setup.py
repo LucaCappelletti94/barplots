@@ -66,6 +66,7 @@ setup(
         "scipy",
         "matplotlib>=3.5.2",
         "tqdm",
+        "userinput",
         "humanize",
         "sanitize_ml_labels>=1.0.47"
     ],
