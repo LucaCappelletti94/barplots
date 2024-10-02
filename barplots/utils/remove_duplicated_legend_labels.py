@@ -1,15 +1,16 @@
-from matplotlib.axes import Axes
-from sanitize_ml_labels import sanitize_ml_labels
+"""Remove duplicated labels from the plot legend."""
+
 from typing import Dict, List, Optional
 import math
+from matplotlib.axes import Axes
 from matplotlib.patches import Patch
+from sanitize_ml_labels import sanitize_ml_labels
 
 
 def remove_duplicated_legend_labels(
     axes: Axes,
     legend_position: str,
     legend_title: str,
-    legend_marker_style: str,
     legend_entries_size: float,
     legend_title_size: float,
     show_legend_title: bool,
@@ -26,8 +27,6 @@ def remove_duplicated_legend_labels(
         Legend position.
     legend_title: str
         Title for the legend.
-    legend_marker_style: str
-        Marker style to use for the legend.
     legend_entries_size: float
         Size for the legend entries font.
     legend_title_size: float
@@ -74,5 +73,5 @@ def remove_duplicated_legend_labels(
     if show_legend_title:
         legend.set_title(
             sanitize_ml_labels(legend_title, custom_defaults=custom_defaults),
-            prop=dict(weight="bold", size=legend_title_size),
+            prop={"weight": "bold", "size": legend_title_size},
         )

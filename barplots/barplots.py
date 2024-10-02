@@ -79,7 +79,6 @@ def barplots(
     skip_boolean_columns: bool = True,
     placeholder: bool = False,
     scale: str = "linear",
-    legend_marker_style: str = "o",
     legend_entries_size: float = 8,
     legend_title_size: float = 9,
     show_legend_title: bool = True,
@@ -212,8 +211,6 @@ def barplots(
     scale: str = "linear"
         Scale to use for the barplots.
         Can either be "linear" or "log".
-    legend_marker_style: str = "o"
-        Marker style to use for the legend.
     legend_entries_size: float = 8
         Size for the legend entries font.
     legend_title_size: float = 9
@@ -279,7 +276,7 @@ def barplots(
     if groupby is not None:
         if len(groupby) == 0:
             raise ValueError(
-                "The provided list of columns to execute groupby on " "is empty."
+                "The provided list of columns to execute groupby on is empty."
             )
         for column_name in groupby:
             if column_name not in df.columns:
@@ -290,12 +287,12 @@ def barplots(
                         f"the column {closest(column_name, df.columns)}?"
                     )
                 )
-            else:
-                # So we can standardize this.
-                backup = pd.options.mode.chained_assignment
-                pd.options.mode.chained_assignment = None
-                df[column_name] = df[column_name].astype(str)
-                pd.options.mode.chained_assignment = backup
+
+            # So we can standardize this.
+            backup = pd.options.mode.chained_assignment
+            pd.options.mode.chained_assignment = None
+            df[column_name] = df[column_name].astype(str)
+            pd.options.mode.chained_assignment = backup
 
         groupby = (
             df.groupby(groupby)
@@ -371,7 +368,6 @@ def barplots(
             auto_normalize_metrics=auto_normalize_metrics,
             placeholder=placeholder,
             scale=scale,
-            legend_marker_style=legend_marker_style,
             legend_entries_size=legend_entries_size,
             legend_title_size=legend_title_size,
             letter_per_subplot=letter_per_subplot,

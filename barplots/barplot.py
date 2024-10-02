@@ -64,7 +64,6 @@ def barplot(
     placeholder: bool = False,
     scale: str = "linear",
     unit: Optional[str] = None,
-    legend_marker_style: str = "o",
     legend_entries_size: float = 8,
     legend_title_size: float = 9,
     letter_per_subplot: Optional[List[str]] = None,
@@ -160,8 +159,6 @@ def barplot(
         Can either be "linear" or "log".
     unit: Optional[str] = None
         The unit to show in the value axis of the plot.
-    legend_marker_style: str = "o"
-        Marker style to use for the legend.
     legend_entries_size: float = 8
         Size for the legend entries font.
     legend_title_size: float = 9
@@ -350,7 +347,6 @@ def barplot(
                 ax,
                 legend_position,
                 df.index.names[-1],
-                legend_marker_style,
                 legend_entries_size,
                 legend_title_size,
                 show_legend_title,

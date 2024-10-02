@@ -1,3 +1,5 @@
+"""Submodule handling the plotting of the bar labels."""
+
 from typing import Dict, List, Union, Optional
 
 import pandas as pd
@@ -6,8 +8,8 @@ from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
 from sanitize_ml_labels import sanitize_ml_labels
 
-from .get_max_bar_position import get_max_bar_position
-from .text_positions import text_positions
+from barplots.utils.get_max_bar_position import get_max_bar_position
+from barplots.utils.text_positions import text_positions
 
 factors = [
     ("_", 0),

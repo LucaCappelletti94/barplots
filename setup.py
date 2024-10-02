@@ -1,3 +1,4 @@
+"""Setup script for the package."""
 import os
 import re
 
@@ -9,7 +10,7 @@ from setuptools import find_packages, setup
 here = os.path.abspath(os.path.dirname(__file__))
 
 # Get the long description from the relevant file
-with copen(os.path.join(here, "README.rst"), encoding="utf-8") as f:
+with copen(os.path.join(here, "README.md"), encoding="utf-8") as f:
     long_description = f.read()
 
 
@@ -31,9 +32,8 @@ __version__ = find_version("barplots", "__version__.py")
 test_deps = [
     "pytest",
     "pytest-cov",
-    "coveralls",
+    "pytest-readme",
     "validate_version_code",
-    "codacy-coverage",
     "numpy",
 ]
 
@@ -46,6 +46,7 @@ setup(
     version=__version__,
     description="Python package to easily make barplots from multi-indexed dataframes.",
     long_description=long_description,
+    long_description_content_type="text/markdown",
     url="https://github.com/LucaCappelletti94/barplots",
     author="Luca Cappelletti",
     author_email="cappelletti.luca94@gmail.com",

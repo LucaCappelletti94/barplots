@@ -1,3 +1,5 @@
+"""Utility dispatch function to plot bar with given properties."""
+
 from matplotlib.axes import Axes
 
 

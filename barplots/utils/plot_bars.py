@@ -1,9 +1,11 @@
-import pandas as pd
+"""Plot bars for given dataframe at given intervals."""
+
 from typing import Dict, Optional
+import pandas as pd
 from matplotlib.axes import Axes
-from .plot_bar import plot_bar
-from .bar_positions import bar_positions
-from .get_best_match import get_best_match
+from barplots.utils.plot_bar import plot_bar
+from barplots.utils.bar_positions import bar_positions
+from barplots.utils.get_best_match import get_best_match
 
 
 def plot_bars(

@@ -1,7 +1,7 @@
-import pandas as pd
 from typing import Generator
-from .get_jumps import get_jumps
-from .bar_positions import bar_positions
+import pandas as pd
+from barplots.utils.get_jumps import get_jumps
+from barplots.utils.bar_positions import bar_positions
 
 
 def text_positions(

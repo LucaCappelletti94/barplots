@@ -22,3 +22,4 @@ htmlcov
 test_barplots
 build/
 dist/
+test_readme.py
