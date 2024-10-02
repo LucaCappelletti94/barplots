@@ -65,6 +65,7 @@ setup(
     install_requires=[
         "pillow",
         "pandas>=2.0",
+        "numpy",
         "scipy",
         "matplotlib>=3.5.2",
         "tqdm",
