@@ -14,7 +14,7 @@ def test_simple_barplots():
         "I": "inactive ",
         "+": " and ",
         "": "anything",
-        "Validation": "val"
+        "Validation": "val",
     }
 
     barplots(

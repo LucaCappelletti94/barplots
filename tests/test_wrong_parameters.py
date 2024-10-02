@@ -12,7 +12,7 @@ def test_wrong_parameters():
         barplots(
             df[df.cell_line == "CIAO"],
             ["cell_line", "task", "balancing", "model"],
-            path="{root}/{{feature}}.png".format(root=root)
+            path="{root}/{{feature}}.png".format(root=root),
         )
 
     with pytest.raises(ValueError):
@@ -20,7 +20,7 @@ def test_wrong_parameters():
             df,
             ["cell_line", "task", "balancing", "model"],
             orientation="pinco",
-            path="{root}/{{feature}}.png".format(root=root)
+            path="{root}/{{feature}}.png".format(root=root),
         )
 
     with pytest.raises(ValueError):
@@ -28,7 +28,7 @@ def test_wrong_parameters():
             df,
             ["model"],
             path="{root}/{{feature}}.png".format(root=root),
-            subplots=True
+            subplots=True,
         )
 
     with pytest.raises(ValueError):
@@ -37,5 +37,5 @@ def test_wrong_parameters():
             ["model"],
             plots_per_row="pinco",
             path="{root}/{{feature}}.png".format(root=root),
-            subplots=True
+            subplots=True,
         )

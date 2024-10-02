@@ -10,40 +10,17 @@ def test_barplots():
     df1 = pd.read_csv("tests/test_case.csv")
     df2 = df1[df1.model.str.contains("bayesian")]
     fuzzy_args = {
-        "df": [
-            (1, df1),
-            (2, df2)
-        ],
-        "groupby": [
-            ["cell_line", "task", "model"]
-        ],
-        "show_legend": [
-            True, False
-        ],
-        "orientation": [
-            "horizontal", "vertical"
-        ],
-        "major_rotation": [
-            0, 90
-        ],
-        "minor_rotation": [
-            0, 90
-        ],
-        "plots_per_row": [
-            3, "auto"
-        ],
-        "unique_minor_labels": [
-            True, False
-        ],
-        "unique_major_labels": [
-            True, False
-        ],
-        "unique_data_label": [
-            False, True
-        ],
-        "subplots": [
-            True, False
-        ]
+        "df": [(1, df1), (2, df2)],
+        "groupby": [["cell_line", "task", "model"]],
+        "show_legend": [True, False],
+        "orientation": ["horizontal", "vertical"],
+        "major_rotation": [0, 90],
+        "minor_rotation": [0, 90],
+        "plots_per_row": [3, "auto"],
+        "unique_minor_labels": [True, False],
+        "unique_major_labels": [True, False],
+        "unique_data_label": [False, True],
+        "subplots": [True, False],
     }
 
     custom_defaults = {
@@ -53,15 +30,14 @@ def test_barplots():
         "I": "inactive ",
         "+": " and ",
         "": "anything",
-        "Validation": "val"
+        "Validation": "val",
     }
 
     arguments = list(itertools.product(*list(fuzzy_args.values())))
     for arg in tqdm(arguments, desc="Running test suite"):
         kwargs = dict(zip(fuzzy_args.keys(), arg))
         path = "examples/{i}/{orientation}".format(
-            i=kwargs["df"][0],
-            orientation=kwargs["orientation"]
+            i=kwargs["df"][0], orientation=kwargs["orientation"]
         )
 
         os.makedirs(os.path.dirname(path), exist_ok=True)
@@ -77,25 +53,52 @@ def test_barplots():
         if kwargs["show_legend"] and kwargs["major_rotation"]:
             continue
 
-        if kwargs["show_legend"] and kwargs["orientation"] == "horizontal" and not kwargs["minor_rotation"]:
+        if (
+            kwargs["show_legend"]
+            and kwargs["orientation"] == "horizontal"
+            and not kwargs["minor_rotation"]
+        ):
             continue
 
-        if kwargs["show_legend"] and kwargs["orientation"] == "vertical" and kwargs["minor_rotation"]:
+        if (
+            kwargs["show_legend"]
+            and kwargs["orientation"] == "vertical"
+            and kwargs["minor_rotation"]
+        ):
             continue
 
-        if not kwargs["show_legend"] and kwargs["orientation"] == "vertical" and not kwargs["minor_rotation"]:
+        if (
+            not kwargs["show_legend"]
+            and kwargs["orientation"] == "vertical"
+            and not kwargs["minor_rotation"]
+        ):
             continue
 
-        if not kwargs["show_legend"] and kwargs["orientation"] == "horizontal" and kwargs["minor_rotation"]:
+        if (
+            not kwargs["show_legend"]
+            and kwargs["orientation"] == "horizontal"
+            and kwargs["minor_rotation"]
+        ):
             continue
 
-        if not kwargs["show_legend"] and kwargs["orientation"] == "vertical" and kwargs["major_rotation"]:
+        if (
+            not kwargs["show_legend"]
+            and kwargs["orientation"] == "vertical"
+            and kwargs["major_rotation"]
+        ):
             continue
 
-        if not (kwargs["minor_rotation"] or kwargs["major_rotation"]) and kwargs["orientation"] == "horizontal":
+        if (
+            not (kwargs["minor_rotation"] or kwargs["major_rotation"])
+            and kwargs["orientation"] == "horizontal"
+        ):
             continue
 
-        if (kwargs["show_legend"] or not kwargs["subplots"]) and (kwargs["unique_data_label"] or kwargs["unique_minor_labels"] or kwargs["unique_major_labels"]):
+        if (kwargs["show_legend"] or not kwargs["subplots"]) and (
+            kwargs["unique_data_label"]
+            or kwargs["unique_minor_labels"]
+            or kwargs["unique_major_labels"]
+        ):
             continue
 
         if kwargs["major_rotation"]:
@@ -114,9 +117,7 @@ def test_barplots():
 
         kwargs["df"] = kwargs["df"][1]
 
-        barplots(
-            **kwargs, path=path,
-            custom_defaults=custom_defaults, verbose=False)
+        barplots(**kwargs, path=path, custom_defaults=custom_defaults, verbose=False)
         plt.close()
 
 
@@ -127,6 +128,6 @@ def test_single_index():
         df,
         ["cell_line"],
         path="{root}/{{feature}}.png".format(root=root),
-        verbose=False
+        verbose=False,
     )
     plt.close()

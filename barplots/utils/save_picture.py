@@ -6,4 +6,4 @@ def save_picture(path: str, figure: Figure):
     directory = os.path.dirname(path)
     if directory:
         os.makedirs(directory, exist_ok=True)
-    figure.savefig(path, bbox_inches='tight')
+    figure.savefig(path, bbox_inches="tight")

@@ -31,10 +31,15 @@ factors = [
     ("_", float("inf")),
 ]
 
+
 def sanitize_digits(digit: float, unit: Optional[str], normalized: bool):
     unit = "" if unit is None else unit
     absolute_digit = abs(digit)
-    if not normalized and digit != 0.0 and (absolute_digit <= 1e-3 or absolute_digit >= 1e3):
+    if (
+        not normalized
+        and digit != 0.0
+        and (absolute_digit <= 1e-3 or absolute_digit >= 1e3)
+    ):
         for (lower_factor, lower_value), (higher_factor, higher_value) in zip(
             factors[:-1],
             factors[1:],
@@ -51,7 +56,6 @@ def sanitize_digits(digit: float, unit: Optional[str], normalized: bool):
                 break
 
     return sanitize_ml_labels(digit) + unit
-
 
 
 def plot_bar_labels(
@@ -108,64 +112,46 @@ def plot_bar_labels(
         nbins = 5 if normalized_metric else 10
 
         if vertical:
-            axes.locator_params(
-                axis='y',
-                nbins=nbins
-            )
+            axes.locator_params(axis="y", nbins=nbins)
         else:
-            axes.locator_params(
-                axis='x',
-                nbins=nbins
-            )
+            axes.locator_params(axis="x", nbins=nbins)
 
-    def sanitizer(x, *args, **kwargs): return sanitize_digits(
-        x,
-        unit=unit,
-        normalized=normalized_metric or absolutely_normalized_metric
-    )
+    def sanitizer(x, *args, **kwargs):
+        return sanitize_digits(
+            x, unit=unit, normalized=normalized_metric or absolutely_normalized_metric
+        )
 
     if vertical:
-        axes.yaxis.set_major_formatter(
-            plt.FuncFormatter(sanitizer)
-        )
+        axes.yaxis.set_major_formatter(plt.FuncFormatter(sanitizer))
     else:
-        axes.xaxis.set_major_formatter(
-            plt.FuncFormatter(sanitizer)
-        )
+        axes.xaxis.set_major_formatter(plt.FuncFormatter(sanitizer))
 
-    for level in reversed(range(max(levels-2, 0), levels)):
-        positions, labels = zip(
-            *text_positions(df, bar_width, space_width, level))
+    for level in reversed(range(max(levels - 2, 0), levels)):
+        positions, labels = zip(*text_positions(df, bar_width, space_width, level))
         labels = sanitize_ml_labels(labels, custom_defaults=custom_defaults)
 
-        max_characters_number_in_labels = max((
-            len(label)
-            for label in labels
-        ))
+        max_characters_number_in_labels = max((len(label) for label in labels))
 
+        positions = [round(pos, 5) for pos in positions]
         positions = [
-            round(pos, 5)
-            for pos in positions
-        ]
-        positions = [
-            position + width*0.0002 if position in other_positions else position
+            position + width * 0.0002 if position in other_positions else position
             for position in positions
         ]
         other_positions |= set(positions)
-        minor = level == levels-1
+        minor = level == levels - 1
 
         # Handle the automatic rotation of minor labels.
         if minor_rotation == "auto":
             if (
-                minor and
-                len(set(labels)) <= width * 5 / max_characters_number_in_labels and
-                vertical
+                minor
+                and len(set(labels)) <= width * 5 / max_characters_number_in_labels
+                and vertical
             ):
                 adapted_minor_rotation = 90
             elif (
-                minor and
-                len(set(labels)) <= width * 20 / max_characters_number_in_labels and
-                not vertical
+                minor
+                and len(set(labels)) <= width * 20 / max_characters_number_in_labels
+                and not vertical
             ):
                 adapted_minor_rotation = 90
             else:
@@ -176,15 +162,15 @@ def plot_bar_labels(
         # Handle the automatic rotation of major labels.
         if major_rotation == "auto":
             if (
-                not minor and
-                len(set(labels)) <= width * 5 / max_characters_number_in_labels and
-                not vertical
+                not minor
+                and len(set(labels)) <= width * 5 / max_characters_number_in_labels
+                and not vertical
             ):
                 adapted_major_rotation = 90
             elif (
-                not minor and
-                len(set(labels)) >= width * 20 / max_characters_number_in_labels and
-                vertical
+                not minor
+                and len(set(labels)) >= width * 20 / max_characters_number_in_labels
+                and vertical
             ):
                 adapted_major_rotation = 90
             else:
@@ -202,10 +188,10 @@ def plot_bar_labels(
             axes.set_xticklabels(labels, minor=minor, ha="center")
             if minor:
                 axes.tick_params(
-                    axis='x',
+                    axis="x",
                     labelsize=9,
-                    which='minor',
-                    labelrotation=adapted_minor_rotation
+                    which="minor",
+                    labelrotation=adapted_minor_rotation,
                 )
 
                 if adapted_minor_rotation > 80:
@@ -214,29 +200,29 @@ def plot_bar_labels(
                     length = 20
 
                 axes.tick_params(
-                    axis='x',
+                    axis="x",
                     labelsize=10,
-                    which='major',
-                    direction='out',
+                    which="major",
+                    direction="out",
                     length=length,
-                    width=0
+                    width=0,
                 )
             else:
                 axes.tick_params(
-                    axis='x',
+                    axis="x",
                     labelsize=10,
-                    which='major',
-                    labelrotation=adapted_major_rotation
+                    which="major",
+                    labelrotation=adapted_major_rotation,
                 )
         else:
             axes.set_yticks(positions, minor=minor)
             axes.set_yticklabels(labels, minor=minor, va="center")
             if minor:
                 axes.tick_params(
-                    axis='y',
-                    which='minor',
+                    axis="y",
+                    which="minor",
                     labelsize=9,
-                    labelrotation=adapted_minor_rotation
+                    labelrotation=adapted_minor_rotation,
                 )
 
                 if adapted_minor_rotation > 80:
@@ -245,20 +231,18 @@ def plot_bar_labels(
                     length = 6 * (max_characters_number_in_labels + 1)
 
                 axes.tick_params(
-                    axis='y',
-                    which='major',
+                    axis="y",
+                    which="major",
                     labelsize=10,
-                    direction='out',
+                    direction="out",
                     length=length,
                     # This is the size of the actual `tick`
                     # in the plot, which we do not want to show
                     # for the major ticks in this case and therefore
                     # we set it to zero.
-                    width=0
+                    width=0,
                 )
             else:
                 axes.tick_params(
-                    axis='y',
-                    which='major',
-                    labelrotation=adapted_major_rotation
+                    axis="y", which="major", labelrotation=adapted_major_rotation
                 )

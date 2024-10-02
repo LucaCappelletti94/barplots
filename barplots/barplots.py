@@ -1,4 +1,5 @@
 """Module implementing plotting of multiple barplots in parallel and sequential manner."""
+
 from typing import Dict, List, Tuple, Callable, Union, Optional
 
 import pandas as pd
@@ -9,8 +10,7 @@ from tqdm.auto import tqdm
 from matplotlib.figure import Figure
 from matplotlib.axis import Axis
 
-from .barplot import barplot
-
+from barplots.barplot import barplot
 
 
 def plot_feature(
@@ -21,15 +21,20 @@ def plot_feature(
     """Returns whether to plot a given column."""
     return (
         # It does not contain NaN values
-        not pd.isna(values).any().any() and
+        not pd.isna(values).any().any()
+        and
         # This is not an empty dataframe
-        not len(values) == 0 and
+        not len(values) == 0
+        and
         # This is not a column of objects
-        values.dtype != object and
+        values.dtype != object
+        and
         # It is not a sporiously loaded numeric index
-        (values != np.arange(values.size)).any() and
+        (values != np.arange(values.size)).any()
+        and
         # It is not a binary-only column
-        (not skip_boolean_columns or values.dtype != bool) and
+        (not skip_boolean_columns or values.dtype != bool)
+        and
         # It is not a column with constant values
         (not skip_constant_columns or (values != values.iloc[0]).any())
     )
@@ -81,7 +86,6 @@ def barplots(
     letter_per_subplot: Optional[List[str]] = None,
     custom_defaults: Optional[Dict[str, List[str]]] = None,
     units: Optional[Dict[str, str]] = None,
-    sort_subplots: Optional[Callable[[List], List]] = None,
     sort_bars: Optional[Callable[[pd.DataFrame], pd.DataFrame]] = None,
     ncol: Optional[int] = None,
     verbose: bool = True,
@@ -102,7 +106,7 @@ def barplots(
         Whetever to show or not the standard deviation.
         This can either be a boolean or "auto". With auto, we show the
         standard deviation for all the metrics where two or more values
-        were provided, and we turn it off otherwise as it would not 
+        were provided, and we turn it off otherwise as it would not
         be defined with a single value.
         By default "auto".
     title: str = "{feature}"
@@ -226,8 +230,6 @@ def barplots(
     units: Optional[Dict[str, str]] = None
         Dictionary of the units to be shown on the side of the metrics.
         The dictionary expected is of the form: {metric: unit}
-    sort_subplots: Optional[Callable[[List], List]] = None
-        Callable that receives a list of the subplot and applies an abitrary sorting.
     sort_bars: Optional[Callable[[pd.DataFrame], pd.DataFrame]] = None
         Callable that receives a dataframe and returns it arbitrarily sorted.
     ncol: Optional[int] = None
@@ -243,9 +245,7 @@ def barplots(
         groupby = [groupby]
 
     if len(df.columns) == 0:
-        raise ValueError(
-            "The provided DataFrame does not have any column."
-        )
+        raise ValueError("The provided DataFrame does not have any column.")
 
     if subplots == "auto":
         if groupby is not None and len(groupby) == 4:
@@ -257,37 +257,37 @@ def barplots(
         raise ValueError(
             (
                 "Without subplots it is not possible to visualize a "
-                "dataframe with an index of size of {}."
-            ).format(len(groupby))
+                f"dataframe with an index of size of {len(groupby)}."
+            )
         )
 
     # Filtering out columns that are not visualizable.
-    df = df[[
-        column
-        for column in df.columns
-        if groupby is not None and column in groupby or plot_feature(
-            df[column],
-            skip_constant_columns=skip_constant_columns,
-            skip_boolean_columns=skip_boolean_columns
-        )
-    ]]
+    df = df[
+        [
+            column
+            for column in df.columns
+            if groupby is not None
+            and column in groupby
+            or plot_feature(
+                df[column],
+                skip_constant_columns=skip_constant_columns,
+                skip_boolean_columns=skip_boolean_columns,
+            )
+        ]
+    ]
 
     if groupby is not None:
         if len(groupby) == 0:
             raise ValueError(
-                "The provided list of columns to execute groupby on "
-                "is empty."
+                "The provided list of columns to execute groupby on " "is empty."
             )
         for column_name in groupby:
             if column_name not in df.columns:
                 raise ValueError(
                     (
-                        "The provided column {column_name} is not available "
+                        f"The provided column {column_name} is not available "
                         "in the set of columns of the dataframe. Di you mean "
-                        "the column {closest_column_name}?"
-                    ).format(
-                        column_name=column_name,
-                        closest_column_name=closest(column_name, df.columns)
+                        f"the column {closest(column_name, df.columns)}?"
                     )
                 )
             else:
@@ -297,9 +297,11 @@ def barplots(
                 df[column_name] = df[column_name].astype(str)
                 pd.options.mode.chained_assignment = backup
 
-        groupby = df.groupby(groupby).agg(
-            ("mean",)+(("std",) if show_standard_deviation else tuple())
-        ).sort_index()
+        groupby = (
+            df.groupby(groupby)
+            .agg(("mean",) + (("std",) if show_standard_deviation else tuple()))
+            .sort_index()
+        )
     else:
         groupby = df
 
@@ -321,14 +323,10 @@ def barplots(
                     continue
                 # If we find any NaN value, we drop the sub-column.
                 if groupby[column].isna().any():
-                    groupby.drop(
-                        columns=[column],
-                        inplace=True
-                    )
+                    groupby.drop(columns=[column], inplace=True)
 
     features = original = {
-        col if isinstance(col, str) else col[0]
-        for col in groupby.columns
+        col if isinstance(col, str) else col[0] for col in groupby.columns
     }
 
     if letters is None:
@@ -379,18 +377,18 @@ def barplots(
             letter_per_subplot=letter_per_subplot,
             show_legend_title=show_legend_title,
             custom_defaults=custom_defaults,
-            sort_subplots=sort_subplots,
             sort_bars=sort_bars,
             unit=units.get(original, None),
             letter=letters.get(original, None),
             letter_font_size=letter_font_size,
-            ncol=ncol
-        ) for original, feature in tqdm(
+            ncol=ncol,
+        )
+        for original, feature in tqdm(
             zip(original, features),
             desc="Rendering barplots",
             total=len(original),
             dynamic_ncols=True,
             leave=False,
-            disable=not verbose or len(original) == 1
+            disable=not verbose or len(original) == 1,
         )
     ]

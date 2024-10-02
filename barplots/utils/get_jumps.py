@@ -16,13 +16,11 @@ def get_jumps(index: Union[List, Any], old_index: Union[List, Any]) -> List[bool
     Returns list of boolean representing if for given index level a jump has been detected.
     """
     if not old_index:
-        return [False]*len(index)
+        return [False] * len(index)
 
     previous = False
     jumps = []
     for new, old in zip(index, old_index):
-        jumps.append(
-            new != old or previous
-        )
+        jumps.append(new != old or previous)
         previous = new != old
     return jumps

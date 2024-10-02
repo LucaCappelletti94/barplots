@@ -43,17 +43,17 @@ def remove_duplicated_legend_labels(
 
     by_label = dict(zip(labels, handles))
     length__of_padding = 6
-    mean_label_length = sum(
-        len(label) for label in by_label.keys()
-    ) / len(by_label) + length__of_padding
+    mean_label_length = (
+        sum(len(label) for label in by_label.keys()) / len(by_label)
+        + length__of_padding
+    )
 
-    ncol = math.ceil(len(legend_title) /
-                     mean_label_length) if ncol is None else ncol
+    ncol = math.ceil(len(legend_title) / mean_label_length) if ncol is None else ncol
 
     legend = axes.legend(
         handles=[
             Patch(
-                linestyle='none',
+                linestyle="none",
                 label=label,
                 linewidth=legend_entries_size,
                 facecolor=handler.patches[0].get_facecolor(),
@@ -61,21 +61,18 @@ def remove_duplicated_legend_labels(
             )
             for handler, label in zip(
                 by_label.values(),
-                sanitize_ml_labels(
-                    by_label.keys(),
-                    custom_defaults=custom_defaults
-                )
+                sanitize_ml_labels(by_label.keys(), custom_defaults=custom_defaults),
             )
         ],
         ncol=ncol,
         handletextpad=0.1,
         columnspacing=0.1,
         handlelength=0.7,
-        prop={'size': legend_entries_size},
-        loc=legend_position
+        prop={"size": legend_entries_size},
+        loc=legend_position,
     )
     if show_legend_title:
         legend.set_title(
             sanitize_ml_labels(legend_title, custom_defaults=custom_defaults),
-            prop=dict(weight='bold', size=legend_title_size)
+            prop=dict(weight="bold", size=legend_title_size),
         )

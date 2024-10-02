@@ -1,21 +1,28 @@
 """Module implementing plotting of a barplot."""
-import pandas as pd
+
 from typing import List, Tuple, Dict, Union, Callable, Optional
+import pandas as pd
 from matplotlib.colors import TABLEAU_COLORS as OLD_TABLEAU_COLORS
 from matplotlib.figure import Figure
 from matplotlib.axes import Axes
-from .utils import get_axes, get_levels, \
-    remove_duplicated_legend_labels, get_max_bar_length,\
-    save_picture, plot_bars, plot_bar_labels
 from sanitize_ml_labels import is_normalized_metric, is_absolutely_normalized_metric
+from barplots.utils import (
+    get_axes,
+    get_levels,
+    remove_duplicated_legend_labels,
+    get_max_bar_length,
+    save_picture,
+    plot_bars,
+    plot_bar_labels,
+)
 
 # These colors are from Tableau
 TABLEAU_COLORS = [
-    '#4e79a7',
-    '#f28e2b',
-    '#e15759',
-    '#76b7b2',
-    '#59a14e',
+    "#4e79a7",
+    "#f28e2b",
+    "#e15759",
+    "#76b7b2",
+    "#59a14e",
     "#edc949",
     "#b07aa2",
     "#ff9da7",
@@ -63,7 +70,6 @@ def barplot(
     letter_per_subplot: Optional[List[str]] = None,
     show_legend_title: bool = True,
     custom_defaults: Dict[str, List[str]] = None,
-    sort_subplots: Callable[[List], List] = None,
     sort_bars: Callable[[pd.DataFrame], pd.DataFrame] = None,
     letter: Optional[str] = None,
     letter_font_size: int = 20,
@@ -193,14 +199,23 @@ def barplot(
     """
 
     if orientation not in ("vertical", "horizontal"):
-        raise ValueError("Given orientation \"{orientation}\" is not supported.".format(
-            orientation=orientation
-        ))
+        raise ValueError(
+            'Given orientation "{orientation}" is not supported.'.format(
+                orientation=orientation
+            )
+        )
 
-    if not isinstance(plots_per_row, int) and plots_per_row != "auto" or isinstance(plots_per_row, int) and plots_per_row < 1:
-        raise ValueError("Given plots_per_row \"{plots_per_row}\" is not 'auto' or a positive integer.".format(
-            plots_per_row=plots_per_row
-        ))
+    if (
+        not isinstance(plots_per_row, int)
+        and plots_per_row != "auto"
+        or isinstance(plots_per_row, int)
+        and plots_per_row < 1
+    ):
+        raise ValueError(
+            "Given plots_per_row \"{plots_per_row}\" is not 'auto' or a positive integer.".format(
+                plots_per_row=plots_per_row
+            )
+        )
 
     vertical = orientation == "vertical"
 
@@ -208,31 +223,24 @@ def barplot(
     expected_levels = len(levels) - int(show_last_level_as_legend) - int(subplots)
 
     if len(levels) <= 1 and subplots:
-        raise ValueError(
-            "Unable to split plots with only a single index level.")
+        raise ValueError("Unable to split plots with only a single index level.")
 
     if plots_per_row == "auto":
         if subplots:
             plots_per_row = min(
-                len(levels[0]),
-                (1 if df.shape[0] > 40 else 2) if vertical else 4
+                len(levels[0]), (1 if df.shape[0] > 40 else 2) if vertical else 4
             )
     else:
-        plots_per_row = min(
-            plots_per_row,
-            len(levels[0])
-        )
+        plots_per_row = min(plots_per_row, len(levels[0]))
 
     if colors is None:
-        colors = dict(
-            zip(levels[-1], TABLEAU_COLORS + list(OLD_TABLEAU_COLORS.keys()))
-        )
+        colors = dict(zip(levels[-1], TABLEAU_COLORS + list(OLD_TABLEAU_COLORS.keys())))
 
     if alphas is None:
-        alphas = dict(zip(levels[-1], (0.95,)*len(levels[-1])))
+        alphas = dict(zip(levels[-1], (0.95,) * len(levels[-1])))
 
     if facecolors is None:
-        facecolors = dict(zip(levels[0], ("white",)*len(levels[0])))
+        facecolors = dict(zip(levels[0], ("white",) * len(levels[0])))
 
     sorted_level = levels[0]
 
@@ -262,12 +270,11 @@ def barplot(
     )
 
     if letter_per_subplot is None:
-        letter_per_subplot = [
-            ""
-            for _ in range(len(axes))
-        ]
+        letter_per_subplot = ["" for _ in range(len(axes))]
 
-    for i, (subplot_letter, index, ax) in enumerate(zip(letter_per_subplot, titles, axes)):
+    for i, (subplot_letter, index, ax) in enumerate(
+        zip(letter_per_subplot, titles, axes)
+    ):
         if subplots:
             sub_df = df.loc[index]
         else:
@@ -276,21 +283,36 @@ def barplot(
         if sort_bars is not None:
             sub_df = sort_bars(sub_df)
 
-        plot_bars(ax, sub_df, bar_width, space_width, alphas, colors, hatch, index,
-                  vertical=vertical, min_std=min_std)
+        plot_bars(
+            ax,
+            sub_df,
+            bar_width,
+            space_width,
+            alphas,
+            colors,
+            hatch,
+            index,
+            vertical=vertical,
+            min_std=min_std,
+        )
 
         is_not_first_ax = subplots and (
-            (not vertical and i % plots_per_row) or
-            (vertical and i < len(axes) - plots_per_row)
+            (not vertical and i % plots_per_row)
+            or (vertical and i < len(axes) - plots_per_row)
         )
 
         is_not_first_vertical_ax = subplots and (
-            (vertical and i % plots_per_row) or
-            (not vertical and i < len(axes) - plots_per_row)
+            (vertical and i % plots_per_row)
+            or (not vertical and i < len(axes) - plots_per_row)
         )
 
-        normalized_metric = auto_normalize_metrics and (is_normalized_metric(df.columns[0]) or is_normalized_metric(title))
-        absolutely_normalized_metric = auto_normalize_metrics and (is_absolutely_normalized_metric(df.columns[0]) or is_absolutely_normalized_metric(title))
+        normalized_metric = auto_normalize_metrics and (
+            is_normalized_metric(df.columns[0][0]) or is_normalized_metric(title)
+        )
+        absolutely_normalized_metric = auto_normalize_metrics and (
+            is_absolutely_normalized_metric(df.columns[0][0])
+            or is_absolutely_normalized_metric(title)
+        )
 
         plot_bar_labels(
             ax,
@@ -308,7 +330,7 @@ def barplot(
             custom_defaults,
             unit,
             normalized_metric=normalized_metric,
-            absolutely_normalized_metric=absolutely_normalized_metric
+            absolutely_normalized_metric=absolutely_normalized_metric,
         )
 
         ax.text(
@@ -333,14 +355,10 @@ def barplot(
                 legend_title_size,
                 show_legend_title,
                 custom_defaults,
-                ncol
+                ncol,
             )
 
-        max_length, min_length = get_max_bar_length(
-            sub_df,
-            bar_width,
-            space_width
-        )
+        max_length, min_length = get_max_bar_length(sub_df, bar_width, space_width)
         max_length *= 1.01
         min_length *= 1.01
         min_length = min(min_length, 0)
@@ -360,15 +378,16 @@ def barplot(
 
         if placeholder:
             ax.text(
-                0.5, 0.5,
+                0.5,
+                0.5,
                 "PLACEHOLDER",
                 fontsize=30,
                 alpha=0.75,
                 color="red",
                 rotation=8,
-                horizontalalignment='center',
-                verticalalignment='center',
-                transform=ax.transAxes
+                horizontalalignment="center",
+                verticalalignment="center",
+                transform=ax.transAxes,
             )
 
         if vertical:
@@ -380,11 +399,13 @@ def barplot(
 
     if letter:
         figure.text(
-            0, 0.95, letter,
-            horizontalalignment='left',
-            verticalalignment='top',
-            weight='bold',
-            fontsize=letter_font_size
+            0,
+            0.95,
+            letter,
+            horizontalalignment="left",
+            verticalalignment="top",
+            weight="bold",
+            fontsize=letter_font_size,
         )
 
     if path is not None:

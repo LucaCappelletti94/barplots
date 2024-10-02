@@ -3,9 +3,7 @@ from .bar_positions import bar_positions
 
 
 def get_max_bar_position(
-    df: pd.DataFrame,
-    bar_width: float,
-    space_width: float
+    df: pd.DataFrame, bar_width: float, space_width: float
 ) -> float:
     """Return maximum bar position.
 
@@ -18,6 +16,7 @@ def get_max_bar_position(
     space_width: float,
             Width of spaces between spaces.
     """
-    return max(
-        x for x, _, _, _ in bar_positions(df, bar_width, space_width)
-    ) + bar_width/2
+    return (
+        max(x for x, _, _, _ in bar_positions(df, bar_width, space_width))
+        + bar_width / 2
+    )

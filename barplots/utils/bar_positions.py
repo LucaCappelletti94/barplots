@@ -1,16 +1,18 @@
+"""Module to generate bar positions."""
+
 from typing import Generator
 import pandas as pd
-from .get_jumps import get_jumps
+from barplots.utils.get_jumps import get_jumps
 
 
 def bar_positions(df: pd.DataFrame, bar_width: float, space_width: float) -> Generator:
     """Returns a generator of bar positions.
-        df: pd.DataFrame,
-            Dataframe to iterate to extract the necessary data.
-        bar_width:float,
-            Width of any given bar.
-        space_width: float,
-            Width of spaces between spaces.
+    df: pd.DataFrame,
+        Dataframe to iterate to extract the necessary data.
+    bar_width:float,
+        Width of any given bar.
+    space_width: float,
+        Width of spaces between spaces.
     """
     old_index = tuple()
     bar_position = 0
@@ -20,7 +22,7 @@ def bar_positions(df: pd.DataFrame, bar_width: float, space_width: float) -> Gen
 
         jumps = get_jumps(index, old_index)
 
-        bar_position += space_width*sum(jumps[:-1])
+        bar_position += space_width * sum(jumps[:-1])
         if jumps[-1]:
             bar_position += bar_width
 
@@ -31,9 +33,4 @@ def bar_positions(df: pd.DataFrame, bar_width: float, space_width: float) -> Gen
         elif len(values) == 1:
             y, std = values.values[0], 0
 
-        yield (
-            bar_position + bar_width / 2,
-            y,
-            std,
-            index
-        )
+        yield (bar_position + bar_width / 2, y, std, index)
