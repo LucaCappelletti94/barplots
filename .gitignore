@@ -21,3 +21,4 @@ htmlcov
 .pytest_cache
 test_barplots
 build/
+dist/
