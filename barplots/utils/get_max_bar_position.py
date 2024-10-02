@@ -1,5 +1,7 @@
+"""Function to get the maximum bar position."""
+
 import pandas as pd
-from .bar_positions import bar_positions
+from barplots.utils.bar_positions import bar_positions
 
 
 def get_max_bar_position(
