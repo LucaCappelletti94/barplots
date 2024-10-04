@@ -197,9 +197,7 @@ def barplot(
 
     if orientation not in ("vertical", "horizontal"):
         raise ValueError(
-            'Given orientation "{orientation}" is not supported.'.format(
-                orientation=orientation
-            )
+            f'Given orientation "{orientation}" is not supported.'
         )
 
     if (
@@ -209,9 +207,7 @@ def barplot(
         and plots_per_row < 1
     ):
         raise ValueError(
-            "Given plots_per_row \"{plots_per_row}\" is not 'auto' or a positive integer.".format(
-                plots_per_row=plots_per_row
-            )
+            f"Given plots_per_row \"{plots_per_row}\" is not 'auto' or a positive integer."
         )
 
     vertical = orientation == "vertical"
