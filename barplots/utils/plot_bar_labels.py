@@ -76,6 +76,7 @@ def plot_bar_labels(
     unit: Optional[str],
     normalized_metric: bool,
     absolutely_normalized_metric: bool,
+    sanitize_metrics: bool,
 ):
     """
     Parameters
@@ -102,6 +103,8 @@ def plot_bar_labels(
         Whether to consider the current metric normalized in a range (0, 1)
     absolutely_normalized_metric: bool
         Whether to consider the current metric absolutely normalized in a range (-1, 1)
+    sanitize_metrics: bool
+        Whether to sanitize the metrics or not.
     """
     other_positions = set()
     width = get_max_bar_position(df, bar_width, space_width)
@@ -129,7 +132,11 @@ def plot_bar_labels(
 
     for level in reversed(range(max(levels - 2, 0), levels)):
         positions, labels = zip(*text_positions(df, bar_width, space_width, level))
-        labels = sanitize_ml_labels(labels, custom_defaults=custom_defaults)
+        labels = (
+            sanitize_ml_labels(labels, custom_defaults=custom_defaults)
+            if sanitize_metrics
+            else labels
+        )
 
         max_characters_number_in_labels = max((len(label) for label in labels))
 

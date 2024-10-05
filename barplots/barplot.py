@@ -63,6 +63,7 @@ def barplot(
     auto_normalize_metrics: bool = True,
     placeholder: bool = False,
     scale: str = "linear",
+    sanitize_metrics: bool = True,
     unit: Optional[str] = None,
     legend_entries_size: float = 8,
     legend_title_size: float = 9,
@@ -157,6 +158,8 @@ def barplot(
     scale: str = "linear",
         Scale to use for the barplots.
         Can either be "linear" or "log".
+    sanitize_metrics: bool = True,
+        Whetever to sanitize the metrics names.
     unit: Optional[str] = None
         The unit to show in the value axis of the plot.
     legend_entries_size: float = 8
@@ -257,6 +260,7 @@ def barplot(
         custom_defaults,
         expected_levels,
         scale,
+        sanitize_metrics,
         facecolors,
         show_title,
         show_column_name,
@@ -324,6 +328,7 @@ def barplot(
             unit,
             normalized_metric=normalized_metric,
             absolutely_normalized_metric=absolutely_normalized_metric,
+            sanitize_metrics=sanitize_metrics,
         )
 
         ax.text(

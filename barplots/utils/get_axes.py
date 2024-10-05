@@ -33,6 +33,7 @@ def get_axes(
     custom_defaults: Dict[str, List[str]],
     expected_levels: int,
     scale: str,
+    sanitize_metrics: bool,
     facecolors: Dict[str, str],
     show_title: bool,
     show_column_name: bool,
@@ -62,6 +63,8 @@ def get_axes(
     scale: str,
         Scale to use for the barplots.
         Can either be "linear" or "log".
+    sanitize_metrics: bool,
+        Whetever to sanitize the metrics or not.
     facecolors: Dict[str, str],
         Colors for the background.
     show_title: str = True,
@@ -113,7 +116,7 @@ def get_axes(
             ax.yaxis.grid(True, which="both")
             if data_label is not None and show_column_name:
                 ax.set_ylabel(
-                    sanitize_ml_labels(data_label, custom_defaults=custom_defaults)
+                    sanitize_ml_labels(data_label, custom_defaults=custom_defaults) if sanitize_metrics else data_label
                 )
         else:
             ax.set_xscale(scale)
@@ -122,16 +125,16 @@ def get_axes(
             ax.xaxis.grid(True, which="both")
             if data_label is not None and show_column_name:
                 ax.set_xlabel(
-                    sanitize_ml_labels(data_label, custom_defaults=custom_defaults)
+                    sanitize_ml_labels(data_label, custom_defaults=custom_defaults) if sanitize_metrics else data_label
                 )
         if show_title:
-            ax.set_title(sanitize_ml_labels(subtitle, custom_defaults=custom_defaults))
+            ax.set_title(sanitize_ml_labels(subtitle, custom_defaults=custom_defaults) if sanitize_metrics else subtitle)
 
     for ax in axes[len(titles) :]:
         ax.grid(False)
         ax.axis("off")
 
     if title is not None and len(axes) == 1 and show_title:
-        axes[0].set_title(sanitize_ml_labels(title, custom_defaults=custom_defaults))
+        axes[0].set_title(sanitize_ml_labels(title, custom_defaults=custom_defaults) if sanitize_metrics else title)
 
     return fig, axes

@@ -368,6 +368,7 @@ def barplots(
             auto_normalize_metrics=auto_normalize_metrics,
             placeholder=placeholder,
             scale=scale,
+            sanitize_metrics=sanitize_metrics,
             legend_entries_size=legend_entries_size,
             legend_title_size=legend_title_size,
             letter_per_subplot=letter_per_subplot,
