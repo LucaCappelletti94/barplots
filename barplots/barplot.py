@@ -2,7 +2,6 @@
 
 from typing import List, Tuple, Dict, Union, Callable, Optional
 import pandas as pd
-from matplotlib.colors import TABLEAU_COLORS as OLD_TABLEAU_COLORS
 from matplotlib.figure import Figure
 from matplotlib.axes import Axes
 from sanitize_ml_labels import is_normalized_metric, is_absolutely_normalized_metric
@@ -16,18 +15,46 @@ from barplots.utils import (
     plot_bar_labels,
 )
 
-# These colors are from Tableau
-TABLEAU_COLORS = [
-    "#4e79a7",
-    "#f28e2b",
-    "#e15759",
-    "#76b7b2",
-    "#59a14e",
-    "#edc949",
-    "#b07aa2",
-    "#ff9da7",
-    "#9c755f",
-    "#bab0ac",
+EXTENDED_COLORS = [
+    # Original Tableau Colors
+    "#4e79a7", "#f28e2b", "#e15759", "#76b7b2", "#59a14e",
+    "#edc949", "#b07aa2", "#ff9da7", "#9c755f", "#bab0ac",
+    
+    # Additional Distinct Colors
+    "#1f77b4",  # Blue
+    "#ff7f0e",  # Orange
+    "#2ca02c",  # Green
+    "#d62728",  # Red
+    "#9467bd",  # Purple
+    "#8c564b",  # Brown
+    "#e377c2",  # Pink
+    "#7f7f7f",  # Gray
+    "#bcbd22",  # Yellow-green
+    "#17becf",  # Cyan
+
+    # More Colors
+    "#393b79",  # Dark Blue
+    "#8c6d31",  # Dark Brown
+    "#bd9e39",  # Dark Yellow
+    "#5254a3",  # Blue-purple
+    "#9e9ac8",  # Light Purple
+    "#637939",  # Olive Green
+    "#8ca252",  # Light Green
+    "#b5cf6b",  # Lime Green
+    "#ce6dbd",  # Magenta
+    "#de9ed6",  # Light Pink
+
+    # Even more distinct colors
+    "#6b6ecf",  # Indigo
+    "#9c9ede",  # Light Indigo
+    "#d6616b",  # Soft Red
+    "#e7969c",  # Soft Pink
+    "#3182bd",  # Bold Blue
+    "#9ecae1",  # Light Blue
+    "#e6550d",  # Dark Orange
+    "#fd8d3c",  # Bright Orange
+    "#31a354",  # Bold Green
+    "#a1d99b",  # Light Green
 ]
 
 
@@ -230,7 +257,7 @@ def barplot(
         plots_per_row = min(plots_per_row, len(levels[0]))
 
     if colors is None:
-        colors = dict(zip(levels[-1], TABLEAU_COLORS + list(OLD_TABLEAU_COLORS.keys())))
+        colors = dict(zip(levels[-1], EXTENDED_COLORS))
 
     if alphas is None:
         alphas = dict(zip(levels[-1], (0.95,) * len(levels[-1])))
