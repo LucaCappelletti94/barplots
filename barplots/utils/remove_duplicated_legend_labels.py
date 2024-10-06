@@ -63,7 +63,11 @@ def remove_duplicated_legend_labels(
             )
             for handler, label in zip(
                 by_label.values(),
-                sanitize_ml_labels(by_label.keys(), custom_defaults=custom_defaults) if sanitize_labels else by_label.keys(),
+                (
+                    sanitize_ml_labels(by_label.keys(), custom_defaults=custom_defaults)
+                    if sanitize_labels
+                    else by_label.keys()
+                ),
             )
         ],
         ncol=ncol,
@@ -75,6 +79,10 @@ def remove_duplicated_legend_labels(
     )
     if show_legend_title:
         legend.set_title(
-            sanitize_ml_labels(legend_title, custom_defaults=custom_defaults) if sanitize_labels else legend_title,
+            (
+                sanitize_ml_labels(legend_title, custom_defaults=custom_defaults)
+                if sanitize_labels
+                else legend_title
+            ),
             prop={"weight": "bold", "size": legend_title_size},
         )

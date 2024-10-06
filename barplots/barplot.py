@@ -17,9 +17,16 @@ from barplots.utils import (
 
 EXTENDED_COLORS = [
     # Original Tableau Colors
-    "#4e79a7", "#f28e2b", "#e15759", "#76b7b2", "#59a14e",
-    "#edc949", "#b07aa2", "#ff9da7", "#9c755f", "#bab0ac",
-    
+    "#4e79a7",
+    "#f28e2b",
+    "#e15759",
+    "#76b7b2",
+    "#59a14e",
+    "#edc949",
+    "#b07aa2",
+    "#ff9da7",
+    "#9c755f",
+    "#bab0ac",
     # Additional Distinct Colors
     "#1f77b4",  # Blue
     "#ff7f0e",  # Orange
@@ -31,7 +38,6 @@ EXTENDED_COLORS = [
     "#7f7f7f",  # Gray
     "#bcbd22",  # Yellow-green
     "#17becf",  # Cyan
-
     # More Colors
     "#393b79",  # Dark Blue
     "#8c6d31",  # Dark Brown
@@ -43,7 +49,6 @@ EXTENDED_COLORS = [
     "#b5cf6b",  # Lime Green
     "#ce6dbd",  # Magenta
     "#de9ed6",  # Light Pink
-
     # Even more distinct colors
     "#6b6ecf",  # Indigo
     "#9c9ede",  # Light Indigo
@@ -226,9 +231,7 @@ def barplot(
     """
 
     if orientation not in ("vertical", "horizontal"):
-        raise ValueError(
-            f'Given orientation "{orientation}" is not supported.'
-        )
+        raise ValueError(f'Given orientation "{orientation}" is not supported.')
 
     if (
         not isinstance(plots_per_row, int)
