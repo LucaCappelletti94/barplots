@@ -298,8 +298,6 @@ def barplot(
     if facecolors is None:
         facecolors = dict(zip(levels[0], ("white",) * len(levels[0])))
 
-    
-
     sorted_level = levels[0]
 
     if subplots:
