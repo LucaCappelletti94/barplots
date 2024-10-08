@@ -15,8 +15,8 @@ from barplots.utils import (
     plot_bar_labels,
 )
 
-EXTENDED_COLORS = [
-    # Original Tableau Colors
+# List of 10 distinct colors from the Tableau palette.
+TABLEAU_COLORS = [
     "#4e79a7",
     "#f28e2b",
     "#e15759",
@@ -27,39 +27,44 @@ EXTENDED_COLORS = [
     "#ff9da7",
     "#9c755f",
     "#bab0ac",
-    # Additional Distinct Colors
-    "#1f77b4",  # Blue
-    "#ff7f0e",  # Orange
-    "#2ca02c",  # Green
-    "#d62728",  # Red
-    "#9467bd",  # Purple
-    "#8c564b",  # Brown
-    "#e377c2",  # Pink
-    "#7f7f7f",  # Gray
-    "#bcbd22",  # Yellow-green
-    "#17becf",  # Cyan
-    # More Colors
-    "#393b79",  # Dark Blue
-    "#8c6d31",  # Dark Brown
-    "#bd9e39",  # Dark Yellow
-    "#5254a3",  # Blue-purple
-    "#9e9ac8",  # Light Purple
-    "#637939",  # Olive Green
-    "#8ca252",  # Light Green
-    "#b5cf6b",  # Lime Green
-    "#ce6dbd",  # Magenta
-    "#de9ed6",  # Light Pink
-    # Even more distinct colors
-    "#6b6ecf",  # Indigo
-    "#9c9ede",  # Light Indigo
-    "#d6616b",  # Soft Red
-    "#e7969c",  # Soft Pink
-    "#3182bd",  # Bold Blue
-    "#9ecae1",  # Light Blue
-    "#e6550d",  # Dark Orange
-    "#fd8d3c",  # Bright Orange
-    "#31a354",  # Bold Green
-    "#a1d99b",  # Light Green
+]
+
+# List of 20 distinct colors composed by Sasha Trubetskoy.
+SASHA_COLORS = [
+    "#e6194B",
+    "#3cb44b",
+    "#ffe119",
+    "#4363d8",
+    "#f58231",
+    "#911eb4",
+    "#42d4f4",
+    "#f032e6",
+    "#bfef45",
+    "#fabed4",
+    "#469990",
+    "#dcbeff",
+    "#9A6324",
+    "#fffac8",
+    "#800000",
+    "#aaffc3",
+    "#808000",
+    "#ffd8b1",
+    "#000075",
+    "#a9a9a9",
+]
+
+# List of hatches supported by matplotlib.
+HATCHES = [
+    "x",
+    "o",
+    "*",
+    "/",
+    "O",
+    "\\",
+    "|",
+    ".",
+    "-",
+    "+",
 ]
 
 
@@ -259,14 +264,41 @@ def barplot(
     else:
         plots_per_row = min(plots_per_row, len(levels[0]))
 
+    infer_alphas = alphas is not None
+    infer_colors = colors is not None
+    infer_hatch = hatch is not None
+    infer_edgecolors = False
+
+    edgecolors = None
+
     if colors is None:
-        colors = dict(zip(levels[-1], EXTENDED_COLORS))
+        # When the number of provide faces is less than the
+        # tableau colors, we use the tableau colors, else we use
+        # the Sasha colors. If even these are not enough, we use
+        # the hatches so that we can differentiate the bars more
+        # easily.
+        if len(levels[-1]) <= len(TABLEAU_COLORS):
+            colors = dict(zip(levels[-1], TABLEAU_COLORS))
+        elif len(levels[-1]) <= len(SASHA_COLORS):
+            colors = dict(zip(levels[-1], SASHA_COLORS))
+        else:
+            colors: Dict[str, str] = {}
+            hatch: Dict[str, str] = {}
+            edgecolors: Dict[str, str] = {}
+            for i, level in enumerate(levels[-1]):
+                colors[level] = TABLEAU_COLORS[i % len(TABLEAU_COLORS)]
+                if i >= len(TABLEAU_COLORS):
+                    adjusted_i = i // len(TABLEAU_COLORS) - 1
+                    hatch[level] = HATCHES[adjusted_i % len(HATCHES)]
+                    edgecolors[level] = "white"
 
     if alphas is None:
         alphas = dict(zip(levels[-1], (0.95,) * len(levels[-1])))
 
     if facecolors is None:
         facecolors = dict(zip(levels[0], ("white",) * len(levels[0])))
+
+    
 
     sorted_level = levels[0]
 
@@ -316,8 +348,13 @@ def barplot(
             bar_width,
             space_width,
             alphas,
+            infer_alphas,
             colors,
+            infer_colors,
+            edgecolors,
+            infer_edgecolors,
             hatch,
+            infer_hatch,
             index,
             vertical=vertical,
             min_std=min_std,
