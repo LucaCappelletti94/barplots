@@ -34,6 +34,7 @@ test_deps = [
     "pytest",
     "validate_version_code",
     "data-science-types",
+    "pytest_readme",
     "numpy",
 ]
 
