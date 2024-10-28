@@ -5,7 +5,6 @@ import pandas as pd
 from barplots.utils.bar_positions import bar_positions
 
 
-
 def get_max_bar_length(
     df: pd.DataFrame, bar_width: float, space_width: float
 ) -> Tuple[float, float]:
