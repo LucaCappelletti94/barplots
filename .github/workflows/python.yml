@@ -1,6 +1,5 @@
 name: Python Package CI
 
-<<<<<<< HEAD
 on: [push, pull_request]
 
 jobs:
@@ -39,45 +38,3 @@ jobs:
         run: |
           python -m pip install wheel
           python setup.py sdist bdist_wheel
-=======
-on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
-
-jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.9
-
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install black
-        pip install ".[test]"
-
-    - name: Run tests
-      run: |
-        pytest
-
-    - name: Check formatting
-      run: |
-        black --check .
-
-    - name: Build package
-      run: |
-        python -m pip install wheel
-        python setup.py sdist bdist_wheel
->>>>>>> 6fc1cff (Working on MyPy support)
