@@ -1,9 +1,9 @@
-from matplotlib.axes import Axes
+from matplotlib.axis import Axis
 import numpy as np
 
 
 def plot_boxplot(
-    axes: Axes,
+    axes: Axis,
     data: np.ndarray,
     x: float,
     y: float,

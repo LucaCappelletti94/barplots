@@ -19,4 +19,4 @@ def get_levels(df: pd.DataFrame) -> List[List[Any]]:
     """
     if isinstance(df.index, MultiIndex):
         return [list(e) for e in df.index.levels]
-    return [df.index.unique().tolist()]
+    return [df.index.unique()]

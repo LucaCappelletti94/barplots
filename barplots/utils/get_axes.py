@@ -1,19 +1,21 @@
 """Function to setup axes for barplot plotting."""
 
-from typing import Tuple, Dict, List
+from typing import Tuple, Dict, List, Iterable
 from math import ceil
 from matplotlib.figure import Figure
 from matplotlib.axes import Axes
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.constants import golden_ratio
 from sanitize_ml_labels import sanitize_ml_labels
 from barplots.utils.get_best_match import get_best_match
 from barplots.utils.get_max_bar_position import get_max_bar_position
 
 
-def swap(*args: List, flag: bool) -> List:
+GOLDEN_RATIO: float = 1.61803398875
+
+
+def swap(*args: List, flag: bool) -> Iterable:
     """If the given flag is true returns"""
     return args if flag else reversed(args)
 
@@ -77,16 +79,17 @@ def get_axes(
     Tuple containing new figure and axis.
     """
     if subplots:
+        index: MultiIndex = df.index
         side = max(
             get_max_bar_position(df.loc[index], bar_width, space_width)
-            for index in df.index.levels[0]
+            for index in index.levels[0]
         )
     else:
         side = get_max_bar_position(df, bar_width, space_width)
 
     if height is None:
         exponent = 1 if subplots or expected_levels > 1 else 1.5
-        height = side / (golden_ratio**exponent)
+        height = side / (GOLDEN_RATIO**exponent)
 
     if subplots:
         nrows = ceil(df.index.levels[0].size / plots_per_row)

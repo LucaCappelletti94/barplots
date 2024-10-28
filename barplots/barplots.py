@@ -5,12 +5,12 @@ from typing import Dict, List, Tuple, Callable, Union, Optional
 import pandas as pd
 import numpy as np
 from sanitize_ml_labels import sanitize_ml_labels
-from userinput.utils import closest
 from tqdm.auto import tqdm
 from matplotlib.figure import Figure
 from matplotlib.axis import Axis
 
 from barplots.barplot import barplot
+
 
 def plot_feature(
     values: pd.Series,
@@ -20,19 +20,19 @@ def plot_feature(
     """Returns whether to plot a given column."""
     return (
         # It does not contain NaN values
-        not pd.isna(values).any().any()
+        not pd.isna(values).any()
         and
         # This is not an empty dataframe
         not len(values) == 0
         and
         # This is not a column of objects
-        values.dtype != object
+        values.values.dtype != object
         and
         # It is not a sporiously loaded numeric index
         (values != np.arange(values.size)).any()
         and
         # It is not a binary-only column
-        (not skip_boolean_columns or values.dtype != bool)
+        (not skip_boolean_columns or values.values.dtype != bool)
         and
         # It is not a column with constant values
         (not skip_constant_columns or (values != values.iloc[0]).any())
@@ -245,9 +245,16 @@ def barplots(
 
     if subplots == "auto":
         if groupby is not None and len(groupby) == 4:
-            subplots = True
+            normalized_subplots: bool = True
         else:
-            subplots = False
+            normalized_subplots = False
+    elif isinstance(subplots, str):
+        raise ValueError(
+            f"Provided value {subplots} for subplots is not valid. "
+            "Use either 'auto' or a boolean."
+        )
+    else:
+        normalized_subplots = subplots
 
     if not subplots and len(groupby) > 3:
         raise ValueError(
@@ -282,8 +289,7 @@ def barplots(
                 raise ValueError(
                     (
                         f"The provided column {column_name} is not available "
-                        "in the set of columns of the dataframe. Di you mean "
-                        f"the column {closest(column_name, df.columns)}?"
+                        "in the set of columns of the dataframe."
                     )
                 )
 
@@ -293,13 +299,13 @@ def barplots(
             df[column_name] = df[column_name].astype(str)
             pd.options.mode.chained_assignment = backup
 
-        groupby = (
+        groups_df: pd.DataFrame = (
             df.groupby(groupby)
-            .agg(("mean",) + (("std",) if show_standard_deviation else tuple()))
+            .agg(("mean", "std") if show_standard_deviation else ("mean",))
             .sort_index()
         )
     else:
-        groupby = df
+        groups_df = df
 
     # If the use has left it to us to decide whether to show
     # or not the standard deviation, we go hunting for Nan values.
@@ -310,19 +316,19 @@ def barplots(
         # processing has multi-index columns. If it does not,
         # then this is a custom dataframe and we need to interfere
         # with it.
-        if issubclass(groupby.columns.__class__, pd.MultiIndex):
-            for column in groupby.columns:
+        if issubclass(groups_df.columns.__class__, pd.MultiIndex):
+            for column in groups_df.columns:
                 # We also need to check whether there is any "std"
                 # column, as it may be the case that this is a custom
                 # dataframe without such a sub-column.
                 if "std" not in column:
                     continue
                 # If we find any NaN value, we drop the sub-column.
-                if groupby[column].isna().any():
-                    groupby.drop(columns=[column], inplace=True)
+                if groups_df[column].isna().any():
+                    groups_df.drop(columns=[column], inplace=True)
 
     features = original = {
-        col if isinstance(col, str) else col[0] for col in groupby.columns
+        col if isinstance(col, str) else col[0] for col in groups_df.columns
     }
 
     if letters is None:
@@ -336,7 +342,7 @@ def barplots(
 
     return [
         barplot(
-            df=groupby[[original]],
+            df=groups_df[[original]],
             title=title.format(feature=feature.replace("_", " ")),
             data_label=data_label.format(feature=feature.replace("_", " ")),
             path=path.format(feature=feature).replace(" ", "_").lower(),
@@ -357,7 +363,7 @@ def barplots(
             alphas=alphas,
             facecolors=facecolors,
             orientation=orientation,
-            subplots=subplots,
+            subplots=normalized_subplots,
             plots_per_row=plots_per_row,
             minor_rotation=minor_rotation,
             major_rotation=major_rotation,

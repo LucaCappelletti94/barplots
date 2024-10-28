@@ -1,6 +1,6 @@
 """Module to generate bar positions."""
 
-from typing import Generator
+from typing import Generator, Tuple
 import pandas as pd
 from barplots.utils.get_jumps import get_jumps
 
@@ -17,8 +17,8 @@ def bar_positions(df: pd.DataFrame, bar_width: float, space_width: float) -> Gen
     space_width: float
         Width of spaces between spaces.
     """
-    old_index = tuple()
-    bar_position = 0
+    old_index: Tuple = ()
+    bar_position: float = 0.0
     for index, values in df.iterrows():
         if not isinstance(index, (list, tuple)):
             index = (index,)
@@ -35,5 +35,10 @@ def bar_positions(df: pd.DataFrame, bar_width: float, space_width: float) -> Gen
             y, std = values
         elif len(values) == 1:
             y, std = values.values[0], 0
+        else:
+            raise ValueError(
+                "Dataframe must have 1 or 2 columns, "
+                f"but {len(values)} columns were found."
+            )
 
         yield (bar_position + bar_width / 2, y, std, index)

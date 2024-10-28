@@ -1,10 +1,10 @@
 """Utility dispatch function to plot bar with given properties."""
 
-from matplotlib.axes import Axes
+from matplotlib.axis import Axis
 
 
 def plot_bar(
-    axes: Axes,
+    axes: Axis,
     x: float,
     y: float,
     std: float,
@@ -17,8 +17,8 @@ def plot_bar(
 
     Parameters
     ----------
-    axes: Axes,
-        Axes object where to plot the bar.
+    axes: Axis,
+        Axis object where to plot the bar.
     x: float,
         Position for the left size of the bar.
     y: float,
