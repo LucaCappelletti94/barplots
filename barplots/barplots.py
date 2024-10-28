@@ -12,7 +12,6 @@ from matplotlib.axis import Axis
 
 from barplots.barplot import barplot
 
-
 def plot_feature(
     values: pd.Series,
     skip_constant_columns: bool = True,
@@ -276,7 +275,11 @@ def barplots(
     if groupby is not None:
         if len(groupby) == 0:
             raise ValueError(
+<<<<<<< HEAD
                 "The provided list of columns to execute groupby on is empty."
+=======
+                "The provided list of columns to execute groupby on " "is empty."
+>>>>>>> 6fc1cff (Working on MyPy support)
             )
         for column_name in groupby:
             if column_name not in df.columns:
@@ -284,16 +287,26 @@ def barplots(
                     (
                         f"The provided column {column_name} is not available "
                         "in the set of columns of the dataframe. Di you mean "
+<<<<<<< HEAD
                         f"the column {closest(column_name, df.columns)}?"
+=======
+                        "the column {closest_column_name}?"
+                    ).format(
+                        column_name=column_name,
+                        closest_column_name=closest(column_name, df.columns),
+>>>>>>> 6fc1cff (Working on MyPy support)
                     )
                 )
 
+<<<<<<< HEAD
             # So we can standardize this.
             backup = pd.options.mode.chained_assignment
             pd.options.mode.chained_assignment = None
             df[column_name] = df[column_name].astype(str)
             pd.options.mode.chained_assignment = backup
 
+=======
+>>>>>>> 6fc1cff (Working on MyPy support)
         groupby = (
             df.groupby(groupby)
             .agg(("mean",) + (("std",) if show_standard_deviation else tuple()))

@@ -19,4 +19,9 @@ def get_levels(df: pd.DataFrame) -> List[List[Any]]:
     """
     if isinstance(df.index, MultiIndex):
         return [list(e) for e in df.index.levels]
+<<<<<<< HEAD
     return [df.index.unique().tolist()]
+=======
+    else:
+        return [df.index.unique().tolist()]
+>>>>>>> 6fc1cff (Working on MyPy support)

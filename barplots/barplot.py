@@ -107,7 +107,12 @@ def barplot(
     letter_per_subplot: Optional[List[str]] = None,
     show_legend_title: bool = True,
     custom_defaults: Dict[str, List[str]] = None,
+<<<<<<< HEAD
     sort_bars: Callable[[pd.DataFrame], pd.DataFrame] = None,
+=======
+    sort_subplots: Callable[[List], List] = None,
+    sort_bars: Optional[Callable[[pd.DataFrame], pd.DataFrame]] = None,
+>>>>>>> 6fc1cff (Working on MyPy support)
     letter: Optional[str] = None,
     letter_font_size: int = 20,
     ncol: Optional[int] = None,
@@ -236,7 +241,15 @@ def barplot(
     """
 
     if orientation not in ("vertical", "horizontal"):
+<<<<<<< HEAD
         raise ValueError(f'Given orientation "{orientation}" is not supported.')
+=======
+        raise ValueError(
+            'Given orientation "{orientation}" is not supported.'.format(
+                orientation=orientation
+            )
+        )
+>>>>>>> 6fc1cff (Working on MyPy support)
 
     if (
         not isinstance(plots_per_row, int)
@@ -245,7 +258,13 @@ def barplot(
         and plots_per_row < 1
     ):
         raise ValueError(
+<<<<<<< HEAD
             f"Given plots_per_row \"{plots_per_row}\" is not 'auto' or a positive integer."
+=======
+            "Given plots_per_row \"{plots_per_row}\" is not 'auto' or a positive integer.".format(
+                plots_per_row=plots_per_row
+            )
+>>>>>>> 6fc1cff (Working on MyPy support)
         )
 
     vertical = orientation == "vertical"
@@ -263,6 +282,7 @@ def barplot(
             )
     else:
         plots_per_row = min(plots_per_row, len(levels[0]))
+<<<<<<< HEAD
 
     infer_alphas = alphas is not None
     infer_colors = colors is not None
@@ -291,6 +311,11 @@ def barplot(
                     adjusted_i = i // len(TABLEAU_COLORS) - 1
                     hatch[level] = HATCHES[adjusted_i % len(HATCHES)]
                     edgecolors[level] = "white"
+=======
+
+    if colors is None:
+        colors = dict(zip(levels[-1], TABLEAU_COLORS + list(OLD_TABLEAU_COLORS.keys())))
+>>>>>>> 6fc1cff (Working on MyPy support)
 
     if alphas is None:
         alphas = dict(zip(levels[-1], (0.95,) * len(levels[-1])))
@@ -346,6 +371,7 @@ def barplot(
             bar_width,
             space_width,
             alphas,
+<<<<<<< HEAD
             infer_alphas,
             colors,
             infer_colors,
@@ -353,6 +379,10 @@ def barplot(
             infer_edgecolors,
             hatch,
             infer_hatch,
+=======
+            colors,
+            hatch,
+>>>>>>> 6fc1cff (Working on MyPy support)
             index,
             vertical=vertical,
             min_std=min_std,
@@ -369,10 +399,17 @@ def barplot(
         )
 
         normalized_metric = auto_normalize_metrics and (
+<<<<<<< HEAD
             is_normalized_metric(df.columns[0][0]) or is_normalized_metric(title)
         )
         absolutely_normalized_metric = auto_normalize_metrics and (
             is_absolutely_normalized_metric(df.columns[0][0])
+=======
+            is_normalized_metric(df.columns[0]) or is_normalized_metric(title)
+        )
+        absolutely_normalized_metric = auto_normalize_metrics and (
+            is_absolutely_normalized_metric(df.columns[0])
+>>>>>>> 6fc1cff (Working on MyPy support)
             or is_absolutely_normalized_metric(title)
         )
 
@@ -393,7 +430,10 @@ def barplot(
             unit,
             normalized_metric=normalized_metric,
             absolutely_normalized_metric=absolutely_normalized_metric,
+<<<<<<< HEAD
             sanitize_metrics=sanitize_metrics,
+=======
+>>>>>>> 6fc1cff (Working on MyPy support)
         )
 
         ax.text(

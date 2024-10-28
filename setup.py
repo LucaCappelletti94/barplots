@@ -32,9 +32,14 @@ __version__ = find_version("barplots", "__version__.py")
 
 test_deps = [
     "pytest",
+<<<<<<< HEAD
     "pytest-cov",
     "pytest-readme",
     "validate_version_code",
+=======
+    "validate_version_code",
+    "data-science-types",
+>>>>>>> 6fc1cff (Working on MyPy support)
     "numpy",
 ]
 

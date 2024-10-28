@@ -7,6 +7,7 @@ from barplots.utils.get_jumps import get_jumps
 
 def bar_positions(df: pd.DataFrame, bar_width: float, space_width: float) -> Generator:
     """Returns a generator of bar positions.
+<<<<<<< HEAD
 
     Parameters
     ----------
@@ -15,6 +16,13 @@ def bar_positions(df: pd.DataFrame, bar_width: float, space_width: float) -> Gen
     bar_width: float
         Width of any given bar.
     space_width: float
+=======
+    df: pd.DataFrame,
+        Dataframe to iterate to extract the necessary data.
+    bar_width:float,
+        Width of any given bar.
+    space_width: float,
+>>>>>>> 6fc1cff (Working on MyPy support)
         Width of spaces between spaces.
     """
     old_index = tuple()

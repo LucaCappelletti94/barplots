@@ -117,8 +117,11 @@ def get_axes(
             if data_label is not None and show_column_name:
                 ax.set_ylabel(
                     sanitize_ml_labels(data_label, custom_defaults=custom_defaults)
+<<<<<<< HEAD
                     if sanitize_metrics
                     else data_label
+=======
+>>>>>>> 6fc1cff (Working on MyPy support)
                 )
         else:
             ax.set_xscale(scale)
@@ -128,6 +131,7 @@ def get_axes(
             if data_label is not None and show_column_name:
                 ax.set_xlabel(
                     sanitize_ml_labels(data_label, custom_defaults=custom_defaults)
+<<<<<<< HEAD
                     if sanitize_metrics
                     else data_label
                 )
@@ -137,16 +141,25 @@ def get_axes(
                 if sanitize_metrics
                 else subtitle
             )
+=======
+                )
+        if show_title:
+            ax.set_title(sanitize_ml_labels(subtitle, custom_defaults=custom_defaults))
+>>>>>>> 6fc1cff (Working on MyPy support)
 
     for ax in axes[len(titles) :]:
         ax.grid(False)
         ax.axis("off")
 
     if title is not None and len(axes) == 1 and show_title:
+<<<<<<< HEAD
         axes[0].set_title(
             sanitize_ml_labels(title, custom_defaults=custom_defaults)
             if sanitize_metrics
             else title
         )
+=======
+        axes[0].set_title(sanitize_ml_labels(title, custom_defaults=custom_defaults))
+>>>>>>> 6fc1cff (Working on MyPy support)
 
     return fig, axes

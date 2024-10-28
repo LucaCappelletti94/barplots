@@ -113,7 +113,7 @@ def plot_bar_labels(
         axes.set_ylabel("")
 
     if normalized_metric or absolutely_normalized_metric:
-        nbins = 5 if normalized_metric else 10
+        nbins = 5 if normalized_metric else 8
 
         if vertical:
             axes.locator_params(axis="y", nbins=nbins)
@@ -129,6 +129,7 @@ def plot_bar_labels(
         axes.yaxis.set_major_formatter(plt.FuncFormatter(sanitizer))
     else:
         axes.xaxis.set_major_formatter(plt.FuncFormatter(sanitizer))
+<<<<<<< HEAD
 
     for level in reversed(range(max(levels - 2, 0), levels)):
         positions, labels = zip(*text_positions(df, bar_width, space_width, level))
@@ -138,6 +139,13 @@ def plot_bar_labels(
             else labels
         )
 
+=======
+
+    for level in reversed(range(max(levels - 2, 0), levels)):
+        positions, labels = zip(*text_positions(df, bar_width, space_width, level))
+        labels = sanitize_ml_labels(labels, custom_defaults=custom_defaults)
+
+>>>>>>> 6fc1cff (Working on MyPy support)
         max_characters_number_in_labels = max((len(label) for label in labels))
 
         positions = [round(pos, 5) for pos in positions]

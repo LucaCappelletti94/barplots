@@ -65,15 +65,20 @@ def plot_bars(
             alpha=(
                 alphas[index[-1]]
                 if index[-1] in alphas
+<<<<<<< HEAD
                 else (
                     get_best_match(alphas, (top_index, *index))
                     if infer_alphas
                     else None
                 )
+=======
+                else get_best_match(alphas, (top_index, *index))
+>>>>>>> 6fc1cff (Working on MyPy support)
             ),
             color=(
                 colors[index[-1]]
                 if index[-1] in colors
+<<<<<<< HEAD
                 else (
                     get_best_match(colors, (top_index, *index))
                     if infer_colors
@@ -92,6 +97,9 @@ def plot_bars(
                         else None
                     )
                 )
+=======
+                else get_best_match(colors, (top_index, *index))
+>>>>>>> 6fc1cff (Working on MyPy support)
             ),
             hatch=(
                 None
@@ -99,11 +107,15 @@ def plot_bars(
                 else (
                     hatch[index[-1]]
                     if index[-1] in hatch
+<<<<<<< HEAD
                     else (
                         get_best_match(hatch, (top_index, *index))
                         if infer_hatch
                         else None
                     )
+=======
+                    else get_best_match(hatch, (top_index, *index))
+>>>>>>> 6fc1cff (Working on MyPy support)
                 )
             ),
             label=index[-1],

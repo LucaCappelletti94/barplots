@@ -1,1 +1,6 @@
+<<<<<<< HEAD
 include LICENSE
+=======
+include LICENSE
+include barplots/py.typed
+>>>>>>> 6fc1cff (Working on MyPy support)
