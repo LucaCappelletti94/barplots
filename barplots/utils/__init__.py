@@ -11,7 +11,6 @@ from barplots.utils.remove_duplicated_legend_labels import (
 from barplots.utils.plot_bar_labels import plot_bar_labels
 from barplots.utils.get_max_bar_length import get_max_bar_length
 
-
 __all__ = [
     "save_picture",
     "get_axes",

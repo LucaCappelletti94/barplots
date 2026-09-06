@@ -11,7 +11,6 @@ from sanitize_ml_labels import sanitize_ml_labels
 from barplots.utils.get_best_match import get_best_match
 from barplots.utils.get_max_bar_position import get_max_bar_position
 
-
 GOLDEN_RATIO: float = 1.61803398875
 
 
